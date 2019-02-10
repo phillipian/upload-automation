@@ -28,7 +28,7 @@ Project to automate uploading to phillipian.net
 - Figure out how to upload more than just the featured image using wp media import
 
 ### Instructions for Setup
-Download Wordpress and Wordpress CLI and begin making posts
+Download Wordpress and Wordpress CLI and begin making posts. This feels a bit hacky and not altogether right but I don't know how else to do it.
 - Set up a localhost wordpress website by following [this](https://crunchify.com/how-to-install-wordpress-locally-on-mac-os-x-using-mamp/) tutorial
 - Download wordpress CLI using the installing instructions [here](https://wp-cli.org/) -- you have to scroll down a lot
 - You can now run wp commands but you have to be in /Applications/MAMP/htdocs/wordpress/wp-includes (or you could just add it to your path but I haven't done that yet)
