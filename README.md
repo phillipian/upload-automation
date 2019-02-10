@@ -22,6 +22,9 @@ Project to automate uploading to phillipian.net
 - Use uploaded post id to add photos
 
 ### To Add Media
+- We can either use the photo directory name or have photo host their images elsewhere online
+- This command sets a featured image for post 1:
+  - wp media import <file or url> --title='Something' --post_id=1 --featured_image
 - Figure out how to upload more than just the featured image using wp media import
 
 ### Instructions for Setup
