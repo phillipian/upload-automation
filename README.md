@@ -23,3 +23,9 @@ Project to automate uploading to phillipian.net
 
 ### To Add Media
 - Figure out how to upload more than just the featured image using wp media import
+
+### Instructions for Setup
+- Set up a localhost wordpress website by following [this](https://crunchify.com/how-to-install-wordpress-locally-on-mac-os-x-using-mamp/) tutorial
+- Download wordpress CLI using the installing instructions [here](https://wp-cli.org/) -- you have to scroll down a lot
+- You can now run wp commands but you have to be in /Applications/MAMP/htdocs/wordpress/wp-includes (or you could just add it to your path but I haven't done that yet)
+- If there is an error saying this: *Error establishing a database connection. This either means that the username and password information in your `wp-config.php` file is incorrect or we can’t contact the database server at `localhost`. This could mean your host’s database server is down.* then find the wp-config.php file which should be in the main wordpress folder and change localhost to 127.0.0.1:3306 or 127.0.0.1:(whatever port you have on MAMP)
