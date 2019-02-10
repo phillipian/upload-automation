@@ -32,5 +32,11 @@ Download Wordpress and Wordpress CLI and begin making posts. This feels a bit ha
 - Set up a localhost wordpress website by following [this](https://crunchify.com/how-to-install-wordpress-locally-on-mac-os-x-using-mamp/) tutorial
 - Download wordpress CLI using the installing instructions [here](https://wp-cli.org/) -- you have to scroll down a lot
 - You can now run wp commands but you have to be in /Applications/MAMP/htdocs/wordpress/wp-includes (or you could just pass it into the command with --path=/Applications/MAMP/htdocs/wordpress or just cd into that directory inside the script which is what is there right now)
-- If there is an error saying this: *Error establishing a database connection. This either means that the username and password information in your `wp-config.php` file is incorrect or we can’t contact the database server at `localhost`. This could mean your host’s database server is down.* then find the wp-config.php file which should be in the main wordpress folder and change localhost to 127.0.0.1:3306 or 127.0.0.1:(whatever port you have on MAMP)
+- Troubleshoot if there are any issues
 - You should be able to run *wp post create --from-post=1 --post_title='Testing wp cli'* and see it when you run *wp post list*
+
+### Troubleshooting:
+**If in** /Applications/MAMP/htdocs/wordpress/wp-includes
+**Running** wp admin
+**Yields** Error establishing a database connection. This either means that the username and password information in your `wp-config.php` file is incorrect or we can’t contact the database server at `localhost`. This could mean your host’s database server is down.
+**Then** find the wp-config.php file which should be in the main wordpress folder and change localhost in wp-config.php to 127.0.0.1:8889 or 127.0.0.1:3306 or 127.0.0.1:<whatever port you have on MAMP>
