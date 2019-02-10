@@ -20,3 +20,6 @@ Project to automate uploading to phillipian.net
 - Content imported from google docs
 
 - Use uploaded post id to add photos
+
+### To Add Media
+- Figure out how to upload more than just the featured image using wp media import
