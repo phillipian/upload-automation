@@ -36,7 +36,7 @@ Download Wordpress and Wordpress CLI and begin making posts. This feels a bit ha
 - You should be able to run *wp post create --from-post=1 --post_title='Testing wp cli'* and see it when you run *wp post list*
 
 ### Troubleshooting:
-**If in** /Applications/MAMP/htdocs/wordpress/wp-includes
-**Running** wp admin
-**Yields** Error establishing a database connection. This either means that the username and password information in your `wp-config.php` file is incorrect or we can’t contact the database server at `localhost`. This could mean your host’s database server is down.
-**Then** find the wp-config.php file which should be in the main wordpress folder and change localhost in wp-config.php to 127.0.0.1:8889 or 127.0.0.1:3306 or 127.0.0.1:<whatever port you have on MAMP>
+- **If in** /Applications/MAMP/htdocs/wordpress/wp-includes
+- **Running** wp admin
+- **Yields** Error establishing a database connection. This either means that the username and password information in your `wp-config.php` file is incorrect or we can’t contact the database server at `localhost`. This could mean your host’s database server is down.
+- **Then** find the wp-config.php file which should be in the main wordpress folder and change localhost in wp-config.php to 127.0.0.1:8889 or 127.0.0.1:3306 or 127.0.0.1:<whatever port you have on MAMP>
