@@ -1,6 +1,9 @@
 # Phillipian Article Upload Automation
 Project to automate uploading to phillipian.net
-
+### Jobs
+- [ ] Jeffrey - commit what you did / be able to extract articles from budget
+- [ ] Alex - style template image to display caption and credit
+- [ ] Sarah - write out the template for the script
 ### Project Requirements
 - [ ] Probably **download budget** from the folder using drive CLI 
 - [ ] Extract **article text** from slug column (get from start to page break) also probably using drive CLI
