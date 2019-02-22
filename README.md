@@ -1,12 +1,11 @@
 # Phillipian Article Upload Automation
 Project to automate uploading to phillipian.net
 ### Jobs
-- [ ] Jeffrey - extract content from budget, write out the template for the script
-- [ ] Alex - style template image to display caption and credit, write out the template for the script
-- [ ] Sarah - google docs, write out the template for the script
-### Logistics
-- [ ] Get a url column
-- [ ] Get a photo directory column
+- [ ] Jeffrey - extract content from budget and deal with multiple sheets, add this functionality to the main script
+- [ ] Alex - style template image to display caption and credit
+- [ ] Sarah - google docs, add this functionality to the main script
+### Logistical To Do
+- [ ] Get a url column, photo directory column in budget
 - [ ] Get a standardized end of article string in each Google Document
 ### Project Requirements
 - [ ] Probably **download budget** from the folder using drive CLI 
@@ -16,6 +15,7 @@ Project to automate uploading to phillipian.net
 
 - [ ] Extract **photo directory name** (it will be a new column in the budget)
 - [ ] Fetch images from file directory - _figure out permissions needed to connect to server_ (should be called name name inside the digital folder of the right week) (somehow - need to store them somewhere remote or maybe run from a newsroom computer but that would not be good)
+- [ ] RESIZE IMAGES IF NECESSARY!
 - [ ] Add downloaded images to uploaded article using [this command](https://developer.wordpress.org/cli/commands/media/import/)
 
 ### To Upload Post
