@@ -3,7 +3,11 @@ Project to automate uploading to phillipian.net
 ### Jobs
 - [ ] Jeffrey - commit what you did / be able to extract articles from budget
 - [ ] Alex - style template image to display caption and credit
-- [ ] Sarah - write out the template for the script
+- [ ] Sarah - google docs, write out the template for the script
+### Logistics
+- [ ] Get a url column
+- [ ] Get a photo directory column
+- [ ] Get a standardized end of article string in each Google Document
 ### Project Requirements
 - [ ] Probably **download budget** from the folder using drive CLI 
 - [ ] Extract **article text** from slug column (get from start to page break) also probably using drive CLI
