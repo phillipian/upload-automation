@@ -3,8 +3,9 @@ Project to automate uploading to phillipian.net
 ### Jobs
 - [ ] Jeffrey - extract content from budget and deal with multiple sheets, add this functionality to the main script
 - [ ] Alex - style template image to display caption and credit
-- [ ] Sarah - google docs, add this functionality to the main script, figure out how to access the photo server
+- [ ] Sarah - add google doc functionality to the main script, 
 ### Logistical To Do
+- [ ] Figure out how to access the photo server (we might just run it on a newsroom computer)
 - [ ] Get a url column, photo directory column in budget
 - [ ] Get a standardized end of article string in each Google Document
 - [ ] Have to change config file to access real website
