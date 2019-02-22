@@ -50,7 +50,8 @@ def main():
 
     # added this, hope it works??
 
-    file_id = '1meoBMYrymou6K80UJV4VGFWLdZ8WK7fwkjZ_l0z56bs'
+    # file_id = '1meoBMYrymou6K80UJV4VGFWLdZ8WK7fwkjZ_l0z56bs'
+    file_id = '1pR5rRTTOHmgW6oFM34p72PkFSCBuzseDTnG-f5tQdfc'
     mimeType = 'text/plain'
 
     # request = service.files().get(fileId=file_id) # to get just the metadata
