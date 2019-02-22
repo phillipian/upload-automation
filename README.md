@@ -21,7 +21,11 @@ Project to automate uploading to phillipian.net
 - [ ] Fetch images from file directory - _figure out permissions needed to connect to server_ (should be called name name inside the digital folder of the right week) (somehow - need to store them somewhere remote or maybe run from a newsroom computer but that would not be good)
 - [ ] RESIZE IMAGES IF NECESSARY!
 - [ ] Add downloaded images to uploaded article using [this command](https://developer.wordpress.org/cli/commands/media/import/)
-
+### Dependencies (not complete)
+- [ ] python, pandas, numpy (obviously)
+- [ ] wordpress, wp cli
+- [ ] google drive API (currently using phillipiandev@gmail.com credentials)
+- [ ] gspread
 ### To Upload Post
 - Section specified via wp-post cli function argument
 - Fill in:
@@ -31,7 +35,6 @@ Project to automate uploading to phillipian.net
 - Content imported from google docs
 
 - Use uploaded post id to add photos
-
 ### To Add Media
 - We can either use the photo directory name or have photo host their images elsewhere online
 - This command attaches an image for post 1:
