@@ -8,6 +8,7 @@ Project to automate uploading to phillipian.net
 - [ ] Get a url column, photo directory column in budget
 - [ ] Get a standardized end of article string in each Google Document
 - [ ] Have to change config file to access real website
+- [ ] Can we get phillipian.com?
 ### Project Requirements
 - [ ] Probably **download budget** from the folder using drive CLI 
 - [ ] Extract **article text** from slug column (get from start to page break) also probably using drive CLI
