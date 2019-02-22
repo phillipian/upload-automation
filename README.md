@@ -6,6 +6,7 @@ Project to automate uploading to phillipian.net
 - [ ] Sarah - add google doc functionality to the main script, 
 ### Logistical To Do
 - [ ] Figure out how to access the photo server (we might just run it on a newsroom computer)
+- [ ] Standardizes slug and headline columns
 - [ ] Get a url column, photo directory column in budget
 - [ ] Get a standardized end of article string in each Google Document
 - [ ] Have to change config file to access real website
