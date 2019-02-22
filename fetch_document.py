@@ -27,7 +27,7 @@ def main():
             creds.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(
-                'credentials.json', SCOPES)
+                '../credentials.json', SCOPES)
             creds = flow.run_local_server()
         # Save the credentials for the next run
         with open('token.pickle', 'wb') as token:
@@ -65,7 +65,7 @@ def main():
         print("Download %d" % int(status.progress() * 100))
     # print(fh.getvalue())
     html = fh.getvalue()
-    with open('file.txt', 'wb') as f: 
+    with open('file3.txt', 'wb') as f: 
         f.write(html)
 
 if __name__ == '__main__':
