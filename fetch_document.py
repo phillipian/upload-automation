@@ -9,11 +9,34 @@ import io
 
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/drive']
+BOFSTR = 'BOFCXLII'
+EOFSTR = 'EOFCXLII'
 
-def main():
-    """Shows basic usage of the Drive v3 API.
-    Prints the names and ids of the first 10 files the user has access to.
-    """
+def get_file_id_from_url(doc_url):
+    partial_prefix = 'docs.google.com/document/d/'
+    postfix = '/edit'
+
+    start = doc_url.index(partial_prefix)+len(partial_prefix)
+    end = doc_url.index(postfix)
+    return doc_url[start:end]
+
+def article_from_txt(raw_txt, filter_txt):
+    # each line is a paragraph
+    rf = open(raw_txt, 'r')
+    wf = open(filter_txt, 'w')
+    copy = False
+    for x in rf:
+        if ('EOFCXLII' in x):
+            break
+        if (copy):
+            wf.write(x) 
+        if ('BOFCXLII' in x):
+            copy = True
+         
+    rf.close()
+    wf.close()
+
+def get_google_doc(doc_url):
     creds = None
     # The file token.pickle stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
@@ -50,9 +73,14 @@ def main():
 
     # added this, hope it works??
 
-    # file_id = '1meoBMYrymou6K80UJV4VGFWLdZ8WK7fwkjZ_l0z56bs'
-    file_id = '1pR5rRTTOHmgW6oFM34p72PkFSCBuzseDTnG-f5tQdfc'
+    file_id = get_file_id_from_url(doc_url)
+    print("file_id")
+    print(file_id)
     mimeType = 'text/plain'
+
+    # TODO: make this fit whatever we decide
+    raw_article = file_id+'_raw.txt'
+    filter_article = file_id+'_filter.txt'
 
     # request = service.files().get(fileId=file_id) # to get just the metadata
     request = service.files().export(fileId=file_id, mimeType=mimeType) # to get the file content
@@ -64,9 +92,13 @@ def main():
         status, done = downloader.next_chunk()
         print("Download %d" % int(status.progress() * 100))
     # print(fh.getvalue())
-    html = fh.getvalue()
-    with open('file3.txt', 'wb') as f: 
-        f.write(html)
+    content = fh.getvalue()
+    with open(raw_article, 'wb') as f: 
+        f.write(content)
+    
+    article_from_txt(raw_article, filter_article)
+
+    return filter_article
 
 if __name__ == '__main__':
     main()
