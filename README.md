@@ -3,7 +3,7 @@ Project to automate uploading to phillipian.net
 ### Jobs
 - [ ] Jeffrey - figure out how to make a docker image with everything needed for easier running
 - [ ] Alex - **figure out how to display image**; style template image to display caption and credit
-- [ ] Sarah - figure out how to upload on the real website; get things standardized!
+- [ ] Sarah - figure out how to upload on the real website; get things standardized on budget!
 ### Logistical To Do
 - [ ] Figure out how to access the photo server (we might just run it on a newsroom computer)
 - [ ] Standardizes slug and headline columns
