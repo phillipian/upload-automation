@@ -1,9 +1,9 @@
 # Phillipian Article Upload Automation
 Project to automate uploading to phillipian.net
 ### Jobs
-- [ ] Jeffrey - extract content from budget and deal with multiple sheets, add this functionality to the main script
-- [ ] Alex - style template image to display caption and credit
-- [ ] Sarah - add google doc functionality to the main script, 
+- [ ] Jeffrey - figure out how to make a docker image with everything needed for easier running
+- [ ] Alex - **figure out how to display image**; style template image to display caption and credit
+- [ ] Sarah - figure out how to upload on the real website; get things standardized!
 ### Logistical To Do
 - [ ] Figure out how to access the photo server (we might just run it on a newsroom computer)
 - [ ] Standardizes slug and headline columns
