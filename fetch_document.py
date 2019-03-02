@@ -74,7 +74,6 @@ def get_google_doc(doc_url):
     # added this, hope it works??
 
     file_id = get_file_id_from_url(doc_url)
-    print("file_id")
     print(file_id)
     mimeType = 'text/plain'
 

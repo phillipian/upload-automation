@@ -1,5 +1,6 @@
 import os
 from subprocess import call
+from subprocess import check_output
 import sys
 import pandas as pd
 import fetch_sheet
@@ -31,18 +32,20 @@ for s in sections:
     if ('Link' in section_df.columns):
         test_url = section_df.head()['Link'].values[0]
         final_txt = fetch_document.get_google_doc(test_url)
+# create post (TEMPORARY, for TESTING)
+        # cd to wordpress (test code for computer only)
+        workingdir = os.getcwd()
+        os.chdir("/Applications/MAMP/htdocs/wordpress/wp-includes")
+        call("pwd")
+        # make a post with the given parameters
+        # print(workingdir,'wdend')
+        
+        cmd = "wp post create --post_status=publish --post_title='Article 1' " + workingdir+'/'+final_txt
+        call(cmd, shell=True)
+
 # fetch image folder path
     if ('Images' in section_df.columns):
         test_path = PATHPREFIX + s + '/' + section_df.head()['Images'].values[0]
-# create posts
-"""
-# cd to wordpress (test code for computer only)
-call("pwd")
-os.chdir("/Applications/MAMP/htdocs/wordpress/wp-includes")
-call("pwd")
 
-# make a post with the given parameters
-call("wp post create --from-post=1 --post_title='Testing wp cli FROM PYTHON'", shell=True)
-"""
 
 # add photos
