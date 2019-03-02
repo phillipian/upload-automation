@@ -8,8 +8,8 @@ import fetch_document
 import argparse
 
 # PATH
-# TODO: get the real path from newsroom computer
-PATHPREFIX = 'PLACEHOLDER/Digital/'
+# TODO: get the real path from newsroom computer, THIS IS A PLACEHOLDER
+PATHPREFIX = os.getcwd()+'/../Digital/'
 
 # sections to upload
 sections = ['News']
@@ -40,12 +40,26 @@ for s in sections:
         # make a post with the given parameters
         # print(workingdir,'wdend')
         
-        cmd = "wp post create --post_status=publish --post_title='Article 1' " + workingdir+'/'+final_txt
-        call(cmd, shell=True)
+        # TODO: uncomment one
+
+        cmd = "wp post create --porcelain --post_status=publish --post_title='INSERT HEADLINE' " + workingdir+'/'+final_txt
+        post_id = check_output(cmd, shell=True)
+        print("POSTID " + str(post_id))
+
+        # cmd = "wp post create --post_status=publish --post_title='Article 1' " + workingdir+'/'+final_txt
+        # call(cmd, shell=True)
 
 # fetch image folder path
-    if ('Images' in section_df.columns):
-        test_path = PATHPREFIX + s + '/' + section_df.head()['Images'].values[0]
+        if ('Images' in section_df.columns):
+            test_path = PATHPREFIX + s + '/' + section_df.head()['Images'].values[0]
+            # print(test_path)
+
+            images = os.listdir(test_path)
+            print(images)
+
+            for image in images:
+                cmd = "wp media import " + test_path + '/' + image + " --post_id=" + post_id
+                call(cmd, shell=True)
 
 
 # add photos
