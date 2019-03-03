@@ -38,8 +38,9 @@ Project to automate uploading to phillipian.net
 ### To Add Media
 - We can either use the photo directory name or have photo host their images elsewhere online
 - This command attaches an image for post 1:
-  - wp media import <file or url> --title='Something' --post_id=1 
+  - wp media import <file or url> --title='Something' --post_id=1
 - The theme file template-parts/content-single.php must be edited to display attachments, and it must be styled to display captions and credits
+  - On the CityNews theme, the code for single posts may lie in `tpl/tpl-loop.php`. We can easily override this file in the child theme.
 
 ### Instructions for Setup
 Download Wordpress and Wordpress CLI and begin making posts. This feels a bit hacky and not altogether right but I don't know how else to do it.
