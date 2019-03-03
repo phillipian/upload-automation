@@ -35,5 +35,6 @@
             }
         }
     ?>
+
     <!-- The remainder of the entry-content goes here! -->
 </div>
