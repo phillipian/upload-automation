@@ -23,24 +23,25 @@ Project to automate uploading to phillipian.net
 - [ ] Add downloaded images to uploaded article using [this command](https://developer.wordpress.org/cli/commands/media/import/)
 ### Dependencies (not complete)
 - [ ] python, pandas, numpy (obviously)
-- [ ] wordpress, wp cli
+- [ ] wordpress, wp cli, wordpress [media credit plugin](https://wordpress.org/plugins/media-credit/)
 - [ ] google drive API (currently using phillipiandev@gmail.com credentials)
 - [ ] gspread
 ### To Upload Post
 - Section specified via wp-post cli function argument
 - Fill in:
-  - Author from article
-  - Title from headline
-  - Date from current time
+  - _Author_ from article
+  - _Title_ from headline
+  - _Date_ from current time
 - Content imported from google docs
 
 - Use uploaded post id to add photos
 ### To Add Media
 - We can either use the photo directory name or have photo host their images elsewhere online
 - This command attaches an image for post 1:
-  - wp media import <file or url> --title='Something' --post_id=1
-- The theme file template-parts/content-single.php must be edited to display attachments, and it must be styled to display captions and credits
-  - On the CityNews theme, the code for single posts may lie in `tpl/tpl-loop.php`. We can easily override this file in the child theme.
+  - `wp media import <file or url> --title='Something' --post_id=1`
+  - Set the `--featured-image` flag to set the post thumbnail displayed on the homepage _(default to setting the flag on the first image)_
+- The theme file `template-parts/content-single.php` must be edited to display attachments, and it must be styled to display captions and credits
+  - On the CityNews theme, the template for single post content may lie in `tpl/tpl-loop.php`. We can easily override this file in the child theme.
 
 ### Instructions for Setup
 Download Wordpress and Wordpress CLI and begin making posts. This feels a bit hacky and not altogether right but I don't know how else to do it.
@@ -48,7 +49,7 @@ Download Wordpress and Wordpress CLI and begin making posts. This feels a bit ha
 - Download wordpress CLI using the installing instructions [here](https://wp-cli.org/) -- you have to scroll down a lot
 - You can now run wp commands but you have to be in /Applications/MAMP/htdocs/wordpress/wp-includes (or you could just pass it into the command with --path=/Applications/MAMP/htdocs/wordpress or just cd into that directory inside the script which is what is there right now)
 - Troubleshoot if there are any issues
-- You should be able to run *wp post create --from-post=1 --post_title='Testing wp cli'* and see it when you run *wp post list*
+- You should be able to run _wp post create --from-post=1 --post_title='Testing wp cli'_ and see it when you run _wp post list_
 
 ### Troubleshooting:
 - **If in** /Applications/MAMP/htdocs/wordpress/wp-includes
