@@ -2,7 +2,8 @@
 Project to automate uploading to phillipian.net
 ### Jobs
 - [ ] Jeffrey - fetch caption (store in caption), credit (photographer, store in description) from photo budget
-- [ ] Alex - adjust image short codes and prepend them to text file
+- [ ] Alex - adjust image short codes and prepend them to text file (an easy way to get url is wp post get id --field=url
+like in the last example in https://developer.wordpress.org/cli/commands/media/import/ bc attachments are posts too)
 - [ ] Sarah - finish and test end to end support; figure out how to upload on the **real** website; get things standardized on budget!
 - [ ] figure out how to make a docker image with everything needed for easier running
 ### Logistical To Do
