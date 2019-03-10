@@ -26,7 +26,7 @@ like in the last example in https://developer.wordpress.org/cli/commands/media/i
 - [ ] Add downloaded images to uploaded article using [this command](https://developer.wordpress.org/cli/commands/media/import/)
 ### Dependencies (not complete)
 - [ ] python, pandas, numpy (obviously)
-- [ ] wordpress, wp cli, wordpress [media credit plugin](https://wordpress.org/plugins/media-credit/)
+- [ ] wordpress, wp cli
 - [ ] google drive API (currently using phillipiandev@gmail.com credentials)
 - [ ] gspread
 ### To Upload Post
@@ -43,8 +43,6 @@ like in the last example in https://developer.wordpress.org/cli/commands/media/i
 - This command attaches an image for post 1:
   - `wp media import <file or url> --title='Something' --post_id=1`
   - Set the `--featured-image` flag to set the post thumbnail displayed on the homepage _(default to setting the flag on the first image)_
-- The theme file `template-parts/content-single.php` must be edited to display attachments, and it must be styled to display captions and credits
-  - On the CityNews theme, the template for single post content may lie in `tpl/tpl-loop.php`. We can easily override this file in the child theme.
 
 ### Instructions for Setup
 Download Wordpress and Wordpress CLI and begin making posts. This feels a bit hacky and not altogether right but I don't know how else to do it.
