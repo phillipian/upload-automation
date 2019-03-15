@@ -25,7 +25,7 @@ like in the last example in https://developer.wordpress.org/cli/commands/media/i
 - [ ] RESIZE IMAGES IF NECESSARY!
 - [ ] Add downloaded images to uploaded article using [this command](https://developer.wordpress.org/cli/commands/media/import/)
 ### Dependencies (not complete)
-- [ ] python, pandas, numpy (obviously)
+- [ ] python, pandas, numpy, [pillow](https://github.com/python-pillow/Pillow) (obviously)
 - [ ] wordpress, wp cli
 - [ ] google drive API (currently using phillipiandev@gmail.com credentials)
 - [ ] gspread
