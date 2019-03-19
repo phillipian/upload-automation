@@ -36,8 +36,10 @@ def main():
     # SPREADSHEET_NAME = input("Spreadsheet Name")
     SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/1XrCCN4SI0ZReGy9G44b9_afTIqCzT2sMNUXx1DgCyUo/edit#gid=1756024164'
     gsheet = get_google_sheet(SPREADSHEET_URL, 'Commentary')
+    photo_sheet = get_google_sheet(SPREADSHEET_URL, 'Photo')
     print(gsheet.head())
+    print(photo_sheet.head())
     gsheet.to_csv(r'../test1.csv',encoding='utf-8')
-
+    photo_sheet.to_csv(r'../test2.csv',encoding='utf-8')
 if __name__ == '__main__':
     main()
