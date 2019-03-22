@@ -17,7 +17,7 @@ def get_google_sheet(spreadsheet_url, section):
     credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCT_FILE, scopes=SCOPES)
     client = gspread.Client(auth=credentials)
     client.session = AuthorizedSession(credentials)
-  
+
     sheet = client.open_by_url(spreadsheet_url) # for spreadsheet by URL
     # sheet1 = client.open(spreadsheet_id).sheet1 # for spreadsheet by NAME
 
