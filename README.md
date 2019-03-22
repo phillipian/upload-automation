@@ -2,6 +2,8 @@
 Project to automate uploading to phillipian.net
 ### Structure
 upload_script.py is the main script, calling functions from other files. It will be run from a docker container on a computer in the newsroom to more easily access the photo server.
+### Usage
+Fill out the entire budget. Add BOF and EOF markers in article docs. Mark articles to upload in budget. Add image directory or the no image string to the budget.
 ### Jobs
 - [ ] Jeffrey - do author creation and assignment (ask Samson for details)
 - [ ] Alex - make a docker image with everything needed for easier running
