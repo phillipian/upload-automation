@@ -4,7 +4,7 @@ Project to automate uploading to phillipian.net
 - [ ] upload_script.py is the main script, calling functions from other files
 ### Jobs
 - [ ] Jeffrey - do author creation and assignment; fetch caption (store in caption field), credit (photographer, store in description field) from photo budget, and edit the upload test budget I just shared with you as needed (rn I think the photo sheet is empty)
-- [ ] Alex - after Sarah finishes photo stuff, make sure all image shortcodes in text file etc are working. (an easy way to get url is wp post get id --field=url)
+- [ ] Alex - do images get resized? after Sarah finishes photo stuff, make sure all image shortcodes in text file etc are working. (an easy way to get url is wp post get id --field=url)
 like in the last example in https://developer.wordpress.org/cli/commands/media/import/ bc attachments are posts too)
 - [ ] Sarah - finish and test end to end support, fetch photos; figure out how to upload on the **real** website; get things standardized on budget!
 - [ ] Resize & compress images using CLI command to put in script
