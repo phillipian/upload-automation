@@ -1,5 +1,7 @@
 # Phillipian Article Upload Automation
 Project to automate uploading to phillipian.net
+### Structure
+- [ ] upload_script.py is the main script, calling functions from other files
 ### Jobs
 - [ ] Jeffrey - do author creation and assignment; fetch caption (store in caption field), credit (photographer, store in description field) from photo budget, and edit the upload test budget I just shared with you as needed (rn I think the photo sheet is empty)
 - [ ] Alex - after Sarah finishes photo stuff, make sure all image shortcodes in text file etc are working. (an easy way to get url is wp post get id --field=url)
