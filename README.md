@@ -2,15 +2,14 @@
 Project to automate uploading to phillipian.net
 ### Structure
 upload_script.py is the main script, calling functions from other files. It will be run from a docker container on a computer in the newsroom to more easily access the photo server.
-python upload_script.py --url URL
 ### Usage
-Fill out the entire budget. Add BOF and EOF markers in article docs. Mark articles to upload in budget. Add image directory or the no image string to the budget.
+- [ ] python upload_script.py --url URL
+- [ ] Fill out the entire budget (mark articles to upload, add image directory or the no image string to the budget, caption, credit, etc)
+- [ ] Add BOF and EOF markers in article docs
 ### Jobs
-- [ ] Jeffrey - do author creation and assignment (ask Samson for details)
-- [ ] Alex - make a docker image with everything needed for easier running
-like in the last example in https://developer.wordpress.org/cli/commands/media/import/ bc attachments are posts too)
-- [ ] Sarah - finish and test end to end support
-- [ ] figure out how to upload on the **real** website
+- [ ] Jeffrey - do old author creation and assignment, read and make compatible current code for that and add multiple author functionality (ask Samson for details)
+- [ ] Alex - make a docker image with everything needed for easier running, look into how to upload on the **real** website (configging etc)
+- [ ] Sarah - add category functionality
 ### Logistical To Do
 - [ ] Change config file to access real website
 - [ ] Changes to the budget (ESSENTIAL)
