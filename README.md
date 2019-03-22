@@ -1,28 +1,27 @@
 # Phillipian Article Upload Automation
 Project to automate uploading to phillipian.net
 ### Structure
-- [ ] upload_script.py is the main script, calling functions from other files
+upload_script.py is the main script, calling functions from other files. It will be run from a docker container on a computer in the newsroom to more easily access the photo server.
 ### Jobs
-- [ ] Jeffrey - do author creation and assignment; fetch caption (store in caption field), credit (photographer, store in description field) from photo budget, and edit the upload test budget I just shared with you as needed (rn I think the photo sheet is empty)
-- [ ] Alex - after Sarah finishes photo stuff, make sure all image shortcodes in text file etc are working. (an easy way to get url is wp post get id --field=url)
+- [ ] Jeffrey - do author creation and assignment (ask Samson for details)
+- [ ] Alex - make a docker image with everything needed for easier running
 like in the last example in https://developer.wordpress.org/cli/commands/media/import/ bc attachments are posts too)
-- [ ] Sarah - finish and test end to end support, fetch photos; figure out how to upload on the **real** website; get things standardized on budget!
-- [ ] Resize & compress images using CLI command to put in script
-- [ ] figure out how to make a docker image with everything needed for easier running
+- [ ] Sarah - finish and test end to end support
+- [ ] figure out how to upload on the **real** website
 ### Logistical To Do
-- [ ] Figure out how to access the photo server (we might just run it on a newsroom computer)
-- [ ] Standardizes slug and headline columns
-- [ ] Get a url column, photo directory column in budget
-- [ ] Get a standardized end of article string in each Google Document
-- [ ] Have to change config file to access real website
-- [ ] Can we get phillipian.com?
+- [ ] Change config file to access real website
+- [ ] Changes to the budget (ESSENTIAL)
+  - [ ] Use the headline column (or fill it in at the end)
+  - [ ] Add 'Link' column that stores explicit link to document with article on it
+  - [ ] Add 'Upload?' column that stores 'yes' or 'no'
+  - [ ] Add 'ImageDir' column that stores photo directory
+- [ ] Add standardized BOF and EOF file strings in each article's Google Document
 ### Project Requirements
 - [ ] Probably **download budget** from the folder using drive CLI 
 - [ ] Extract **article text** from slug column (get from start to page break) also probably using drive CLI
 - [ ] Extract **writer, headline, and section** from budget
 - [ ] Post to the website us wp post create -(parameters with all the extract info) (see [here](https://developer.wordpress.org/cli/commands/post/create/))
 
-- [ ] Extract **photo directory name** (it will be a new column in the budget)
 - [ ] Fetch images from file directory - _figure out permissions needed to connect to server_ (should be called name name inside the digital folder of the right week) (somehow - need to store them somewhere remote or maybe run from a newsroom computer but that would not be good)
 - [ ] RESIZE IMAGES IF NECESSARY!
 - [ ] Add downloaded images to uploaded article using [this command](https://developer.wordpress.org/cli/commands/media/import/)
