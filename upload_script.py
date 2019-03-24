@@ -41,7 +41,7 @@ NOPHOTO = 'xxnophotoxx'
 ARTICLECAP = 3 # TODO: remove after finished (for testing purposes)
 
 special_photo_credits = ['Archives', 'Courtesy of ']
-
+category_slugs = {'Arts':'arts', 'Look of the Week':'lotw', 'Commentary':'commentary', 'Editorial':'editorial', 'Featured Posts':'featured', 'News':'news', 'Sports':'sports', 'The Eighth Page':'eighthpage'}
 sections = ['News'] # sections to upload
 # sections = ['Sports', 'News', 'Commentary', 'Arts', 'The Eighth Page']
 
@@ -109,8 +109,9 @@ for s in sections:
         print('error: '+s+' budget columns not the same length')
         exit(0)
 
+    section_category = category_slugs[s]
+
     # loop through articles and upload them
-    # TODO: catch blank fields
     for i in range(min(ARTICLECAP,len(article_urls))):
         article_url = article_urls[i]
         headline = headlines[i]
@@ -118,7 +119,18 @@ for s in sections:
         writer = writers[i]
         status = statuses[i]
 
-        # only upload marked articles
+        if (article_url == ''):
+            print('error: no article url')
+        if (headline == ''):
+            print('error: no headline')
+        if (img_name == ''):
+            print('error: no image name')
+        if (writer == ''):
+            print('error: no writer')
+        if (status == ''):
+            print('error: no status')
+
+        # only upload done articles, skip unless marked
         if (status != 'yes'):
             continue
 
@@ -178,7 +190,7 @@ for s in sections:
 
         # make a post with the given parameters
         # TODO: make status draft
-        cmd = "wp post create "+ workingdir +"/"+ article_txt + " --post_status=publish --post_title='"+ headline +"' --porcelain --post_author="+ writer_id 
+        cmd = "wp post create "+ workingdir +"/"+ article_txt + " --post_category="+ section_category +" --post_status=publish --post_title='"+ headline +"' --porcelain --post_author="+ writer_id 
         post_id = check_output(cmd, shell=True)
 
         os.chdir(workingdir)
