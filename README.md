@@ -1,16 +1,19 @@
 # Phillipian Article Upload Automation
 Project to automate uploading to phillipian.net
 ### Structure
-upload_script.py is the main script, calling functions from other files. It will be run from a docker container on a computer in the newsroom to more easily access the photo server.
-python upload_script.py --url URL
+upload_script.py is the main script. It will be run from a docker container on a computer in the newsroom to more easily access the photo server.
 ### Usage
-Fill out the entire budget. Add BOF and EOF markers in article docs. Mark articles to upload in budget. Add image directory or the no image string to the budget.
+- [ ] Fill out the budget and make sure there are no missing fields (mark articles to upload, add image directory or the no image string to the budget, caption, credit, etc)
+- [ ] Add BOF and EOF markers in article docs
+- [ ] python upload_script.py --url URL
+- [ ] Check ALL posts (and maybe publish them by hand?)
+- [ ] Upload editorial manually?
+- [ ] Mark categories manually (featured, look of the week, sports season, sports teams), either in the budget ahead of time (we can integrate it into the script) or afterwards
+- [ ] Multilingual uploading?
 ### Jobs
-- [ ] Jeffrey - do author creation and assignment (ask Samson for details)
-- [ ] Alex - make a docker image with everything needed for easier running
-like in the last example in https://developer.wordpress.org/cli/commands/media/import/ bc attachments are posts too)
-- [ ] Sarah - finish and test end to end support
-- [ ] figure out how to upload on the **real** website
+- [ ] Jeffrey - do old author creation and assignment, read and make compatible current code for that and add multiple author functionality (ask Samson for details)
+- [ ] Alex - make a docker image with everything needed for easier running, look into how to upload on the **real** website (configging etc)
+- [ ] Sarah - add basic category functionality
 ### Logistical To Do
 - [ ] Change config file to access real website
 - [ ] Changes to the budget (ESSENTIAL)
