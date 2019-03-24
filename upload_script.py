@@ -189,7 +189,8 @@ for s in sections:
         os.chdir("/Applications/MAMP/htdocs/wordpress/wp-includes")
 
         # make a post with the given parameters
-        # TODO: make status draft
+        # TODO: make status draft for the real site
+        # TODO: check if category needs quotes around it
         cmd = "wp post create "+ workingdir +"/"+ article_txt + " --post_category="+ section_category +" --post_status=publish --post_title='"+ headline +"' --porcelain --post_author="+ writer_id 
         post_id = check_output(cmd, shell=True)
 
