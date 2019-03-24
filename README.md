@@ -6,14 +6,14 @@ upload_script.py is the main script. It will be run from a docker container on a
 - [ ] Fill out the budget and make sure there are no missing fields (mark articles to upload, add image directory or the no image string to the budget, caption, credit, etc)
 - [ ] Add BOF and EOF markers in article docs
 - [ ] python upload_script.py --url URL
-- [ ] Check ALL posts (and maybe publish them by hand?)
+- [ ] Check ALL posts and publish them (the script will make them drafts)
 - [ ] Upload editorial manually?
 - [ ] Mark categories manually (featured, look of the week, sports season, sports teams), either in the budget ahead of time (we can integrate it into the script) or afterwards
 - [ ] Multilingual uploading?
 ### Jobs
-- [ ] Jeffrey - do old author creation and assignment, read and make compatible current code for that and add multiple author functionality (ask Samson for details)
+- [ ] Jeffrey - do author creation and assignment for all articles, make sure that the current code for author functionality is compatible, add multiple author functionality (ask Samson for details)
 - [ ] Alex - make a docker image with everything needed for easier running, look into how to upload on the **real** website (configging etc)
-- [ ] Sarah - add basic category functionality
+- [ ] Sarah - add sophisticated category functionality
 ### Logistical To Do
 - [ ] Change config file to access real website
 - [ ] Changes to the budget (ESSENTIAL)
