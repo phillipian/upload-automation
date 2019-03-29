@@ -11,9 +11,9 @@ upload_script.py is the main script. It will be run from a docker container on a
 - [ ] Mark categories manually (featured, look of the week, sports season, sports teams), either in the budget ahead of time (we can integrate it into the script) or afterwards
 - [ ] Multilingual uploading?
 ### Jobs
-- [ ] Jeffrey - do author creation and assignment for all articles, make sure that the current code for author functionality is compatible, add multiple author functionality (ask Samson for details)
-- [ ] Alex - make a docker image with everything needed for easier running, look into how to upload on the **real** website (configging etc)
-- [ ] Sarah - add sophisticated category functionality
+- [ ] Jeffrey - do author creation/assignment for all past articles, make sure that the current code for author functionality is compatible, add multiple author functionality
+- [ ] Alex - make a docker image with everything needed for easier running, try uploading on the **real** website (configging etc)
+- [ ] Sarah - end to end testing, generate complete budget
 ### Logistical To Do
 - [ ] Change config file to access real website
 - [ ] Changes to the budget (ESSENTIAL)
