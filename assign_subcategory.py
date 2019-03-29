@@ -45,7 +45,7 @@ def find_sports_subcategories(headline, article_text):
             team_slug = category_sanitize(keyword)
             categ_string += slug +','+ sports_seasons_slugs(slug) # append slug
     if (categ_string == ''):
-        print('no subcategory found')
+        print('error: no sports subcategory found, ASSIGN MANUALLY!')
     return categ_string
 
 def category_sanitize(s_in):
