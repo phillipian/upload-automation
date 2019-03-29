@@ -1,4 +1,3 @@
-# TODO: add category functionality!
 # TODO: fix multiple authors
 import os
 from subprocess import call
@@ -7,13 +6,14 @@ import sys
 import pandas as pd
 import fetch_sheet
 import fetch_document
+import assign_subcategory
 # import imgprepare # TODO: uncomment
 import imgprepare_python_2
 import argparse
 import datetime
 
 def remove_spaces_commas(s_in):
-    # remove spaces and commas from a string
+    """Remove spaces and commas from a string"""
     s_out = ''
     for i in range(len(s_in)):
         if (s_in[i] != ',' and s_in[i] != ' '):
@@ -41,11 +41,11 @@ NOPHOTO = 'xxnophotoxx'
 ARTICLECAP = 3 # TODO: remove after finished (for testing purposes)
 
 special_photo_credits = ['Archives', 'Courtesy of ']
-category_slugs = {'Arts':'arts', 'Look of the Week':'lotw', 'Commentary':'commentary', 'Editorial':'editorial', 'Featured Posts':'featured', 'News':'news', 'Sports':'sports', 'The Eighth Page':'eighthpage'}
+category_slugs = {'Arts':'arts', 'Commentary':'commentary', 'Editorial':'editorial', 'Featured Posts':'featured', 'News':'news', 'Sports':'sports', 'The Eighth Page':'eighthpage'}
 sections = ['News'] # sections to upload
 # sections = ['Sports', 'News', 'Commentary', 'Arts', 'The Eighth Page']
 
-existing_writers = [] # TODO: import this from somewhere else
+existing_writers = [] # import from running list
 writer_file = open('existing_users.txt','r')
 for line in writer_file:
     existing_writers.append(line[:-1]) # cut off the new line
@@ -95,6 +95,7 @@ for s in sections:
         'ImageDir' in section_df.columns and \
         'Headline' in section_df.columns and \
         'Writer' in section_df.columns and \
+        'Featured?' in section_df.columns and \
         'Upload?' in section_df.columns)):
         print('error: missing budget columns')
         exit(0)
@@ -104,12 +105,14 @@ for s in sections:
     img_names = section_df['ImageDir'].values
     writers = section_df['Writer'].values
     statuses = section_df['Upload?'].values
+    featured_posts = section_df['Featured?'].values
 
     if (not (len(article_urls) == len(img_names) and len(headlines) == len(img_names) and len(writers) == len(img_names) and len(statuses) == len(img_names))):
         print('error: '+s+' budget columns not the same length')
         exit(0)
 
-    section_category = category_slugs[s]
+    # the highest category for each
+    category_slug = category_slugs[s]
 
     # loop through articles and upload them
     for i in range(min(ARTICLECAP,len(article_urls))):
@@ -118,6 +121,7 @@ for s in sections:
         img_name = img_names[i] # directory name
         writer = writers[i]
         status = statuses[i]
+        featured = featured_posts[i]
 
         if (article_url == ''):
             print('error: no article url')
@@ -129,6 +133,8 @@ for s in sections:
             print('error: no writer')
         if (status == ''):
             print('error: no status')
+
+        
 
         # only upload done articles, skip unless marked
         if (status != 'yes'):
@@ -185,13 +191,39 @@ for s in sections:
             src.writelines(content)
             src.close()
         
+        # assign categories
+        category_string = category_slug
+        src=open(article_txt,"r")
+        content=src.readlines()
+        src.close()
+        if (category_string == 'sports'):
+            category_string += ','+assign_subcategory.find_sports_subcategories(headline, content)
+        elif (category_string == 'arts'):
+            category_string += ','+find_arts_subcategories(headline)
+
+        print(category_string)
+
+        # fix headlines for each section
+        if (category_slug == 'eighthpage'):
+            headline = 'Phillipian Satire: ' + headline
+        if (category_slug == 'commentary'):
+            headline = 'Phillipian Commentary: ' + headline
+
+        # if featured article, make timestamp yesterday and add to the featured category
+        more_options = ''
+        if featured == 'yes':
+            post_timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            more_options += "--post_date='"+post_timestamp+"'"
+            category_string += ',featured'
+
+        
         # cd to wordpress (test code only)
         os.chdir("/Applications/MAMP/htdocs/wordpress/wp-includes")
 
         # make a post with the given parameters
         # TODO: make status draft for the real site
         # TODO: check if category needs quotes around it
-        cmd = "wp post create "+ workingdir +"/"+ article_txt + " --post_category="+ section_category +" --post_status=publish --post_title='"+ headline +"' --porcelain --post_author="+ writer_id 
+        cmd = "wp post create "+ workingdir +"/"+ article_txt + " --post_category="+ category_string +" --post_status=publish --post_title='"+ headline +"' --porcelain --post_author="+ writer_id + ' ' + more_options 
         post_id = check_output(cmd, shell=True)
 
         os.chdir(workingdir)
