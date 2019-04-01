@@ -1,3 +1,4 @@
+
 # TODO: support multiple author functionality
 import os
 from subprocess import call
@@ -13,9 +14,14 @@ import imgprepare_python_2
 import argparse
 import datetime
 
-# CONSTANTS
+# COPY PHOTOS OVER TO SERVER
+local_path = '/Volumes/Phillipian/Phillipian/Spring 2019/3:29/digital'
+server_path = '/wp-photos/3-29'
+cmd = 'scp -r "'+local_path+'" your_username@remotehost.edu:'+server_path+''
+call(cmd, shell=True)
 
-# TODO: get the real path from newsroom computer, THIS IS A PLACEHOLDER
+# CONSTANTS
+# TODO: get the real path on the server newsroom computer, THIS IS A PLACEHOLDER
 PATHPREFIX = os.getcwd()+'/../Digital/' # PATH to folders
 NOPHOTO = 'xxnophotoxx'
 ARTICLECAP = 3 # TODO: remove after finished (for testing purposes)
@@ -146,9 +152,9 @@ for s in sections:
         workingdir = os.getcwd()
         os.chdir("/Applications/MAMP/htdocs/wordpress/wp-includes")
         if (writer in existing_writers):
-            cmd = 'wp user get --field=ID ' + writer_login
+            cmd = 'wp user get --ssh=automaticupload@phillipian.com --field=ID ' + writer_login
         else:
-            cmd = 'wp user create ' + writer_login + ' ' + writer_login + "@phillipian.net --display_name='"+writer+"' --porcelain" 
+            cmd = 'wp user create ' + writer_login + ' ' + writer_login + "@phillipian.net --ssh=automaticupload@phillipian.com --display_name='"+writer+"' --porcelain" 
             existing_writers.append(writer)
         writer_id = check_output(cmd, shell=True)
         os.chdir(workingdir)
@@ -168,7 +174,7 @@ for s in sections:
             img = imgprepare_python_2.compress_img(img, 30) 
 
             os.chdir("/Applications/MAMP/htdocs/wordpress/wp-includes")
-            cmd = 'wp media import '+img+' --porcelain | xargs -I {} wp post list --post__in={} --field=url --post_type=attachment'
+            cmd = 'wp media import '+img+' --ssh=automaticupload@phillipian.com --porcelain | xargs -I {} wp post list --post__in={} --field=url --ssh=automaticupload@phillipian.com --post_type=attachment'
             img_url = check_output(cmd, shell=True)
             img_url = helper.media_url_to_img_url(img_url,imgs[ind])
             print(img_url)
@@ -209,7 +215,7 @@ for s in sections:
         os.chdir("/Applications/MAMP/htdocs/wordpress/wp-includes")
         # TODO: make status draft for the real site
         # TODO: check if category needs quotes around it
-        cmd = "wp post create "+ workingdir +"/"+ article_txt + " --post_category="+ category_string +" --post_status=publish --post_title='"+ headline +"' --porcelain --post_author="+ writer_id + ' ' + more_options 
+        cmd = "wp post create "+ workingdir +"/"+ article_txt + " --ssh=automaticupload@phillipian.com --post_category="+ category_string +" --post_status=publish --post_title='"+ headline +"' --porcelain --post_author="+ writer_id + ' ' + more_options 
         post_id = check_output(cmd, shell=True)
 
         os.chdir(workingdir)
