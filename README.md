@@ -3,33 +3,25 @@ Project to automate uploading to phillipian.net
 ### Structure
 upload_script.py is the main script. It will be run from a docker container on a computer in the newsroom to more easily access the photo server.
 ### Usage
-- [ ] Fill out the budget and make sure there are no missing fields (mark articles to upload, add image directory or the no image string to the budget, caption, credit, etc)
-- [ ] Add BOF and EOF markers in article docs
-- [ ] python upload_script.py --url URL
-- [ ] Check ALL posts and publish them (the script will make them drafts)
-- [ ] Upload editorial manually?
-- [ ] Mark categories manually (featured, look of the week, sports season, sports teams), either in the budget ahead of time (we can integrate it into the script) or afterwards
-- [ ] Multilingual uploading?
+- Fill out the budget
+  - Use these fields: 'Headline'
+  - New fields: 'Link' (explicit link to Google doc), 'Upload?' ('yes'/'no'; whether article is ready for upload), 'Featured?' (whether article is featured), and 'ImageDir' (image directory within the digital folder with the actual color images used)
+  - Photo: 'Caption', 'Photographer' (for credit)
+- Add BOF and EOF markers in article doc
+- Run the script: python upload_script.py --url URL
+- Check and publsih all posts (the script will make them drafts)
+- Upload editorial and multilingual manually
 ### Jobs
 - [ ] Jeffrey - do author creation/assignment for all past articles, make sure that the current code for author functionality is compatible, add multiple author functionality
 - [ ] Alex - make a docker image with everything needed for easier running, try uploading on the **real** website (configging etc)
 - [ ] Sarah - end to end testing, generate complete budget
-### Logistical To Do
+### To Do
 - [ ] Change config file to access real website
-- [ ] Changes to the budget (ESSENTIAL)
-  - [ ] Use the headline column (or fill it in at the end)
-  - [ ] Add 'Link' column that stores explicit link to document with article on it
-  - [ ] Add 'Upload?' column that stores 'yes' or 'no'
-  - [ ] Add 'ImageDir' column that stores photo directory
-- [ ] Add standardized BOF and EOF file strings in each article's Google Document
-### Project Requirements
-- [ ] Probably **download budget** from the folder using drive CLI 
-- [ ] Extract **article text** from slug column (get from start to page break) also probably using drive CLI
-- [ ] Extract **writer, headline, and section** from budget
+### Project Workflow
+- [ ] Fetch **budget data** using drive CLI 
+- [ ] Extract **article text** from slug column using drive CLI
 - [ ] Post to the website us wp post create -(parameters with all the extract info) (see [here](https://developer.wordpress.org/cli/commands/post/create/))
-
-- [ ] Fetch images from file directory - _figure out permissions needed to connect to server_ (should be called name name inside the digital folder of the right week) (somehow - need to store them somewhere remote or maybe run from a newsroom computer but that would not be good)
-- [ ] RESIZE IMAGES IF NECESSARY!
+- [ ] Fetch and resize images from file directory - _figure out permissions needed to connect to server_ (should be called name name inside the digital folder of the right week) (somehow - need to store them somewhere remote or maybe run from a newsroom computer but that would not be good)
 - [ ] Add downloaded images to uploaded article using [this command](https://developer.wordpress.org/cli/commands/media/import/)
 ### Dependencies (not complete)
 - [ ] python, pandas, numpy, [pillow](https://github.com/python-pillow/Pillow) (obviously)
@@ -46,7 +38,6 @@ upload_script.py is the main script. It will be run from a docker container on a
 
 - Use uploaded post id to add photos
 ### To Add Media
-- We can either use the photo directory name or have photo host their images elsewhere online
 - This command attaches an image for post 1:
   - `wp media import <file or url> --title='Something' --post_id=1`
   - Set the `--featured-image` flag to set the post thumbnail displayed on the homepage _(default to setting the flag on the first image)_
