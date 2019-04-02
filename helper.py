@@ -19,3 +19,33 @@ def media_url_to_img_url(murl, filename):
         cur_month = '0'+cur_month
     iurl = '/'.join(murl_elements[:-1])+'/wp-content/uploads/'+str(datetime.datetime.now().year)+'/'+str(cur_month)+'/'+filename
     return iurl
+def replace_dash_w_colon(s):
+    r = ''
+    for i in range(len(s)):
+        if (s[i] == '-'):
+            r += s[i]
+        else:
+            r += ':'
+
+def prepend(article_txt_file, image_txt):
+    """prepend image_txt to the article_txt_file"""
+    src=open(article_txt_file,"r")
+    content=src.readlines()
+    content.insert(0,image_txt+'\n') 
+    src.close()
+    src=open(article_txt_file,"w")
+    src.writelines(content)
+    src.close()
+
+def check_content(list_of_strings):
+    """make sure all strings in list are non-empty"""
+    for any_string in list_of_strings:
+        if (any_string == '' or any_string == null):
+            print('error: missing field')
+
+def check_columns(s_df, cols):
+    """verify that all columns in 'cols' are columns of s_df"""
+    for col in cols:
+        if (not col in s_df.columns):
+            print('error: missing budget column "'+col+'", exiting program')
+            exit(0)

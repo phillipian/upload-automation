@@ -5,7 +5,7 @@ upload_script.py is the main script. It will be run from a docker container on a
 ### Usage
 - Fill out the budget
   - Use these fields: 'Headline'
-  - New fields: 'Link' (explicit link to Google doc), 'Upload?' ('yes'/'no'; whether article is ready for upload), 'Featured?' (whether article is featured), and 'ImageDir' (image directory within the digital folder with the actual color images used)
+  - New fields: 'Link' (explicit link to Google doc), 'Upload?' ('yes'/'no'; whether article is ready for upload), 'Featured?' (whether article is featured), and 'ImageDir' (image directory within the digital folder with the actual color images used ex: 'palfrey 2' if the path is palfrey and there are 2 photos)
   - Photo: 'Caption', 'Photographer' (for credit), 'ImageDir' (should match ImageDir from writing section)
 - Add BOF and EOF markers in article doc
 - Run the script: python upload_script.py --url URL
