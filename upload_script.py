@@ -45,6 +45,7 @@ special_photo_credits = ['Archives', 'Courtesy of ']
 category_slugs = {'Arts':'arts', 'Commentary':'commentary', 'Editorial':'editorial', 'Featured Posts':'featured', 'News':'news', 'Sports':'sports', 'The Eighth Page':'eighthpage'}
 # sections = ['Sports', 'News', 'Commentary', 'Arts', 'The Eighth Page'] # sections to upload
 sections = ['News']
+server_name = 'plipdigital@phillipian.net'
 
 # VARS
 fetch_caption = {'':''} # map photo_dir to caption
@@ -55,7 +56,7 @@ for line in writer_file:
     existing_writers.append(line[:-1]) # cut off the new line
 
 def copy_photos_to_server():
-    cmd = 'scp -r "'+local_path+'" auto_upload@craig.dreamhost.com:'+server_path+''
+    cmd = 'scp -r "'+local_path+'" '+server_name+":"+server_path+''
     call(cmd, shell=True)
 
 def fetch_photos(sheet_url):
@@ -110,10 +111,10 @@ def fetch_writer_id(writer_str):
     os.chdir("/Applications/MAMP/htdocs/wordpress/wp-includes") # TODO: fix
     
     try:
-        cmd = 'wp user get --field=ID ' + writer_login
+        cmd = 'wp user get --ssh='+server_name+' --field=ID ' + writer_login
         writer_id = check_output(cmd, shell=True)
     except:
-        cmd = 'wp user create ' + writer_login + ' ' + writer_login + "@craig.dreamhost.com --display_name='"+writer+"' --porcelain" 
+        cmd = 'wp user create ' + writer_login + ' ' + writer_login + "@phillipian.net --ssh="+server_name+" --display_name='"+writer+"' --porcelain"
         writer_id = check_output(cmd, shell=True)
     
     """
@@ -194,7 +195,7 @@ for s in sections:
 
                 # upload the image to the media library
                 os.chdir("/Applications/MAMP/htdocs/wordpress/wp-includes")
-                cmd = 'wp media import '+img+' --porcelain | xargs -I {} wp post list --post__in={} --field=url --post_type=attachment'
+                cmd = 'wp media import '+img+' --ssh='+server_name+' --porcelain | xargs -I {} wp post list --post__in={} --field=url --ssh='+server_name+' --post_type=attachment'
                 # cmd = 'wp media import '+img+' --ssh=automatic_upload@craig.dreamhost.com --porcelain | xargs -I {} wp post list --post__in={} --field=url --ssh=automatic_upload@craig.dreamhost.com --post_type=attachment'
                 img_url = check_output(cmd, shell=True)
                 img_url = helper.media_url_to_img_url(img_url,imgs[ind])
@@ -224,9 +225,9 @@ for s in sections:
 
         # POST WITH GIVEN PARAMETERS
         os.chdir("/Applications/MAMP/htdocs/wordpress/wp-includes") # cd to wordpress (test code only)
-        # TODO: check if category needs quotes around it
-        # cmd = "wp post create "+ workingdir +"/"+ article_txt + " --ssh=automaticupload@craig.dreamhost.com --post_category="+ category_string +" --post_status=draft --post_title='"+ headline +"' --porcelain --post_author="+ writer_id + ' ' + more_options 
-        cmd = "wp post create "+ workingdir +"/"+ article_txt + " --post_category="+ category_string +" --post_status=publish --post_title='"+ headline +"' --porcelain --post_author="+ writer_id + ' ' + more_options 
+        # cmd = "wp post create "+ workingdir +"/"+ article_txt + " --post_category="+ category_string +" --post_status=publish --post_title='"+ headline +"' --porcelain --post_author="+ writer_id + ' ' + more_options 
+        cmd = "wp post create "+ workingdir +"/"+ article_txt + " --ssh="+server_name+" --post_category="+ category_string +" --post_status=publish --post_title='"+ headline +"' --porcelain --post_author="+ writer_id + ' ' + more_options 
+
         post_id = check_output(cmd, shell=True)
 
         os.chdir(workingdir)
