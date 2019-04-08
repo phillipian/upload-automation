@@ -12,7 +12,7 @@ upload_script.py is the main script. It will be run from a docker container on a
 - Check and publsih all posts (the script will make them drafts)
 - Upload editorial and multilingual manually
 ### Jobs
-- [ ] Jeffrey - do author creation/assignment for all past articles, make sure that the current code for author functionality is compatible, add multiple author functionality
+- [ ] Jeffrey - create/assign authors for all past articles (preserving compatability for current mechanisms), add multiple author functionality, create compatability with the old phillipian.net with custom field plug-in for authors.
 - [ ] Alex - make a docker image with everything needed for easier running, try uploading on the **real** website (configging etc)
 - [ ] Sarah - end to end testing, generate complete budget
 ### To Do
