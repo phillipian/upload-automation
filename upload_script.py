@@ -37,7 +37,6 @@ server_path = '/wp-photos/'+paper_week+'/'
 ARTICLECAP = 2
 workingdir = os.getcwd()
 
-
 # PATHPREFIX = server_path # PATH to folders # TODO: add this back
 PATHPREFIX = '/Users/sarahchen/Documents/plip-upload/Digital/' # PATH to folders 
 NOPHOTO = 'xxnophotoxx'
@@ -45,7 +44,7 @@ special_photo_credits = ['Archives', 'Courtesy of ']
 category_slugs = {'Arts':'arts', 'Commentary':'commentary', 'Editorial':'editorial', 'Featured Posts':'featured', 'News':'news', 'Sports':'sports', 'The Eighth Page':'eighthpage'}
 # sections = ['Sports', 'News', 'Commentary', 'Arts', 'The Eighth Page'] # sections to upload
 sections = ['News']
-server_name = 'plipdigital@phillipian.net'
+server_name = 'plipdigital@phillipian.net/home/plipdigital/phillipian.net' # TODO: I'm not sure if this works
 
 # VARS
 fetch_caption = {'':''} # map photo_dir to caption
@@ -182,7 +181,7 @@ for s in sections:
         # There can be multiple img_names in this field
         if (NOPHOTO not in img_name and img_name != ''):
             for name in img_name.split(' '):
-                img_dir = PATHPREFIX + s + '/' + name
+                img_dir = PATHPREFIX + s + '/' + name # TODO: change this to work on the server
                 imgs = os.listdir(img_dir) 
                 ind = 0
             
