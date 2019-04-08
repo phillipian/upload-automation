@@ -1,3 +1,4 @@
+import datetime
 def remove_spaces_commas(s_in):
     """Remove spaces and commas from a string"""
     s_out = ''
@@ -40,7 +41,7 @@ def prepend(article_txt_file, image_txt):
 def check_content(list_of_strings):
     """make sure all strings in list are non-empty"""
     for any_string in list_of_strings:
-        if (any_string == '' or any_string == null):
+        if (any_string == '' or any_string == None):
             print('error: missing field')
 
 def check_columns(s_df, cols):
