@@ -15,8 +15,8 @@ upload_script.py is the main script. It will be run from a docker container on a
 - Check and publsih all posts (the script will make them drafts)
 - Upload editorial and multilingual manually
 
-- Docker: docker cp /Volumes/Phillipian/Phillipian/Spring-2019/4-12/digital/ <container>:/imgs
-  - docker exec -it <container> /bin/bash
+- Docker: docker cp /Volumes/Phillipian/Phillipian/Spring-2019/4-12/digital/ container:/imgs
+  - docker exec -it container /bin/bash
   - To check status, use Kitematic (if you are Alex) and use docker ps -a (if you are not)
 ### Jobs
 - [ ] Jeffrey - create/assign authors for all past articles (preserving compatability for current mechanisms), add multiple author functionality, create compatability with the old phillipian.net with custom field plug-in for authors.
