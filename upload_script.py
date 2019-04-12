@@ -241,7 +241,7 @@ for s in sections:
                 # TODO: catch error if name is not in keys
                 if name not in fetch_caption.keys() or name not in fetch_credit.keys():
                     print('error: imageDir not found in photo budget')
-                else if name not in illus_credit.keys():
+                elif name not in illus_credit.keys():
                     print('error: imageDir not found in illustration budget')
                 image_txt = imgprepare_python_2.img_for_post_content(img_url, fetch_caption[name], fetch_credit[name]) 
                 helper.prepend(article_txt, image_txt)
