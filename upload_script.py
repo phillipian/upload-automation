@@ -38,7 +38,7 @@ if (paper_week == None):
     exit(0)
 
 # CONSTANTS
-local_path = '/pleasework2' # path to photos in the docker image
+local_path = '/imgs' # path to photos in the docker image
 server_path = '/wp-photos/'+paper_week+'/'
 ARTICLECAP = 3
 workingdir = os.getcwd()

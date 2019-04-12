@@ -49,8 +49,7 @@ def get_google_doc(doc_url):
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file(
-                '/pleasework2/credentials.json', SCOPES)
+            flow = InstalledAppFlow.from_client_secrets_file('/imgs/credentials.json', SCOPES)
             creds = flow.run_local_server()
         # Save the credentials for the next run
         with open('token.pickle', 'wb') as token:
@@ -85,4 +84,4 @@ def get_google_doc(doc_url):
     return filter_article
 
 if __name__ == '__main__':
-    main()
+    get_google_doc('https://docs.google.com/document/d/15GuvkChMq_a-3Dbx7c8zCX1zzBpXQ2DD2Tnk6V3jDL0/edit')
