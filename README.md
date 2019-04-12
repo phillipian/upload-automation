@@ -18,6 +18,7 @@ upload_script.py is the main script. It will be run from a docker container on a
 - Docker: 
   - docker create -it --name container upload_container
   - docker cp /Volumes/Phillipian/Phillipian/Spring-2019/4-12/digital/ container:/imgs
+  - docker start container
   - docker exec -it container /bin/bash
   - To check status, use Kitematic (if you are Alex) and use docker ps -a (if you are not)
 ### Jobs
