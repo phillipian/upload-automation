@@ -17,7 +17,7 @@ upload_script.py is the main script. It will be run from a docker container on a
 ### Jobs
 - [ ] Jeffrey - create/assign authors for all past articles (preserving compatability for current mechanisms), add multiple author functionality, create compatability with the old phillipian.net with custom field plug-in for authors.
 - [ ] Alex - make a docker image with everything needed for easier running, try uploading on the **real** website (configging etc)
-- [ ] Sarah - end to end testing, generate complete budget, output message for spreads saying to upload photos manually, output message for missing EOF and BOF strings / if not formatted right, add quotes around cd
+- [ ] Sarah - end to end testing, generate complete budget, output message for spreads saying to upload photos manually, output message for missing EOF and BOF strings / if not formatted right, add quotes around cd, ask to standardize format for photographer
 ### To Do
 - [ ] Change config file to access real website
 ### Project Workflow
