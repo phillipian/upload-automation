@@ -15,7 +15,9 @@ upload_script.py is the main script. It will be run from a docker container on a
 - Check and publsih all posts (the script will make them drafts)
 - Upload editorial and multilingual manually
 
-- Docker: docker cp /Volumes/Phillipian/Phillipian/Spring-2019/4-12/digital/ container:/imgs
+- Docker: 
+  - docker create -it --name container upload_container
+  - docker cp /Volumes/Phillipian/Phillipian/Spring-2019/4-12/digital/ container:/imgs
   - docker exec -it container /bin/bash
   - To check status, use Kitematic (if you are Alex) and use docker ps -a (if you are not)
 ### Jobs
