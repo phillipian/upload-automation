@@ -39,7 +39,7 @@ workingdir = os.getcwd()
 
 # PATHPREFIX = server_path # PATH to folders # TODO: add this back
 PATHPREFIX = '/Users/sarahchen/Documents/plip-upload/Digital/' # PATH to folders 
-NOPHOTO = 'xxnophotoxx'
+NOPHOTO = 'nophoto'
 special_photo_credits = ['Archives', 'Courtesy of ']
 category_slugs = {'Arts':'arts', 'Commentary':'commentary', 'Editorial':'editorial', 'Featured Posts':'featured', 'News':'news', 'Sports':'sports', 'The Eighth Page':'eighthpage'}
 # sections = ['Sports', 'News', 'Commentary', 'Arts', 'The Eighth Page'] # sections to upload
