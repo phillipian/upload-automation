@@ -178,13 +178,13 @@ for s in sections:
     print(s)
     # fetch and verify sheet dataframe content
     section_df = fetch_sheet.get_google_sheet(sheet_url, s) 
-    helper.check_columns(section_df, ['Link','ImageDir','Headline','Writer','Featured?','Upload?']) 
+    helper.check_columns(section_df, ['Link','ImageDir','Headline','Writer','Featured?','Upload']) 
 
     article_urls = section_df['Link'].values
     headlines = section_df['Headline'].values
     img_names = section_df['ImageDir'].values
     writers = section_df['Writer'].values
-    statuses = section_df['Upload?'].values
+    statuses = section_df['Upload'].values
     featured_posts = section_df['Featured?'].values
 
     if (not (len(article_urls) == len(img_names) and len(headlines) == len(img_names) and len(writers) == len(img_names) and len(statuses) == len(img_names))):
