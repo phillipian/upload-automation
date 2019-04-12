@@ -4,6 +4,7 @@ Project to automate uploading to phillipian.net
 upload_script.py is the main script. It will be run from a docker container on a computer in the newsroom to more easily access the photo server.
 ### Usage
 - Article text will appear as it does in the Google Doc
+- Things have to be standardized, like folder names on the path to image dirs
 - Fill out the budget
   - Use these fields: 'Headline'
   - New fields: 'Link' (explicit link to Google doc), 'Upload?' ('yes'/'no'; whether article is ready for upload), 'Featured?' (whether article is featured), and 'ImageDir' (image directory within the digital folder)
