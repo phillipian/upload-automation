@@ -101,7 +101,7 @@ def fetch_photos(sheet_url):
 
 def fetch_illustrations(sheet_url):
     illus_df = fetch_sheet.get_google_sheet(sheet_url, 'Illustrations') #fetch illustration sheet
-    if('ImageDir' in illus_df.columns and 'Illustrator' in illus.df.columns):
+    if('ImageDir' in illus_df.columns and 'Illustrator' in illus_df.columns):
         paths = illus_df['ImageDir'].values
         credits = illus_df['Illustrator'].values
         if(not(len(paths) == len(captions) and len(captions) == len(credits))):
