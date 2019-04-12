@@ -1,4 +1,11 @@
+"""
+Automatically upload Phillipian articles
+Run weekly from a newsroom computer within the docker image
+On newsroom computer, -v with drobo folder (ex: '/Volumes/Phillipian/Phillipian/Spring 2019/4:12/digital')
+
+"""
 # TODO: support multiple author functionality
+# TODO: support multiple photos
 import os
 from subprocess import call
 from subprocess import check_output
@@ -12,7 +19,6 @@ import helper
 import imgprepare_python_2
 import argparse
 import datetime
-
 
 # PARSE COMMAND
 parser = argparse.ArgumentParser(description='Upload articles from the budget spreadsheet.')
@@ -31,7 +37,7 @@ if (paper_week == None):
     exit(0)
 
 # CONSTANTS
-local_path = '/Volumes/Phillipian/Phillipian/Spring 2019/'+str(helper.replace_dash_w_colon(paper_week))+'/digital'
+local_path = '/Downloads' # path to photos in the docker image
 server_path = '/wp-photos/'+paper_week+'/'
 ARTICLECAP = 2
 workingdir = os.getcwd()
