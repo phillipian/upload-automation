@@ -21,6 +21,10 @@ def write_authors():
        cmd = 'wp post get ' + post_id + ' --field=post_author'
        author_name = check_output(cmd, shell=True)
        cmd = 'wp post meta update ' + post_id + ' Custom Post Author ' + author_name
-        
+def write_authors_from_list(posts):
+   for post_id in posts:
+       cmd = 'wp post get ' + post_id + ' --field=post_author'
+       author_name = check_output(cmd, shell=True)
+       cmd = 'wp post meta update ' + post_id + ' Custom Post Author ' + author_name
  
 write_authors()

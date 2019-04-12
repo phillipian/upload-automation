@@ -19,6 +19,7 @@ import helper
 import imgprepare_python_2
 import argparse
 import datetime
+import custom_author
 
 # PARSE COMMAND
 parser = argparse.ArgumentParser(description='Upload articles from the budget spreadsheet.')
@@ -37,7 +38,7 @@ if (paper_week == None):
     exit(0)
 
 # CONSTANTS
-local_path = '/Downloads' # path to photos in the docker image
+local_path = '/pleasework2' # path to photos in the docker image
 server_path = '/wp-photos/'+paper_week+'/'
 ARTICLECAP = 2
 workingdir = os.getcwd()
@@ -52,16 +53,17 @@ sections = ['News']
 server_name = 'plipdigital@phillipian.net/home/plipdigital/phillipian.net' # TODO: I'm not sure if this works
 
 # VARS
+all_post_ids = []
 fetch_caption = {'':''} # map photo_dir to caption
 fetch_credit = {'':''} # map photo_dir to credit
 illus_credit = {'':''} # map illus_dir to credit
-existing_writers = [] # import from running list # TODO: get this from wp
-writer_file = open('existing_users.txt','r')
-for line in writer_file:
-    existing_writers.append(line[:-1]) # cut off the new line
+# existing_writers = [] # import from running list # TODO: get this from wp
+# writer_file = open('existing_users.txt','r')
+# for line in writer_file:
+#     existing_writers.append(line[:-1]) # cut off the new line
 
 def copy_photos_to_server():
-    cmd = 'scp -r "'+local_path+'" '+server_name+":"+server_path+''
+    cmd = 'scp -r "'+local_path+' plipdigital@phillipian.net:'+server_path
     call(cmd, shell=True)
 
 def fetch_photos(sheet_url):
@@ -162,7 +164,7 @@ def fetch_writer_id(writer_str):
 
 
 # COPY PHOTOS OVER TO SERVER
-# copy_photos_to_server() # TODO: add this back
+copy_photos_to_server()
 
 # FETCH PHOTOS
 fetch_photos(sheet_url)
@@ -259,14 +261,16 @@ for s in sections:
             category_string += ',featured'
 
         # POST WITH GIVEN PARAMETERS
-        os.chdir("/Applications/MAMP/htdocs/wordpress/wp-includes") # cd to wordpress (test code only)
+        # os.chdir("/Applications/MAMP/htdocs/wordpress/wp-includes") # cd to wordpress (test code only)
         # cmd = "wp post create "+ workingdir +"/"+ article_txt + " --post_category="+ category_string +" --post_status=publish --post_title='"+ headline +"' --porcelain --post_author="+ writer_id + ' ' + more_options 
         cmd = "wp post create "+ workingdir +"/"+ article_txt + " --ssh="+server_name+" --post_category="+ category_string +" --post_status=publish --post_title='"+ headline +"' --porcelain --post_author="+ writer_id + ' ' + more_options 
-
         post_id = check_output(cmd, shell=True)
+        all_post_ids.append(post_id)
 
         os.chdir(workingdir)
 
-writer_file = open('existing_users.txt','w')
-for writer in existing_writers:
-    writer_file.write(writer+'\n') # cut off the new line
+custom_author.write_authors_from_list(all_post_ids)
+
+# writer_file = open('existing_users.txt','w')
+# for writer in existing_writers:
+#     writer_file.write(writer+'\n') # cut off the new line
