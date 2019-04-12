@@ -1,4 +1,3 @@
-
 # TODO: support multiple author functionality
 import os
 from subprocess import call
@@ -49,6 +48,7 @@ server_name = 'plipdigital@phillipian.net/home/plipdigital/phillipian.net' # TOD
 # VARS
 fetch_caption = {'':''} # map photo_dir to caption
 fetch_credit = {'':''} # map photo_dir to credit
+illus_credit = {'':''} # map illus_dir to credit
 existing_writers = [] # import from running list # TODO: get this from wp
 writer_file = open('existing_users.txt','r')
 for line in writer_file:
@@ -90,6 +90,31 @@ def fetch_photos(sheet_url):
         print(fetch_credit)
     else:
         print('error: missing col')
+
+def fetch_illustrations(sheet_url):
+    illus_df = fetch_sheet.get_google_sheet(sheet_url, 'Illustrations') #fetch illustration sheet
+    if('ImageDir' in illus_df.columns and 'Illustrator' in illus.df.columns):
+        paths = illus_df['ImageDir'].values
+        credits = illus_df['Illustrator'].values
+        if(not(len(paths) == len(captions) and len(captions) == len(credits))):
+            print('error: illustration budget columns not the same length')
+            exit(0)
+
+        # fill dictionaries
+        for i in range(len(paths)):
+            if(credits[i] == ''):
+                print('missing credit')
+                continue
+       
+            credit = ''
+            if (credit == ''):
+                print("c: credits[i])
+                credit = credits[i][0] + '.' + credits[i].split(' ')[1]+'/The Phillipian'
+            illus_credit[paths[i]] = credit
+        print(illus_credit)
+    else:
+        print('error: missing col')
+
 def assign_categories(cur_cat_str, article_txt, headline):
     """produce the category string"""
     cat_string = cur_cat_str
@@ -136,6 +161,10 @@ def fetch_writer_id(writer_str):
 # FETCH PHOTOS
 fetch_photos(sheet_url)
 print(fetch_caption)
+# FETCH ILLUSTRATIONS
+fetch_illustrations(sheet_url)
+print(illus_credit)
+
 # FETCH ARTICLES
 for s in sections:
     print(s)
@@ -180,7 +209,7 @@ for s in sections:
         # fetch image(s)
         # There can be multiple img_names in this field
         if (NOPHOTO not in img_name and img_name != ''):
-            for name in img_name.split(' '):
+            for name in img_name:
                 img_dir = PATHPREFIX + s + '/' + name # TODO: change this to work on the server
                 imgs = os.listdir(img_dir) 
                 ind = 0
@@ -204,10 +233,11 @@ for s in sections:
                 # TODO: catch error if name is not in keys
                 if name not in fetch_caption.keys() or name not in fetch_credit.keys():
                     print('error: imageDir not found in photo budget')
-
+                else if name not in illus_credit.keys():
+                    print('error: imageDir not found in illustration budget')
                 image_txt = imgprepare_python_2.img_for_post_content(img_url, fetch_caption[name], fetch_credit[name]) 
                 helper.prepend(article_txt, image_txt)
-        
+               
         # fix headlines for each section
         if (category_slug == 'eighthpage'):
             headline = 'Phillipian Satire: ' + headline
