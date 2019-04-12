@@ -7,7 +7,7 @@ upload_script.py is the main script. It will be run from a docker container on a
 - Things have to be standardized, like folder names on the path to image dirs, and all photos should be in the digital directory
 - Can we put pulled photos on the budget too
 - Fill out the budget
-  - Use these fields: 'Headline'
+  - Use these fields: 'Headline' (for sports, make sure the team name is somewhere in there)
   - New fields: 'Link' (explicit link to Google doc), 'Upload?' ('yes'/'no'; whether article is ready for upload), 'Featured?' (whether article is featured), and 'ImageDir' (image directory within the digital folder)
   - Photo: 'Caption', 'Photographer' (for credit), 'ImageDir' (should match ImageDir from writing section)
 - Add BOF and EOF markers in article doc (‘BOFCXLII’, ‘EOFCXLII’) (the doc must be the final version of the article)
