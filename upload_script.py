@@ -40,7 +40,7 @@ if (paper_week == None):
 # CONSTANTS
 local_path = '/pleasework2' # path to photos in the docker image
 server_path = '/wp-photos/'+paper_week+'/'
-ARTICLECAP = 2
+ARTICLECAP = 3
 workingdir = os.getcwd()
 
 # PATHPREFIX = server_path # PATH to folders # TODO: add this back
@@ -116,7 +116,7 @@ def fetch_illustrations(sheet_url):
        
             credit = ''
             if (credit == ''):
-                print("c: credits[i])
+                print("c: "+credits[i])
                 credit = credits[i][0] + '.' + credits[i].split(' ')[1]+'/The Phillipian'
             illus_credit[paths[i]] = credit
         print(illus_credit)
