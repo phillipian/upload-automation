@@ -23,9 +23,9 @@ New plan: On the local machine, the script will compress images, fetch filtered 
   - docker exec -it container /bin/bash
   - To check status, use Kitematic (if you are Alex) and use docker ps -a (if you are not)
 ### Jobs
-- [ ] Jeffrey - create/assign authors for all past articles (preserving compatability for current mechanisms), add multiple author functionality, create compatability with the old phillipian.net with custom field plug-in for authors.
-- [ ] Alex - make a docker image with everything needed for easier running, try uploading on the **real** website (configging etc)
-- [ ] Sarah - end to end testing, generate complete budget, output message for spreads saying to upload photos manually, output message for missing EOF and BOF strings / if not formatted right, add quotes around cd, ask to standardize format for photographer
+- [ ] Jeffrey - add multiple author functionality; create/assign authors for all past articles (just run the current try/except over all of them); print nice status updates/errors/warnings (ex: if the BOF or EOF string is missing)
+- [ ] Alex - try to make the docker image work
+- [ ] Sarah - make sure next week's budget is right; restructure script (partition into local_upload.py and remote_upload.py)
 ### Project Workflow
 - [ ] Fetch **budget data** using drive CLI 
 - [ ] Extract **article text** from slug column using drive CLI
