@@ -2,8 +2,7 @@
 Project to automate uploading to phillipian.net
 ### Running
 Run upload_script.py from a local machine with access to the week's photos (laptop or newsroom computer with docker).
-
-
+New plan: On the local machine, the script will compress images, fetch filtered articles, and prepend image info/author name to the beginning of each article. Those files will be scp-ed to the server, and the rest of the script will read the info from the article text file and call the necessary wordpress commands.
 ### Usage
 - Article Google Docs
   - Article text will appear as it does in the doc, so please place the final article back on the doc if changes are made
@@ -27,8 +26,6 @@ Run upload_script.py from a local machine with access to the week's photos (lapt
 - [ ] Jeffrey - create/assign authors for all past articles (preserving compatability for current mechanisms), add multiple author functionality, create compatability with the old phillipian.net with custom field plug-in for authors.
 - [ ] Alex - make a docker image with everything needed for easier running, try uploading on the **real** website (configging etc)
 - [ ] Sarah - end to end testing, generate complete budget, output message for spreads saying to upload photos manually, output message for missing EOF and BOF strings / if not formatted right, add quotes around cd, ask to standardize format for photographer
-### To Do
-- [ ] Change config file to access real website
 ### Project Workflow
 - [ ] Fetch **budget data** using drive CLI 
 - [ ] Extract **article text** from slug column using drive CLI
