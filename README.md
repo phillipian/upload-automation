@@ -1,18 +1,20 @@
 # Phillipian Article Upload Automation
 Project to automate uploading to phillipian.net
-### Structure
-upload_script.py is the main script. It will be run from a docker container on a computer in the newsroom to more easily access the photo server.
+### Running
+Run upload_script.py from a local machine with access to the week's photos (laptop or newsroom computer with docker).
+
+
 ### Usage
-- Article text will appear as it does in the Google Doc
-- Things have to be standardized, like folder names on the path to image dirs, and all photos should be in the digital directory
-- Can we put pulled photos on the budget too
-- Fill out the budget
+- Article Google Docs
+  - Article text will appear as it does in the doc, so please place the final article back on the doc if changes are made
+  - Add BOF and EOF markers in article doc (‘BOFCXLII’, ‘EOFCXLII’) (the doc must be the final version of the article)
+- All photos/illustrations should be in the digital directory. Also, folder names on the path have to be standardized, sorry!
+- Filling out the budget
   - Use these fields: 'Headline' (for sports, make sure the team name is somewhere in there)
   - New fields: 'Link' (explicit link to Google doc), 'Upload?' ('yes'/'no'; whether article is ready for upload), 'Featured?' (whether article is featured), and 'ImageDir' (image directory within the digital folder)
   - Photo: 'Caption', 'Photographer' (for credit), 'ImageDir' (should match ImageDir from writing section)
-- Add BOF and EOF markers in article doc (‘BOFCXLII’, ‘EOFCXLII’) (the doc must be the final version of the article)
-- Run the script: python upload_script.py --url URL
-- Check and publsih all posts (the script will make them drafts)
+  - All photos/illustrations should also be on the budget (including ones that are pulled), with their photographer information so they can be properly fetched, captioned, and credited
+- Check and publish all posts (the script will make them drafts)
 - Upload editorial and multilingual manually
 
 - Docker: 
