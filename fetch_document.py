@@ -50,7 +50,7 @@ def get_google_doc(doc_url):
             creds.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file('/imgs/credentials.json', SCOPES)
-            creds = flow.run_local_server('host.docker.internal')
+            creds = flow.run_local_server()
         # Save the credentials for the next run
         with open('token.pickle', 'wb') as token:
             pickle.dump(creds, token)
