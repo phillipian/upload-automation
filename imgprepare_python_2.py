@@ -25,11 +25,11 @@ def compress_img(fp, jpeg_quality):
     """
     if (jpeg_quality == None):
         jpeg_quality = 90
-    img = Image.open(fp).copy()
+    img = Image.open(str(fp)).copy()
 
     maxsize = (1280, 1280)
     img.thumbnail(maxsize, Image.ANTIALIAS)
-    new_fp = os.path.dirname(fp) + '/Compressed_' + os.path.basename(fp)
+    new_fp = os.path.dirname(fp) + '/0----Compressed_' + os.path.basename(fp)
 
     img.save(new_fp, "JPEG", quality=jpeg_quality, optimize=True)
     return new_fp

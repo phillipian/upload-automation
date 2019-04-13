@@ -16,15 +16,15 @@ sports_teams_keywords = ['Boys Cross Country', 'Boys Soccer', 'Boys Water Polo',
 # the slug is the sanitized version of the string 
 
 # map team slugs to season slugs
-sports_seasons_slugs = {'boys-soccer': 'fall-sport', 'football': 'fall-sport', 'girls-volleyball': 'fall-sport', \
-    'girls-cross-country': 'fall-sport', 'boys-cross-country': 'fall-sport', 'field-hockey': 'fall-sport', \
-    'girls-soccer': 'fall-sport', 'boys-water-polo': 'fall-sport', 'girls-tennis': 'spring-sport', \
-    'cycling': 'spring-sport', 'spring-track-field': 'spring-sport', 'boys-lacrosse': 'spring-sport', \
-    'girls-lacrosse': 'spring-sport', 'boys-tennis': 'spring-sport', 'baseball': 'spring-sport', \
-    'ultimate': 'spring-sport', 'softball': 'spring-sport', 'boys-crew': 'spring-sport', 'golf': 'spring-sport', \
-    'girls-water-polo': 'spring-sport', 'boys-volleyball': 'spring-sport', 'girls-crew': 'spring-sport', \
-    'winter-track-field': 'winter-sport', 'girls-hockey': 'winter-sport', 'girls-swimming': 'winter-sport', \
-    'wrestling': 'winter-sport', 'girls-squash': 'winter-sport', 'nordic': 'winter-sport'}
+sports_seasons_slugs = {'boys-soccer': 'fall-sports', 'football': 'fall-sports', 'girls-volleyball': 'fall-sports', \
+    'girls-cross-country': 'fall-sports', 'boys-cross-country': 'fall-sports', 'field-hockey': 'fall-sports', \
+    'girls-soccer': 'fall-sports', 'boys-water-polo': 'fall-sports', 'girls-tennis': 'spring-sports', \
+    'cycling': 'spring-sports', 'spring-track-field': 'spring-sports', 'boys-lacrosse': 'spring-sports', \
+    'girls-lacrosse': 'spring-sports', 'boys-tennis': 'spring-sports', 'baseball': 'spring-sports', \
+    'ultimate': 'spring-sports', 'softball': 'spring-sports', 'boys-crew': 'spring-sports', 'golf': 'spring-sports', \
+    'girls-water-polo': 'spring-sports', 'boys-volleyball': 'spring-sports', 'girls-crew': 'spring-sports', \
+    'winter-track-field': 'winter-sports', 'girls-hockey': 'winter-sports', 'girls-swimming': 'winter-sports', \
+    'wrestling': 'winter-sports', 'girls-squash': 'winter-sports', 'nordic': 'winter-sports'}
 
 def find_sports_subcategories(headline, article_text):
     categ_string = ''
@@ -36,14 +36,14 @@ def find_sports_subcategories(headline, article_text):
         if (keyword in headline):
             team_found = True
             team_slug = category_sanitize(keyword)
-            categ_string += slug +','+ sports_seasons_slugs(slug) # append slug
+            categ_string += team_slug +','+ sports_seasons_slugs[team_slug] # append slug
         if (team_found):
             break
         # search the article_text
         if (keyword in article_text):
             team_found = True
             team_slug = category_sanitize(keyword)
-            categ_string += slug +','+ sports_seasons_slugs(slug) # append slug
+            categ_string += team_slug +','+ sports_seasons_slugs[team_slug] # append slug
     if (categ_string == ''):
         print('error: no sports subcategory found, ASSIGN MANUALLY!')
     return categ_string

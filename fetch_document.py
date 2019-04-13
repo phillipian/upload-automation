@@ -49,7 +49,7 @@ def get_google_doc(doc_url):
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file('/imgs/credentials.json', SCOPES)
+            flow = InstalledAppFlow.from_client_secrets_file('../credentials.json', SCOPES)
             creds = flow.run_local_server()
         # Save the credentials for the next run
         with open('token.pickle', 'wb') as token:
@@ -58,7 +58,7 @@ def get_google_doc(doc_url):
     service = build('drive', 'v3', credentials=creds)
 
     file_id = get_file_id_from_url(doc_url)
-    print(file_id)
+    # print(file_id)
     mimeType = 'text/plain'
 
     # TODO: make this fit whatever we decide
@@ -73,7 +73,7 @@ def get_google_doc(doc_url):
     done = False
     while done is False:
         status, done = downloader.next_chunk()
-        print("Download %d" % int(status.progress() * 100))
+        # print("Download %d" % int(status.progress() * 100))
     # print(fh.getvalue())
     content = fh.getvalue()
     with open(raw_article, 'wb') as f: 

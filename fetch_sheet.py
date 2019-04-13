@@ -12,7 +12,7 @@ def get_google_sheet(spreadsheet_url, section):
     """ Retrieve sheet data using OAuth credentials and Google Python API. """
     SCOPES = ['https://spreadsheets.google.com/feeds',
          'https://www.googleapis.com/auth/drive']
-    SERVICE_ACCT_FILE = '/imgs/client_secret.json'
+    SERVICE_ACCT_FILE = '../client_secret.json'
 
     credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCT_FILE, scopes=SCOPES)
     client = gspread.Client(auth=credentials)

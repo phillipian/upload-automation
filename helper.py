@@ -1,4 +1,7 @@
 import datetime
+import re
+
+
 def remove_spaces_commas(s_in):
     """Remove spaces and commas from a string"""
     s_out = ''
@@ -13,7 +16,7 @@ def media_url_to_img_url(murl, filename):
     if ('' == murl_elements[-1] or '\n' == murl_elements[-1]):
         del murl_elements[-1]
     
-    print(murl_elements)
+    # print(murl_elements)
     
     cur_month = str(datetime.datetime.now().month)
     if (len(cur_month) < 2):
@@ -32,8 +35,13 @@ def prepend(article_txt_file, image_txt):
     """prepend image_txt to the article_txt_file"""
     src=open(article_txt_file,"r")
     content=src.readlines()
+    # print(content)
+    # print()
     content.insert(0,image_txt+'\n') 
     src.close()
+    for i in range(len(content)):
+        content[i] = re.sub(u'\u2019',"'",content[i])
+        content[i] = str(content[i])
     src=open(article_txt_file,"w")
     src.writelines(content)
     src.close()
