@@ -30,7 +30,17 @@ def replace_dash_w_colon(s):
             r += s[i]
         else:
             r += ':'
-
+def deprepend(article_txt_file):
+    """remove and return first line from article_txt_file"""
+    src=open(article_txt_file,"r")
+    content=src.readlines()
+    src.close()
+    first_line = content[0]
+    del content[0]
+    src=open(article_txt_file,"w")
+    src.writelines(content)
+    src.close()
+    return first_line
 def prepend(article_txt_file, image_txt):
     """prepend image_txt to the article_txt_file"""
     src=open(article_txt_file,"r")

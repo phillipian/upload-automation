@@ -1,5 +1,6 @@
 """
-This has an archived copy, so you can edit/delete things as needed here
+DO NOT EDIT
+Archived copy of script (now partitioned)
 Automatically upload Phillipian articles
 Drobo folder (ex: '/Volumes/Phillipian/Phillipian/Spring 2019/4:12/digital')
 """
