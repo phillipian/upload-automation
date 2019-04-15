@@ -190,11 +190,11 @@ def fetch_writer_id(writer_str):
     return writer_id
 
 # FETCH PHOTOS (and compress)
-fetch_photos(sheet_url, True)
+fetch_photos(sheet_url, False)
 # FETCH ILLUSTRATIONS (and compress)
-fetch_illustrations(sheet_url, True)
+fetch_illustrations(sheet_url, False)
 # COPY PHOTOS OVER TO SERVER
-copy_photos_to_server() # TODO: uncomment this
+# copy_photos_to_server() # TODO: uncomment this
 
 # FETCH ARTICLES
 for s in sections:
@@ -220,7 +220,7 @@ for s in sections:
         if (statuses[i].lower() != 'yes'):
             print('  skipped article: '+headlines[i])
             continue # only upload finished articles -- skip all that are not marked
-        
+        print(os.getcwd())
         # load and check fields
         article_url = article_urls[i]
         headline = headlines[i]
