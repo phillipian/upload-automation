@@ -29,8 +29,8 @@ New plan: On the local machine, the script will compress images, fetch filtered 
 ### Project Workflow
 - [ ] Fetch **budget data** using drive CLI 
 - [ ] Extract **article text** from slug column using drive CLI
-- [ ] Post to the website us wp post create -(parameters with all the extract info) (see [here](https://developer.wordpress.org/cli/commands/post/create/))
-- [ ] Fetch and resize images from file directory - _figure out permissions needed to connect to server_ (should be called name name inside the digital folder of the right week) (somehow - need to store them somewhere remote or maybe run from a newsroom computer but that would not be good)
+- [ ] Post to the website us wp post create -(parameters) (see [here](https://developer.wordpress.org/cli/commands/post/create/))
+- [ ] Fetch and resize images from file directory
 - [ ] Add downloaded images to uploaded article using [this command](https://developer.wordpress.org/cli/commands/media/import/)
 ### Dependencies (not complete)
 - [ ] python, pandas, numpy, [pillow](https://github.com/python-pillow/Pillow) (obviously)
