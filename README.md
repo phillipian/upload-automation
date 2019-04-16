@@ -4,6 +4,7 @@ Project to automate uploading to phillipian.net
 Run upload_script.py from a local machine with access to the week's photos (laptop or newsroom computer with docker).
 New plan: On the local machine, the script will compress images, fetch filtered articles, and prepend image info/author name to the beginning of each article. Those files will be scp-ed to the server, and the rest of the script will read the info from the article text file and call the necessary wordpress commands.
 ### Usage
+- MANUALLY UPLOAD spreads, editorial, eighth page, and multilingual for now
 - Article Google Docs
   - Article text will appear as it does in the doc, so please place the final article back on the doc if changes are made
   - Add BOF and EOF markers in article doc (‘BOFCXLII’, ‘EOFCXLII’) (the doc must be the final version of the article)
@@ -14,7 +15,7 @@ New plan: On the local machine, the script will compress images, fetch filtered 
   - Photo: 'Caption', 'Photographer' (for credit), 'ImageDir' (should match ImageDir from writing section)
   - All photos/illustrations should also be on the budget (including ones that are pulled), with their photographer information so they can be properly fetched, captioned, and credited
 - Check and publish all posts (the script will make them drafts)
-- Upload editorial and multilingual manually
+
 
 - Docker: 
   - docker create -it --name container upload_container
