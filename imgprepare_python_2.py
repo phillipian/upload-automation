@@ -9,7 +9,7 @@ def img_for_post_content(url, caption, credit):
         img_markdown = "[media-credit name="+credit+"]"+img_markdown+"[/media-credit]"
 
     if caption.strip():
-        img_markdown = "[caption]"+img_markdown+" "+caption+"[/caption]"
+        img_markdown = "[caption]<?php do_shortcode("+img_markdown+" "+caption+")?>[/caption]"
 
     return img_markdown
 
