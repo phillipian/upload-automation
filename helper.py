@@ -51,6 +51,8 @@ def prepend(article_txt_file, image_txt):
     src.close()
     for i in range(len(content)):
         content[i] = re.sub(u'\u2019',"'",content[i])
+        content[i] = re.sub(u'\u201c','"',content[i])
+        content[i] = re.sub(u'\u201d','"',content[i])
         content[i] = str(content[i])
     src=open(article_txt_file,"w")
     src.writelines(content)

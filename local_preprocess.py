@@ -12,7 +12,6 @@ import fetch_sheet
 import fetch_document
 import assign_subcategory
 import helper
-import imgprepare
 import imgprepare_python_2 # TODO: change everything to imgprepare
 import argparse
 import datetime as dt
@@ -37,7 +36,7 @@ if (paper_week == None):
 local_article_path = ''
 server_article_path = '/home/plipdigital/temp_articles/' # path to articles on the server
 category_slugs = {'Arts':'arts', 'Commentary':'commentary', 'Editorial':'editorial', 'Featured Posts':'featured', 'News':'news', 'Sports':'sports', 'The Eighth Page':'eighthpage'}
-sections = ['Sports', 'News', 'Commentary', 'Arts', 'The Eighth Page'] # sections to upload
+sections = ['News', 'Sports', 'Commentary', 'Arts', 'The Eighth Page'] # sections to upload
 
 # IMG CONSTANTS
 local_img_path = '' # TODO: fill this in; path to photos in the docker image / local computer
@@ -46,8 +45,7 @@ NOPHOTO = 'nophoto'
 special_photo_credits = ['Archives', 'Courtesy of ']
 category_slugs = {'Arts':'arts', 'Commentary':'commentary', 'Editorial':'editorial', 'Featured Posts':'featured', 'News':'news', 'Sports':'sports', 'The Eighth Page':'eighthpage'}
 
-#GLOBAL VARS
-
+# GLOBAL VARS
 photo_caption = {'':''} # map photo_dir to caption
 photo_credit = {'':''} # map photo_dir to credit
 illus_credit = {'':''} # map illus_dir to credit
@@ -70,8 +68,8 @@ def assign_categories(cur_cat_str, article_txt, headline):
 def copy_photos_to_server():
     cmd = 'scp -r '+local_img_path+' plipdigital@phillipian.net:'+server_img_path
     call(cmd, shell=True)
-def copy_article_to_server(article_txt, section):
-    cmd = 'scp "'+article_txt+'" plipdigital@phillipian.net:'+server_article_path+section+'/'
+def copy_article_to_server(article_txt):
+    cmd = 'scp "'+article_txt+'" plipdigital@phillipian.net:'+server_article_path
     call(cmd, shell=True)
     return server_article_path+article_txt.split('/')[-1]
 def fetch_photos(sheet_url, compress_job):
@@ -106,15 +104,14 @@ def fetch_photos(sheet_url, compress_job):
             photo_credit[paths[i]] = credit
 
             # compress image
-            if (compress_job and sections[i] == 'Sports'): # TODO: remove the sports thing
+            if (compress_job): 
                 full_path = local_img_path+sections[i].lower()+'/'+paths[i]
                 imgs = os.listdir(full_path) 
                 ind = 0
                 while (imgs[ind][0] == '.'): # skip hidden directories ('.anything')
                     ind += 1
                 img = full_path+'/'+imgs[ind] 
-                #img = imgprepare_python_2.compress_img(img, 30) # TODO: use imgprepare
-                img = imgprepare.compress_img(img, 30) #added this line for imgprepare support
+                img = imgprepare_python_2.compress_img(img, 30) # TODO: use imgprepare
     else:
         print('error: missing col')
 
@@ -144,35 +141,34 @@ def fetch_illustrations(sheet_url, compress_job):
             illus_credit[paths[i]] = credit
          
             # compress image
-            if compress_job and sections[i] == 'Sports': # TODO: remove sports req
+            if compress_job: 
                 full_path = local_img_path+sections[i].lower()+'/'+paths[i]
                 imgs = os.listdir(full_path) 
                 ind = 0
                 while (imgs[ind][0] == '.'): # skip hidden directories ('.anything')
                     ind += 1
                 img = full_path+'/'+imgs[ind] 
-                #img = imgprepare_python_2.compress_img(img, 30) # TODO: use imgprepare
-                img = imgprepare.compress_img(img, 30)
+                img = imgprepare_python_2.compress_img(img, 30) # TODO: use imgprepare
     else:
         print('error: missing col')
 
-fetch_photos(sheet_url, False)
-fetch_illustrations(sheet_url, False)
+# fetch_photos(sheet_url, False)
+# fetch_illustrations(sheet_url, False)
 # COPY PHOTOS OVER TO SERVER
-# copy_photos_to_server() # uncomment when everything else works
+# copy_photos_to_server()
 
 # FETCH ARTICLES
 for s in sections:
     print('starting section: ' + s)
     # fetch and verify sheet dataframe content
     section_df = fetch_sheet.get_google_sheet(sheet_url, s) 
-    helper.check_columns(section_df, ['Link','ImageDir','Headline','Writer','Featured?','Upload']) 
+    helper.check_columns(section_df, ['Link','ImageDir','Headline','Writer','Featured?','Upload?']) 
 
     article_urls = section_df['Link'].values
     headlines = section_df['Headline'].values
     img_names = section_df['ImageDir'].values
     writers = section_df['Writer'].values
-    statuses = section_df['Upload'].values
+    statuses = section_df['Upload?'].values
     featured_posts = section_df['Featured?'].values
 
     category_slug = category_slugs[s] # main category
@@ -211,16 +207,12 @@ for s in sections:
             more_options += "--post_date='"+post_timestamp+"'"
             category_string += ',featured'
 
-
-        # TODO: PROCESS ARTICLE IMAGES
-        img_name = img_names[i] # directory name
-        # Note to Jeffrey: prepend function: helper.prepend(article_txt, whatever_to_prepend) (automatic \n)
-        # Note to Jeffrey: some of it is leftover and still applies, so I left it here
+        # PROCESS ARTICLE IMAGES
+        img_name = img_names[i] # directory name from budget
         if (NOPHOTO not in img_name and img_name != ''):
             # fetch image (only 1 supported)
             name = str(img_name)
-            local_img_dir = local_img_path + s.lower() + '/' + name
-            imgs = os.listdir(local_img_dir) 
+            imgs = os.listdir(local_img_path + s.lower() + '/' + name) # find imgs in the directory
             ind = 0
             while (imgs[ind][0] == '.'): # skip hidden directories ('.anything')
                 ind += 1
@@ -246,18 +238,21 @@ for s in sections:
                 helper.prepend(article_txt, 'credit: ' + credit)
             # TODO: whatever else is needed
             # TODO: prepend all photo info to article text file
-            helper.prepend(article_txt, 'path to img: '+img)
+            helper.prepend(article_txt, 'path to img:\t'+img)
         else:
-            helper.prepend(article_txt, 'path to img: '+NOPHOTO)
+            helper.prepend(article_txt, 'path to img:\t'+NOPHOTO)
 
         # prepend info to article text file
         helper.prepend(article_txt, 'headline:\t'+headline)
-        helper.prepend(article_txt, 'writer:\t'+headline)
+        helper.prepend(article_txt, 'writer:\t'+writer)
         helper.prepend(article_txt, 'categories:\t'+category_string)
         helper.prepend(article_txt, 'more options:\t'+more_options)
         print(article_txt)
         # copy article to server
-        #article_txt_on_server = copy_article_to_server(article_txt, s)
+        article_txt_on_server = copy_article_to_server(article_txt)
+        print('article file: '+article_txt)
+        break
+    break
             
         
     
