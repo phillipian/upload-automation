@@ -75,22 +75,22 @@ def copy_article_to_server(article_txt):
 def fetch_photos(sheet_url, compress_job):
     """fill dictionaries and compress images"""
     photo_df = fetch_sheet.get_google_sheet(sheet_url, 'Photo') # fetch image sheet
-    if ('ImageDir' in photo_df.columns and 'Caption' in photo_df.columns and 'Photographer' in photo_df.columns and 'Section' in photo_df.columns):
+    if ('ImageDir' in photo_df.columns and 'Context/Caption' in photo_df.columns and 'Photographer' in photo_df.columns and 'Section' in photo_df.columns):
         paths = photo_df['ImageDir'].values
-        captions = photo_df['Caption'].values
+        captions = photo_df['Context/Caption'].values
         credits = photo_df['Photographer'].values
         sections = photo_df['Section'].values
 
         if (not (len(paths) == len(captions) and len(captions) == len(credits))):
             print('error: photo budget columns not the same length')
             exit(0)
-
        
         for i in range(len(paths)):
-            if (captions[i] == '' or credits[i] == '' or sections[i] == ''):
+            if (captions[i] == '' or credits[i] == '' or sections[i] == ''): # skip empty fields
                 continue
             paths[i] = paths[i].strip()
-             # fill in the dictionaries
+            
+            # fill in the dictionaries
             photo_caption[paths[i]] = captions[i]
         
             credit = ''
@@ -152,10 +152,10 @@ def fetch_illustrations(sheet_url, compress_job):
     else:
         print('error: missing col')
 
-# fetch_photos(sheet_url, False)
-# fetch_illustrations(sheet_url, False)
+fetch_photos(sheet_url, True)
+fetch_illustrations(sheet_url, True)
 # COPY PHOTOS OVER TO SERVER
-# copy_photos_to_server()
+copy_photos_to_server()
 
 # FETCH ARTICLES
 for s in sections:
