@@ -7,17 +7,9 @@ post
 import os
 from subprocess import call
 from subprocess import check_output
-import sys
-import pandas as pd
-import fetch_sheet
-import fetch_document
-import assign_subcategory
 import helper
+import imgprepare
 import imgprepare_python_2 # TODO: uncomment, change everything to imgprepare
-import argparse
-import datetime
-import custom_author
-import re 
 
 server_article_path = '/home/plipdigital/temp_articles/' # path to articles on the server
 sections = ['Sports', 'News', 'Commentary', 'Arts', 'The Eighth Page'] # sections to upload
@@ -44,29 +36,29 @@ for s in sections:
     
     for article_txt in article_txts: # loop through articles and upload them
         # article properties
-        headline = deprepend(article_txt).split('\t')[1].strip()
-        writer = deprepend(article_txt).split('\t')[1].strip()
-        categories = deprepend(article_txt).split('\t')[1].strip()
-        more_options = deprepend(article_txt).split('\t')[1].strip()
+        more_options = helper.deprepend(article_txt).split('\t')[1].strip()
+        categories = helper.deprepend(article_txt).split('\t')[1].strip()
+        writer = helper.deprepend(article_txt).split('\t')[1].strip()
+        headline = helper.deprepend(article_txt).split('\t')[1].strip()
 
         writer_id = fetch_writer_id(writer) # fetch writer id number, or create user if writer does not exist
-
-        img = deprepend(article_txt).split('\t')[1].strip()
+        img = helper.deprepend(article_txt).split('\t')[1].strip()
         if (img != NOPHOTO):
             # TODO: fill this in
-            caption = ''
-            credit = ''
+            caption = helper.deprepend(article_txt).split('\t')[1].strip()
+            credit = helper.deprepend(article_txt).split('\t')[1].strip()
 
             # upload the image to the media library
             cmd = 'wp media import '+img+' --porcelain | xargs -I {} wp post list --post__in={} --field=url --ssh='+server_name+' --post_type=attachment'
             img_url = check_output(cmd, shell=True)
-            img_url = helper.media_url_to_img_url(img_url,imgs[ind])
+            img_url = helper.media_url_to_img_url(img_url, img.split(sep='/')[-1])
 
-            image_txt = imgprepare_python_2.img_for_post_content(img_url, caption, credit) 
-            helper.prepend(article_txt, temp_shortcode)
+            image_shortcode = imgprepare_python_2.img_for_post_content(img_url, caption, credit)
+            #image_shortcode = imgprepare.img_for_post_content(img_url, caption, credit)
+            helper.prepend(article_txt, image_shortcode)
         
         # POST WITH GIVEN PARAMETERS
-        cmd = "wp post create " + article_txt + " --post_category="+ category_string +" --post_status=publish --post_title='"+ headline +"' --porcelain --post_author="+ writer_id + ' ' + more_options 
+        cmd = "wp post create " + article_txt + " --post_category="+ categories +" --post_status=publish --post_title='"+ headline +"' --porcelain --post_author="+ writer_id + ' ' + more_options 
         post_id = check_output(cmd, shell=True)
 
         # CUSTOM AUTHOR UPDATE

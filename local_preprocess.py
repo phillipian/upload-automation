@@ -7,19 +7,15 @@ scp article text files and image files to server
 # TODO: support multiple author functionality
 # TODO: support multiple photos
 import os
-import sys
 from subprocess import call
-from subprocess import check_output
-import pandas as pd
 import fetch_sheet
 import fetch_document
 import assign_subcategory
 import helper
+import imgprepare
 import imgprepare_python_2 # TODO: change everything to imgprepare
 import argparse
 import datetime as dt
-import custom_author
-import re 
 
 # PARSE COMMAND
 parser = argparse.ArgumentParser(description='Upload articles from the budget spreadsheet.')
@@ -50,7 +46,11 @@ NOPHOTO = 'nophoto'
 special_photo_credits = ['Archives', 'Courtesy of ']
 category_slugs = {'Arts':'arts', 'Commentary':'commentary', 'Editorial':'editorial', 'Featured Posts':'featured', 'News':'news', 'Sports':'sports', 'The Eighth Page':'eighthpage'}
 
+#GLOBAL VARS
 
+photo_caption = {'':''} # map photo_dir to caption
+photo_credit = {'':''} # map photo_dir to credit
+illus_credit = {'':''} # map illus_dir to credit
 
 # FUNCTIONS
 def assign_categories(cur_cat_str, article_txt, headline):
@@ -63,17 +63,17 @@ def assign_categories(cur_cat_str, article_txt, headline):
     if (cur_cat_str == 'sports'):
         cat_string += ','+assign_subcategory.find_sports_subcategories(headline, content)
     elif (cur_cat_str == 'arts'):
-        if len(find_arts_subcategories(headline)) > 0:
-            cat_string += ','+find_arts_subcategories(headline)
+        if len(assign_subcategory.find_arts_subcategories(headline)) > 0:
+            cat_string += ','+ assign_subcategory.find_arts_subcategories(headline)
     return cat_string
 
 def copy_photos_to_server():
-    cmd = 'scp -r '+local_path+' plipdigital@phillipian.net:'+server_img_path
+    cmd = 'scp -r '+local_img_path+' plipdigital@phillipian.net:'+server_img_path
     call(cmd, shell=True)
 def copy_article_to_server(article_txt, section):
     cmd = 'scp "'+article_txt+'" plipdigital@phillipian.net:'+server_article_path+section+'/'
     call(cmd, shell=True)
-    return server_articles+article_txt.split('/')[-1]
+    return server_article_path+article_txt.split('/')[-1]
 def fetch_photos(sheet_url, compress_job):
     """fill dictionaries and compress images"""
     photo_df = fetch_sheet.get_google_sheet(sheet_url, 'Photo') # fetch image sheet
@@ -93,7 +93,7 @@ def fetch_photos(sheet_url, compress_job):
                 continue
             paths[i] = paths[i].strip()
              # fill in the dictionaries
-            fetch_caption[paths[i]] = captions[i]
+            photo_caption[paths[i]] = captions[i]
         
             credit = ''
             for special_case in special_photo_credits:
@@ -103,18 +103,18 @@ def fetch_photos(sheet_url, compress_job):
             if (credit == ''):
                 credit = credits[i][0]+'.'+credits[i].split(' ')[1]+'/The Phillipian'
 
-            fetch_credit[paths[i]] = credit
+            photo_credit[paths[i]] = credit
 
             # compress image
             if (compress_job and sections[i] == 'Sports'): # TODO: remove the sports thing
-                full_path = local_path+sections[i].lower()+'/'+paths[i]
+                full_path = local_img_path+sections[i].lower()+'/'+paths[i]
                 imgs = os.listdir(full_path) 
                 ind = 0
                 while (imgs[ind][0] == '.'): # skip hidden directories ('.anything')
                     ind += 1
                 img = full_path+'/'+imgs[ind] 
-                img = imgprepare_python_2.compress_img(img, 30) # TODO: use imgprepare
-
+                #img = imgprepare_python_2.compress_img(img, 30) # TODO: use imgprepare
+                img = imgprepare.compress_img(img, 30) #added this line for imgprepare support
     else:
         print('error: missing col')
 
@@ -142,21 +142,22 @@ def fetch_illustrations(sheet_url, compress_job):
             if (credit == ''):
                 credit = credits[i][0] + '.' + credits[i].split(' ')[1]+'/The Phillipian'
             illus_credit[paths[i]] = credit
-
+         
             # compress image
             if compress_job and sections[i] == 'Sports': # TODO: remove sports req
-                full_path = local_path+sections[i].lower()+'/'+paths[i]
+                full_path = local_img_path+sections[i].lower()+'/'+paths[i]
                 imgs = os.listdir(full_path) 
                 ind = 0
                 while (imgs[ind][0] == '.'): # skip hidden directories ('.anything')
                     ind += 1
                 img = full_path+'/'+imgs[ind] 
-                img = imgprepare_python_2.compress_img(img, 30) # TODO: use imgprepare
+                #img = imgprepare_python_2.compress_img(img, 30) # TODO: use imgprepare
+                img = imgprepare.compress_img(img, 30)
     else:
         print('error: missing col')
 
-# TODO: FETCH PHOTO INFO AND COMPRESS PHOTOS (modify the function)
-# TODO: FETCH ILLUSTRATION INFO AND COMPRESS (modify function)
+fetch_photos(sheet_url, False)
+fetch_illustrations(sheet_url, False)
 # COPY PHOTOS OVER TO SERVER
 # copy_photos_to_server() # uncomment when everything else works
 
@@ -209,18 +210,10 @@ for s in sections:
             post_timestamp = (dt.datetime.now()-dt.timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
             more_options += "--post_date='"+post_timestamp+"'"
             category_string += ',featured'
-        
-        
-        
-
-
-
 
 
         # TODO: PROCESS ARTICLE IMAGES
         img_name = img_names[i] # directory name
-
-        # TODO: fetch image info (path, photographer, caption, etc) and prepend to article text
         # Note to Jeffrey: prepend function: helper.prepend(article_txt, whatever_to_prepend) (automatic \n)
         # Note to Jeffrey: some of it is leftover and still applies, so I left it here
         if (NOPHOTO not in img_name and img_name != ''):
@@ -233,42 +226,38 @@ for s in sections:
                 ind += 1
             img = server_img_path+s.lower()+'/'+name+'/'+imgs[ind] # path to img on server
 
-
             # generate short code for image, prepend to article content
             inphoto = False
-            if name in fetch_caption.keys() and name in fetch_credit.keys(): # check for valid photo
+            if name in photo_caption.keys() and name in photo_credit.keys(): # check for valid photo
                 inphoto = True
-                caption = fetch_caption[name]
-                credit = fetch_credit[name]
+                caption = photo_caption[name]
+                credit = photo_credit[name]
                 if caption == '' or caption == None:
                     print('warning: missing caption on image for imagedir '+name)
                 if credit == '' or credit == None:
                     print('warning: missing credit on image for imagedir '+name)
             if not inphoto and name not in illus_credit.keys(): 
                 print('error: imageDir not found in photo or illustration budget for imagedir '+name)
-                credit = fetch_credit[name]
+                credit = photo_credit[name]
                 if credit == '' or credit == None:
                     print('warning: missing credit on image for imagedir '+name)
                 exit(0)
-            # TODO: make sure special photo credits are supported
+                helper.prepend(article_txt, 'caption: ' + caption)
+                helper.prepend(article_txt, 'credit: ' + credit)
             # TODO: whatever else is needed
             # TODO: prepend all photo info to article text file
             helper.prepend(article_txt, 'path to img: '+img)
         else:
             helper.prepend(article_txt, 'path to img: '+NOPHOTO)
-            
-        
-
-        
 
         # prepend info to article text file
         helper.prepend(article_txt, 'headline:\t'+headline)
         helper.prepend(article_txt, 'writer:\t'+headline)
         helper.prepend(article_txt, 'categories:\t'+category_string)
         helper.prepend(article_txt, 'more options:\t'+more_options)
-
+        print(article_txt)
         # copy article to server
-        article_txt_on_server = copy_article_to_server(article_txt, s)
+        #article_txt_on_server = copy_article_to_server(article_txt, s)
             
         
     
