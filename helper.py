@@ -10,6 +10,18 @@ def remove_spaces_commas(s_in):
             s_out += s_in[i]
     return s_out
 def media_url_to_img_url(murl, filename):
+    # if there are many dashes in a row, remove all but 1
+    new_filename = ''
+    for i in range(len(filename)):
+        if filename[i] != '-':
+            new_filename += filename[i]
+        else:
+            if filename[i+1] == '-': # if the next char is also -, don't add it
+                continue
+            else:
+                new_filename += filename[i]
+
+    filename = new_filename
 
     murl_elements = murl.split('/')
 
@@ -50,14 +62,23 @@ def prepend(article_txt_file, image_txt):
     content.insert(0,image_txt+'\n') 
     src.close()
     for i in range(len(content)):
+        content[i] = re.sub(u'\u2018',"'",content[i])
         content[i] = re.sub(u'\u2019',"'",content[i])
         content[i] = re.sub(u'\u201c','"',content[i])
         content[i] = re.sub(u'\u201d','"',content[i])
+        content[i] = re.sub(u'\u2013','-',content[i])
         content[i] = str(content[i])
     src=open(article_txt_file,"w")
     src.writelines(content)
     src.close()
-
+def add_line_breaks(article_txt_file):
+    """add extra \n after every line for better readability"""
+    content = ''
+    with open(article_txt_file,"r") as artic:
+        for line in artic:
+            content += line+'\n'
+    with open(article_txt_file,"w") as artic:
+        artic.write(content)
 def check_content(list_of_strings):
     """make sure all strings in list are non-empty"""
     for any_string in list_of_strings:

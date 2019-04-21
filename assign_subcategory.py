@@ -1,9 +1,9 @@
 # OTHER
-arts_slugs = {'look of the week':'lotw'} # complete names : slugs
+arts_slugs = {'look of the week':'lotw', 'off the shelf':'off-the-shelf'} # complete names : slugs
 def find_arts_subcategories(headline):
     categ_string = ''
-    for key in arts_slugs.keys:
-        if (key in headline):
+    for key in arts_slugs.keys():
+        if (key in headline.lower()):
             categ_string += arts_slugs[key]
     return categ_string
 
@@ -45,7 +45,7 @@ def find_sports_subcategories(headline, article_text):
             team_slug = category_sanitize(keyword)
             categ_string += team_slug +','+ sports_seasons_slugs[team_slug] # append slug
     if (categ_string == ''):
-        print('error: no sports subcategory found, ASSIGN MANUALLY!')
+        print('  error: no sports subcategory found, ASSIGN MANUALLY!')
     return categ_string
 
 def category_sanitize(s_in):

@@ -6,6 +6,7 @@ from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 import io
+import helper
 
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/drive']
@@ -36,7 +37,7 @@ def article_from_txt(raw_txt, filter_txt):
     rf.close()
     wf.close()
 
-def get_google_doc(doc_url):
+def get_google_doc(doc_url, workingdir):
     creds = None
     # The file token.pickle stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
@@ -62,8 +63,8 @@ def get_google_doc(doc_url):
     mimeType = 'text/plain'
 
     # TODO: make this fit whatever we decide
-    raw_article = file_id+'_raw.txt'
-    filter_article = file_id+'_filter.txt'
+    raw_article = workingdir+file_id+'_raw.txt'
+    filter_article = workingdir+file_id+'_filter.txt'
 
     # request = service.files().get(fileId=file_id) # to get just the metadata
     request = service.files().export(fileId=file_id, mimeType=mimeType) # to get the file content
@@ -80,7 +81,7 @@ def get_google_doc(doc_url):
         f.write(content)
     
     article_from_txt(raw_article, filter_article)
-
+    helper.add_line_breaks(filter_article)
     return filter_article
 
 if __name__ == '__main__':

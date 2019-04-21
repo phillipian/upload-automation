@@ -3,13 +3,13 @@ from PIL import Image
 # python 2 version (I don't have python 3)
 def img_for_post_content(url, caption, credit):
     """Returns the string used to insert an image, caption, and credit into the post content"""
-    img_markdown = "<img src="+url.strip()+" />"
+    img_markdown = "<img src='"+url.strip()+"' />"
 
     if credit.strip():
-        img_markdown = "[media-credit name="+credit+"]"+img_markdown+"[/media-credit]"
+        img_markdown = "[media-credit name='"+credit+"']"+img_markdown+"[/media-credit]"
 
     if caption.strip():
-        img_markdown = "[caption]<?php do_shortcode("+img_markdown+" "+caption+")?>[/caption]"
+        img_markdown = "[caption]"+img_markdown+" "+caption+"[/caption]"
 
     return img_markdown
 

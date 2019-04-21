@@ -15,6 +15,7 @@ import helper
 import imgprepare_python_2 # TODO: change everything to imgprepare
 import argparse
 import datetime as dt
+import re
 
 # PARSE COMMAND
 parser = argparse.ArgumentParser(description='Upload articles from the budget spreadsheet.')
@@ -33,13 +34,13 @@ if (paper_week == None):
     exit(0)
 
 # CONSTANTS
-local_article_path = ''
+local_article_path = 'articles/'
 server_article_path = '/home/plipdigital/temp_articles/' # path to articles on the server
 category_slugs = {'Arts':'arts', 'Commentary':'commentary', 'Editorial':'editorial', 'Featured Posts':'featured', 'News':'news', 'Sports':'sports', 'The Eighth Page':'eighthpage'}
-sections = ['News', 'Sports', 'Commentary', 'Arts', 'The Eighth Page'] # sections to upload
+sections = ['News', 'Sports', 'Commentary', 'Arts'] # sections to upload # TODO: 8th pg
 
 # IMG CONSTANTS
-local_img_path = '' # TODO: fill this in; path to photos in the docker image / local computer
+local_img_path = '/Users/sarahchen/Downloads/digital/' # TODO: fill this in; path to photos in the docker image / local computer
 server_img_path = '/home/plipdigital/wp-photos/'+paper_week+'/' # path to photos on the server
 NOPHOTO = 'nophoto'
 special_photo_credits = ['Archives', 'Courtesy of ']
@@ -69,10 +70,10 @@ def copy_photos_to_server():
     cmd = 'scp -r '+local_img_path+' plipdigital@phillipian.net:'+server_img_path
     call(cmd, shell=True)
 def copy_article_to_server(article_txt):
-    cmd = 'scp "'+article_txt+'" plipdigital@phillipian.net:'+server_article_path
+    cmd = 'scp -r "'+article_txt+'" plipdigital@phillipian.net:'+server_article_path
     call(cmd, shell=True)
     return server_article_path+article_txt.split('/')[-1]
-def fetch_photos(sheet_url, compress_job):
+def fetch_photos(sheet_url):
     """fill dictionaries and compress images"""
     photo_df = fetch_sheet.get_google_sheet(sheet_url, 'Photo') # fetch image sheet
     if ('ImageDir' in photo_df.columns and 'Context/Caption' in photo_df.columns and 'Photographer' in photo_df.columns and 'Section' in photo_df.columns):
@@ -86,10 +87,11 @@ def fetch_photos(sheet_url, compress_job):
             exit(0)
        
         for i in range(len(paths)):
-            if (captions[i] == '' or credits[i] == '' or sections[i] == ''): # skip empty fields
+            if (paths[i] == NOPHOTO or captions[i] == '' or credits[i] == '' or sections[i] == ''): # skip empty fields
                 continue
             paths[i] = paths[i].strip()
             
+
             # fill in the dictionaries
             photo_caption[paths[i]] = captions[i]
         
@@ -104,18 +106,20 @@ def fetch_photos(sheet_url, compress_job):
             photo_credit[paths[i]] = credit
 
             # compress image
-            if (compress_job): 
-                full_path = local_img_path+sections[i].lower()+'/'+paths[i]
-                imgs = os.listdir(full_path) 
-                ind = 0
-                while (imgs[ind][0] == '.'): # skip hidden directories ('.anything')
-                    ind += 1
+
+
+            full_path = local_img_path+sections[i].lower()+'/'+paths[i]
+            imgs = os.listdir(full_path) 
+            ind = 0
+            while (imgs[ind][0] == '.'): # skip hidden directories ('.anything')
+                ind += 1
+            if (imgs[ind][0] != '0'): # compress if not already compressed
+                print('compressing '+full_path)
                 img = full_path+'/'+imgs[ind] 
                 img = imgprepare_python_2.compress_img(img, 30) # TODO: use imgprepare
     else:
         print('error: missing col')
-
-def fetch_illustrations(sheet_url, compress_job):
+def fetch_illustrations(sheet_url):
     illus_df = fetch_sheet.get_google_sheet(sheet_url, 'Illustrations') #fetch illustration sheet
     if ('ImageDir' in illus_df.columns and 'Illustrator' in illus_df.columns and 'Section' in illus_df.columns):
         paths = illus_df['ImageDir'].values
@@ -134,6 +138,9 @@ def fetch_illustrations(sheet_url, compress_job):
             if(credits[i] == ''):
                 print('missing credit')
                 continue
+            if paths[i] == NOPHOTO:
+                print('no photo')
+                continue
        
             credit = ''
             if (credit == ''):
@@ -141,25 +148,28 @@ def fetch_illustrations(sheet_url, compress_job):
             illus_credit[paths[i]] = credit
          
             # compress image
-            if compress_job: 
-                full_path = local_img_path+sections[i].lower()+'/'+paths[i]
-                imgs = os.listdir(full_path) 
-                ind = 0
-                while (imgs[ind][0] == '.'): # skip hidden directories ('.anything')
-                    ind += 1
+            full_path = local_img_path+sections[i].lower()+'/'+paths[i]
+            imgs = os.listdir(full_path) 
+            ind = 0
+            while (imgs[ind][0] == '.'): # skip hidden directories ('.anything')
+                ind += 1
+            if imgs[ind][0] != '0':
+                print('compressing '+full_path)
                 img = full_path+'/'+imgs[ind] 
                 img = imgprepare_python_2.compress_img(img, 30) # TODO: use imgprepare
     else:
         print('error: missing col')
+        print(illus_df.columns)
 
-fetch_photos(sheet_url, True)
-fetch_illustrations(sheet_url, True)
+
+fetch_photos(sheet_url)
+fetch_illustrations(sheet_url)
 # COPY PHOTOS OVER TO SERVER
-copy_photos_to_server()
+# copy_photos_to_server() # TODO: uncomment after done testing
 
 # FETCH ARTICLES
 for s in sections:
-    print('starting section: ' + s)
+    print('starting section:\t' + s)
     # fetch and verify sheet dataframe content
     section_df = fetch_sheet.get_google_sheet(sheet_url, s) 
     helper.check_columns(section_df, ['Link','ImageDir','Headline','Writer','Featured?','Upload?']) 
@@ -176,7 +186,7 @@ for s in sections:
     # upload articles
     for i in range(len(article_urls)):
         if (statuses[i].lower() != 'yes'): # only upload finished articles -- skip all that are not marked
-            print('  skipping article: '+headlines[i])
+            print('skipping:\t'+headlines[i])
             continue 
 
         # PROCESS ARTICLE TEXT
@@ -186,12 +196,12 @@ for s in sections:
         featured = featured_posts[i]
         helper.check_content([article_doc_url, headline, writer])
 
-        print('Uploading: ' + headline + ' from ' + s) # progress string
+        print('Processing:\t' + headline + ' from ' + s) # progress string
         if (not 'docs.google.com/document/d/' in article_doc_url): # verify url
             print('  Error: not a url, now skipping '+article_doc_url)
             continue
 
-        article_txt = fetch_document.get_google_doc(article_doc_url) # fetch article text file
+        article_txt = fetch_document.get_google_doc(article_doc_url, local_article_path) # fetch article text file
         category_string = assign_categories(category_slug, article_txt, headline) # assign categories and subcategories
         
         # fix headlines for each section
@@ -225,34 +235,30 @@ for s in sections:
                 caption = photo_caption[name]
                 credit = photo_credit[name]
                 if caption == '' or caption == None:
-                    print('warning: missing caption on image for imagedir '+name)
+                    print('  warning: missing caption on image for imagedir '+name)
                 if credit == '' or credit == None:
-                    print('warning: missing credit on image for imagedir '+name)
+                    print('  warning: missing credit on image for imagedir '+name)
+            if name in illus_credit.keys():
+                captions = ''
+                credit = illus_credit[name]
+                if credit == '' or credit == None:
+                    print('  warning: missing credit on image for imagedir '+name)
+
             if not inphoto and name not in illus_credit.keys(): 
-                print('error: imageDir not found in photo or illustration budget for imagedir '+name)
-                credit = photo_credit[name]
-                if credit == '' or credit == None:
-                    print('warning: missing credit on image for imagedir '+name)
+                print('  error: imageDir not found in photo or illustration budget for imagedir '+name)
                 exit(0)
-                helper.prepend(article_txt, 'caption: ' + caption)
-                helper.prepend(article_txt, 'credit: ' + credit)
-            # TODO: whatever else is needed
-            # TODO: prepend all photo info to article text file
+            helper.prepend(article_txt, 'caption:\t' + re.sub('\n'," ",caption))
+            helper.prepend(article_txt, 'credit:\t' + credit)
             helper.prepend(article_txt, 'path to img:\t'+img)
         else:
             helper.prepend(article_txt, 'path to img:\t'+NOPHOTO)
 
         # prepend info to article text file
-        helper.prepend(article_txt, 'headline:\t'+headline)
-        helper.prepend(article_txt, 'writer:\t'+writer)
-        helper.prepend(article_txt, 'categories:\t'+category_string)
-        helper.prepend(article_txt, 'more options:\t'+more_options)
-        print(article_txt)
+        helper.prepend(article_txt, 'headline:\t'+headline.strip())
+        helper.prepend(article_txt, 'writer:\t'+writer.strip())
+        helper.prepend(article_txt, 'categories:\t'+category_string.strip())
+        helper.prepend(article_txt, 'more options:\t'+more_options.strip())
         # copy article to server
-        article_txt_on_server = copy_article_to_server(article_txt)
-        print('article file: '+article_txt)
-        break
-    break
-            
-        
-    
+        # article_txt_on_server = copy_article_to_server(article_txt)
+        # print('  article file: '+article_txt)
+copy_article_to_server(local_article_path)
