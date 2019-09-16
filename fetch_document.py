@@ -6,6 +6,8 @@ from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 import io
+import re
+import json
 import helper
 
 # If modifying these scopes, delete the file token.pickle.
@@ -24,16 +26,21 @@ def get_file_id_from_url(doc_url):
 def article_from_txt(raw_txt, filter_txt):
     # each line is a paragraph
     rf = open(raw_txt, 'r')
-    wf = open(filter_txt, 'w')
+    src = {}
+    article_string = ''
+
     copy = False
     for x in rf:
         if ('EOFCXLII' in x):
             break
         if (copy):
-            wf.write(x) 
+            article_string = article_string+x
         if ('BOFCXLII' in x):
             copy = True
-         
+    article_string = helper.fix_characters(article_string)
+    src['article_content'] = article_string
+    with open(filter_txt, 'w') as wf:
+        json.dump(src, wf)
     rf.close()
     wf.close()
 
@@ -64,7 +71,7 @@ def get_google_doc(doc_url, workingdir):
 
     # TODO: make this fit whatever we decide
     raw_article = workingdir+file_id+'_raw.txt'
-    filter_article = workingdir+file_id+'_filter.txt'
+    filter_article = workingdir+file_id+'_filter.json'
 
     # request = service.files().get(fileId=file_id) # to get just the metadata
     request = service.files().export(fileId=file_id, mimeType=mimeType) # to get the file content

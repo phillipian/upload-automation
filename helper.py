@@ -53,6 +53,7 @@ def deprepend(article_txt_file):
     src.writelines(content)
     src.close()
     return first_line
+    
 def prepend(article_txt_file, image_txt):
     """prepend image_txt to the article_txt_file"""
     src=open(article_txt_file,"r")
@@ -91,3 +92,13 @@ def check_columns(s_df, cols):
         if (not col in s_df.columns):
             print('error: missing budget column "'+col+'", exiting program')
             exit(0)
+            
+def fix_characters(input_string):
+    #Fixes the weird characters with dashes and quotes
+    input_string = re.sub(u'\u2018',"'", input_string)
+    input_string = re.sub(u'\u2019',"'",input_string)
+    input_string = re.sub(u'\u201c','"',input_string)
+    input_string = re.sub(u'\u201d','"',input_string)
+    input_string = re.sub(u'\u2013','-',input_string)
+    input_string = re.sub(u'\u2026', '...', input_string) 
+    return input_string

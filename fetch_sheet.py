@@ -8,6 +8,17 @@ import gspread
 import pandas as pd
 import numpy as np
 
+'''
+def get_hyperlinks(raw_links):
+    link_list = []
+    for raw in raw_links:
+        if (raw == '' or 'Slug'):
+            continue
+        elif('=HYPERLINK' in raw):
+            link = raw[10:-2].split(',')[0].strip('"')[2:]
+            link_list.append(link)
+    return link_list
+'''
 def get_google_sheet(spreadsheet_url, section):
     """ Retrieve sheet data using OAuth credentials and Google Python API. """
     SCOPES = ['https://spreadsheets.google.com/feeds',
@@ -24,12 +35,15 @@ def get_google_sheet(spreadsheet_url, section):
     # convert sheet to dataframe
     section_sheet = sheet.worksheet(section)
     values = section_sheet.get_all_values()
+    #print(section_sheet.col_values(1, 'FORMULA'))
+    #links = pd.DataFrame(section_sheet.col_values(1, 'FORMULA')[2:])
     section_sheet_df = pd.DataFrame(values[2:])
-  
+
     # rename columns
     col_names = section_sheet_df[0:1].values[0]
     section_sheet_df = section_sheet_df[1:]
     section_sheet_df.columns = col_names
+    #print(section_sheet_df)
     return section_sheet_df
 
 def main():
