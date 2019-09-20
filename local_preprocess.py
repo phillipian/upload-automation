@@ -102,7 +102,7 @@ def fetch_photos(sheet_url):
                     credit = credits[i]
                     break
             if (credit == ''):
-                credit = credits[i][0]+'.'+credits[i][1:]+'/The Phillipian'
+                credit = credits[i][0].upper()+'.'+credits[i][1:].upper()+'/The Phillipian'
 
             photo_credit[paths[i]] = credit
 
@@ -164,7 +164,7 @@ def fetch_illustrations(sheet_url):
 fetch_photos(sheet_url)
 fetch_illustrations(sheet_url)
 # COPY PHOTOS OVER TO SERVER
-#copy_photos_to_server() # TODO: uncomment after done testing
+copy_photos_to_server() # TODO: uncomment after done testing
 
 # FETCH ARTICLES
 for s in sections:
