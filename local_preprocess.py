@@ -17,6 +17,7 @@ import imgprepare_python_2 # TODO: change everything to imgprepare
 import argparse
 import datetime as dt
 import re
+import unidecode
 
 # PARSE COMMAND
 parser = argparse.ArgumentParser(description='Upload articles from the budget spreadsheet.')
@@ -164,7 +165,7 @@ def fetch_illustrations(sheet_url):
 fetch_photos(sheet_url)
 fetch_illustrations(sheet_url)
 # COPY PHOTOS OVER TO SERVER
-copy_photos_to_server() # TODO: uncomment after done testing
+#copy_photos_to_server() # TODO: uncomment after done testing
 
 # FETCH ARTICLES
 for s in sections:
@@ -250,7 +251,7 @@ for s in sections:
             if not inphoto and name not in illus_credit.keys():
                 print('  error: imageDir not found in photo or illustration budget for imagedir '+name)
                 exit(0)
-            caption = helper.fix_characters(caption)
+            caption = (caption)
             article_info['caption'] = caption
             article_info['credit'] = credit
             article_info['img_path'] = img
@@ -264,9 +265,9 @@ for s in sections:
 
         #fix all the strings before writing to json
 
-        headline = helper.fix_characters(headline)
-        writer = helper.fix_characters(writer)
-        category_string = helper.fix_characters(category_string)
+        headline = unidecode.unidecode(headline)
+        writer = unidecode.unidecode(writer)
+        category_string = unidecode.unidecode(category_string)
 
         # prepend info to article text file
         article_info['headline'] = headline.strip() 

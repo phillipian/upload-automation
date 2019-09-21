@@ -9,6 +9,7 @@ import io
 import re
 import json
 import helper
+import unidecode
 
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/drive']
@@ -37,7 +38,7 @@ def article_from_txt(raw_txt, filter_txt):
             article_string = article_string+x
         if ('BOFCXLII' in x):
             copy = True
-    article_string = helper.fix_characters(article_string)
+    article_string = unidecode.unidecode(article_string)
     src['article_content'] = article_string
     with open(filter_txt, 'w') as wf:
         json.dump(src, wf)
