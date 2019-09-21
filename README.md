@@ -34,6 +34,8 @@ New plan: On the local machine, the script will compress images, fetch filtered 
 - [ ] wordpress, wp cli
 - [ ] google drive API (currently using phillipiandev@gmail.com credentials)
 - [ ] gspread
+- [ ] [pytesseract](https://pypi.org/project/pytesseract/)
+- [ ] [unidecode](https://pypi.org/project/Unidecode/)
 ### To Upload Post
 - Section specified via wp-post cli function argument
 - Fill in:
