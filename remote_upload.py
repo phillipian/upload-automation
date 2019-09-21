@@ -15,11 +15,10 @@ import re
 
 #Set up student directory to search author names and emails
 
-with open(os.getcwd()+'/students.json', 'r') as f:
+os.chdir('/home/plipdigital/phillipian.net') # must run script in wordpress installation, so cd
+with open('../students.json', 'r') as f:
     students = json.load(f)
 directory = StudentDirectory(students)
-
-os.chdir('/home/plipdigital/phillipian.net') # must run script in wordpress installation, so cd
 
 server_article_path = '/home/plipdigital/temp_articles/articles/' # path to articles on the server (same as from local script + articles/)
 sections = [ 'News', 'Sports','Commentary', 'Arts', 'The Eighth Page'] # sections to upload
