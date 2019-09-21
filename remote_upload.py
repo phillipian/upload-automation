@@ -9,7 +9,7 @@ from subprocess import call
 from subprocess import check_output
 import helper
 import imgprepare_python_2 # TODO: uncomment, change everything to imgprepare
-import student_directory
+from student_directory import StudentDirectory
 import json
 import re
 
@@ -28,7 +28,11 @@ special_photo_credits = ['Archives', 'Courtesy of ']
 
 def fetch_writer_id(writer_str):
     writer_login = helper.remove_spaces_commas(writer_str).lower()
-    writer_email = directory.search_by_name(writer.split(' ')[0], writer.split(' ')[-1]) 
+    try:
+        writer_email = directory.student_dict[directory.search_by_name(writer.split(' ')[0], writer.split(' ')[-1])[0]]['email']
+        print(writer_email)
+    except:
+        writer_email = writer_login + '@phillipian.net'
     try:
         cmd = 'wp user create ' + writer_login + ' ' + writer_email + " --role='author' --display_name='"+writer+"' --first_name='"+writer.split(' ')[0]+"' --last_name='"+writer.split(' ')[-1]+"' --porcelain"
         writer_id = check_output(cmd, shell=True).strip()
@@ -92,7 +96,7 @@ for article_txt in article_txts: # loop through articles and upload them
             helper.prepend(article_txt+'.txt', image_shortcode)
 
         # POST WITH GIVEN PARAMETERS
-        cmd = "wp post create " + article_txt+'.txt' + " --post_category="+ categories +' --post_status=draft --post_title="'+ headline +'" --porcelain --post_author='+ writer_id + ' ' + more_options.strip()
+        cmd = "wp post create " + article_txt+'.txt' + " --post_category="+ categories +' --post_status=publish --post_title="'+ headline +'" --porcelain --post_author='+ writer_id + ' ' + more_options.strip()
         post_id = check_output(cmd, shell=True)
         print('posted article')
         # CUSTOM AUTHOR UPDATE
