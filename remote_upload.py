@@ -69,10 +69,10 @@ for article_txt in article_txts: # loop through articles and upload them
         writer_id = fetch_writer_id(writer) # fetch writer id number, or create user if writer does not exist
         img = article_info['img_path'].strip()
 
-        article_string = article_info['article_content']
-
+        article_string = article_info['article_content'].encode('utf-8')
+        print(type(article_string))
         with open(article_txt+'.txt', 'wb') as f: 
-            f.write(article_info['article_content'])
+            f.write(article_info['article_content'].encode('utf-8'))
 
         helper.add_line_breaks(article_txt+'.txt')
 
