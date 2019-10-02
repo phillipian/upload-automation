@@ -219,7 +219,10 @@ for s in sections:
             continue
 
         article_txt = fetch_document.get_google_doc(article_doc_url, local_article_path) # fetch article text file
-        category_string = assign_categories(category_slug, article_txt, headline) # assign categories and subcategories
+        if s == 'Multilingual':
+            category_string = category_slug + ',' + languages[i].rstrip()
+        else:
+            category_string = assign_categories(category_slug, article_txt, headline) # assign categories and subcategories
 
         article_info = {}
         with open(article_txt, 'r') as f:
@@ -285,7 +288,6 @@ for s in sections:
         #fix all the strings before writing to json
 
         writer = unidecode.unidecode(writer)
-        category_string = unidecode.unidecode(category_string)
 
         # prepend info to article text file
         article_info['headline'] = headline.strip() 
