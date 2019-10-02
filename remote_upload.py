@@ -21,7 +21,7 @@ with open('../students.json', 'r') as f:
 directory = StudentDirectory(students)
 
 server_article_path = '/home/plipdigital/temp_articles/articles/' # path to articles on the server (same as from local script + articles/)
-sections = [ 'News', 'Sports','Commentary', 'Arts', 'The Eighth Page'] # sections to upload
+sections = [ 'News', 'Sports','Commentary', 'Arts', 'The Eighth Page', 'Multilingual'] # sections to upload
 server_name = 'plipdigital@phillipian.net/home/plipdigital/phillipian.net' # TODO: I'm not sure if this works
 NOPHOTO = 'nophoto'
 special_photo_credits = ['Archives', 'Courtesy of ']
@@ -68,6 +68,8 @@ for article_txt in article_txts: # loop through articles and upload them
         headline = article_info['headline'].strip()
         writer_id = fetch_writer_id(writer) # fetch writer id number, or create user if writer does not exist
         img = article_info['img_path'].strip()
+
+        article_string = article_info['article_content']
 
         with open(article_txt+'.txt', 'wb') as f: 
             f.write(article_info['article_content'])
