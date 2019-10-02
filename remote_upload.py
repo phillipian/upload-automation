@@ -64,17 +64,15 @@ for article_txt in article_txts: # loop through articles and upload them
             more_options = ''
 
         categories = article_info['categories'].strip()
-        for category in categories:
-            category = "'" + category + "'"
         writer = article_info['writer'].strip()
         headline = article_info['headline'].strip()
         writer_id = fetch_writer_id(writer) # fetch writer id number, or create user if writer does not exist
         img = article_info['img_path'].strip()
 
-        article_string = article_info['article_content'].encode('utf-8')
-        print(type(article_string))
+        article_string = article_info['article_content']
+
         with open(article_txt+'.txt', 'wb') as f: 
-            f.write(article_info['article_content'].encode('utf-8'))
+            f.write(article_info['article_content'])
 
         helper.add_line_breaks(article_txt+'.txt')
 

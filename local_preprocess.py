@@ -220,7 +220,7 @@ for s in sections:
 
         article_txt = fetch_document.get_google_doc(article_doc_url, local_article_path) # fetch article text file
         if s == 'Multilingual':
-            category_string = category_slug + ',' + languages[i].rstrip()
+            category_string = category_slug + ',' + "'" + languages[i].rstrip() + "'"
         else:
             category_string = assign_categories(category_slug, article_txt, headline) # assign categories and subcategories
 
