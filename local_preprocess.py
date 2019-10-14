@@ -38,15 +38,15 @@ if (paper_week == None):
 # CONSTANTS
 local_article_path = 'articles/'
 server_article_path = '/home/plipdigital/temp_articles/' # path to articles on the server
-category_slugs = {'Arts':'arts', 'Commentary':'commentary', 'Editorial':'editorial', 'Featured Posts':'featured', 'News':'news', 'Sports':'sports', 'The Eighth Page':'eighthpage'}
-sections = ['News', 'Sports', 'Commentary', 'Arts'] # sections to upload # TODO: 8th pg
+category_slugs = {'Arts':'arts', 'Commentary':'commentary', 'Editorial':'editorial', 'Featured Posts':'featured', 'News':'news', 'Sports':'sports', 'The Eighth Page':'eighthpage', 'Multilingual':'multilingual'}
+#sections = ['News', 'Sports', 'Commentary', 'Arts', 'Multilingual'] # sections to upload # TODO: 8th pg
+sections = ['Multilingual']
 
 # IMG CONSTANTS
 local_img_path = '/Users/Alex/Downloads/digital/' # TODO: fill this in; path to photos in the docker image / local computer
 server_img_path = '/home/plipdigital/wp-photos/'+paper_week+'/' # path to photos on the server
 NOPHOTO = 'nophoto'
 special_photo_credits = ['Archives', 'Courtesy of ']
-category_slugs = {'Arts':'arts', 'Commentary':'commentary', 'Editorial':'editorial', 'Featured Posts':'featured', 'News':'news', 'Sports':'sports', 'The Eighth Page':'eighthpage'}
 
 # GLOBAL VARS
 photo_caption = {'':''} # map photo_dir to caption
@@ -162,8 +162,8 @@ def fetch_illustrations(sheet_url):
         print(illus_df.columns)
 
 
-fetch_photos(sheet_url)
-fetch_illustrations(sheet_url)
+#fetch_photos(sheet_url)
+#fetch_illustrations(sheet_url)
 # COPY PHOTOS OVER TO SERVER
 # copy_photos_to_server() # TODO: uncomment after done testing
 
@@ -172,14 +172,26 @@ for s in sections:
     print('starting section:\t' + s)
     # fetch and verify sheet dataframe content
     section_df = fetch_sheet.get_google_sheet(sheet_url, s)
-    helper.check_columns(section_df, ['Link','ImageDir','Headline','Writer','Featured','Upload'])
+    languages = None
+    img_names = None
+    translators = None
+    featured_posts = None
+    if s == 'Multilingual':
+        helper.check_columns(section_df, ['Link','Translator','Translated Headline','Writer','Language','Upload'])
+        headlines = section_df['Translated Headline'].values
+        translators = section_df['Translator'].values
+        languages = section_df['Language'].values
+        
+    else:
+        helper.check_columns(section_df, ['Link','ImageDir','Headline','Writer','Featured','Upload'])
+        headlines = section_df['Headline'].values
+        img_names = section_df['ImageDir'].values
+        featured_posts = section_df['Featured'].values
 
     article_urls = section_df['Link'].values
-    headlines = section_df['Headline'].values
-    img_names = section_df['ImageDir'].values
     writers = section_df['Writer'].values
     statuses = section_df['Upload'].values
-    featured_posts = section_df['Featured'].values
+    print(translators[0])
 
     category_slug = category_slugs[s] # main category
 
@@ -194,7 +206,11 @@ for s in sections:
         article_doc_url = article_urls[i].rstrip()
         headline = headlines[i].rstrip()
         writer = writers[i].rstrip()
-        featured = featured_posts[i].rstrip()
+        if s == 'Multilingual':
+            writer = writer + ' Translated by ' + translators[i].rstrip()
+            featured = ''
+        else:
+            featured = featured_posts[i].rstrip()
         helper.check_content([article_doc_url, headline, writer])
 
         print('Processing:\t' + headline + ' from ' + s) # progress string
@@ -203,7 +219,10 @@ for s in sections:
             continue
 
         article_txt = fetch_document.get_google_doc(article_doc_url, local_article_path) # fetch article text file
-        category_string = assign_categories(category_slug, article_txt, headline) # assign categories and subcategories
+        if s == 'Multilingual':
+            category_string = category_slug + ',' + "'" + languages[i].rstrip() + "'"
+        else:
+            category_string = assign_categories(category_slug, article_txt, headline) # assign categories and subcategories
 
         article_info = {}
         with open(article_txt, 'r') as f:
@@ -222,7 +241,10 @@ for s in sections:
             category_string += ',featured'
 
         # PROCESS ARTICLE IMAGES
-        img_name = img_names[i].rstrip() # directory name from budget
+        if s == 'Multilingual':
+            img_name = NOPHOTO
+        else:
+            img_name = img_names[i].rstrip() # directory name from budget
         if (NOPHOTO not in img_name and img_name != ''):
             # fetch image (only 1 supported)
             name = str(img_name)
@@ -265,9 +287,7 @@ for s in sections:
 
         #fix all the strings before writing to json
 
-        headline = unidecode.unidecode(headline)
         writer = unidecode.unidecode(writer)
-        category_string = unidecode.unidecode(category_string)
 
         # prepend info to article text file
         article_info['headline'] = headline.strip() 

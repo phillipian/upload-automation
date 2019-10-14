@@ -38,7 +38,7 @@ def article_from_txt(raw_txt, filter_txt):
             article_string = article_string+x
         if ('BOFCXLII' in x):
             copy = True
-    article_string = unidecode.unidecode(article_string)
+    #article_string = unidecode(article_string)
     src['article_content'] = article_string
     with open(filter_txt, 'w') as wf:
         json.dump(src, wf)
