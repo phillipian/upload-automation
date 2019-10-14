@@ -42,7 +42,7 @@ category_slugs = {'Arts':'arts', 'Commentary':'commentary', 'Editorial':'editori
 sections = ['News', 'Sports', 'Commentary', 'Arts'] # sections to upload # TODO: 8th pg
 
 # IMG CONSTANTS
-local_img_path = '/Users/jzpan/digital/' # TODO: fill this in; path to photos in the docker image / local computer
+local_img_path = '/Users/Alex/Downloads/digital/' # TODO: fill this in; path to photos in the docker image / local computer
 server_img_path = '/home/plipdigital/wp-photos/'+paper_week+'/' # path to photos on the server
 NOPHOTO = 'nophoto'
 special_photo_credits = ['Archives', 'Courtesy of ']
@@ -165,7 +165,7 @@ def fetch_illustrations(sheet_url):
 fetch_photos(sheet_url)
 fetch_illustrations(sheet_url)
 # COPY PHOTOS OVER TO SERVER
-#copy_photos_to_server() # TODO: uncomment after done testing
+# copy_photos_to_server() # TODO: uncomment after done testing
 
 # FETCH ARTICLES
 for s in sections:
@@ -217,7 +217,7 @@ for s in sections:
         # if featured article, make timestamp yesterday and add to the featured category
         more_options = ''
         if featured.lower() == 'yes':
-            post_timestamp = (dt.datetime.now()-dt.timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
+            post_timestamp = (dt.datetime.now()+dt.timedelta(minutes=5)).strftime("%Y-%m-%d %H:%M:%S")
             more_options += "--post_date='"+post_timestamp+"'"
             category_string += ',featured'
 
