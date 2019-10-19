@@ -1,0 +1,109 @@
+﻿Glen Cahilly ’23 Uses 3-D Modelling To Create Course Maps
+By Nicole Lee
+BOFCXLII
+When he’s not competing for Andover Boys Cross Country, Glen Cahilly ’23 is working on creating 3-D printed maps of racecourses for the team, including those of Choate, Andover, and Northfield Mount Hermon. 
+Cahilly’s models help the team with its pace as well as allow runners to better visualize the course, according to Head Coach Patrick Rielly and fellow runner, Samuel Capobianco ’21. With a 3-D model, runners can see where inclines and downhill portions of the courses are. 
+“Glen's project is a very creative way to help us think through courses visually. Two-dimensional course maps only give us part of the story, but in three dimensions, we can see elevation changes and get a sense of what the rhythm of running might be,” said Rielly.
+Capobianco added, “We really want a good layout of the course to figure out how we want to run our race and how we want to pace each other so it would be really helpful if we could have a clear layout of the course was like beforehand. On uphills, we need to pace each other and go slower so we can conserve energy. Especially in the later half of the race, it is important that we prepare for those big hills.” 
+Inspired to print different course models by his father, Cahilly got to work figuring out how to put his plan into action. According to Cahilly, he conducted outside research and consulted The Nest for help beginning his project.
+“I did a lot of research trying to figure out the best way to do this and I realized that if you take a run on Strava, [a software used to track running exercises through GPS data], you can upload the GPS data to your computer. From there, I used an online source that converts the data into a 3-D model for you and then I put it into the maker bot software which 3-D prints it,” Cahilly said.  
+According to fellow runners and teammates Douglas Yang ’20 and Capobianco, the course models will allow the team to better prepare for its away meets by allowing it to focus its workouts during the week off the course it will be competing at the coming weekend.
+Yang said, “I think the models come in handy if we can analyze them as a team before practice, so at times we can tailor our workouts to some of the hard parts of the course. It essentially gives us more insight into the course and we can tailor our daily practices to them.”
+Capobianco added, “Say we have an away meet and we have a 3-D model of the layout: we can mimic the course in a workout. If there is a long hill, we might do some tempo pieces to start out workout and then do some long hill pieces at the end to replicate what the course would be like.”
+Following a victory against Choate last Saturday where Andover swept the top five places and earned a perfect score, Cahilly hopes the course models will continue to provide team with helpful insight that will lead to more success this season. 
+“I think it is definitely helpful for my teammates and my own understanding of the courses. Of course, you don’t want to do worse in a race just because you don’t know it well. If you can get a good understanding of the course, and other teams can’t, it’s like a home course advantage, because you can visualize it more easily,” said Cahilly.
+
+
+EOFCXLII 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+TRANSCRIPTIONS
+Glen Cahilly ’23
+Actually I was talking to my dad on FaceTime and we thought that it would be pretty cool if we could print different course maps. From there I did a lot of research trying to figure out the best way to do this and I realized that if you take a run on Strava, you can upload the GPS data to your computer. From there, I used an online source that converts the data into a 3D model for you and then I put it into the maker bot software which 3D prints it. I think the most important part about them is the elevation as the models show the hills very well. For example, one of the courses called the Bobcat Invitational is mainly hills and has no flat parts but also that when you are about a half mile away from the finish, we knew there was a hill, but once I 3D printed it you could see that you are essentially running from the very bottom of the course to the top. Knowing this kind of information for any race would give us a huge tactical advantage to understand the course and what is coming up next. It was partially out of my own curiosity, just to see if I could do it and how it would work. Also, I think it is definitely helpful for my teammates and my own understanding of the courses. Of course, you don’t want to do worse in a race just because you don’t know it well. If you can get a good understanding of the course and other teams can’t it’s like a home course advantage because you can visualize it more easily. I have been able to print Choate, Andover, NMH, and the Bobcat International courses which will be helpful for the rest of the season. One thing I’m still experimenting with is how wide to make the actual path. With the Andover course, I made the path really really wide and I’m not sure if I like that because it takes out some of the little twists and turns. Choate on the other hand I made a much thinner path width so you can see the turns much clearer. Another thing I realized was that if you leave the supports which are automatically generated by the software, it adds a visual appeal because there is a platform which the course can lie on. I hope these courses can even give us a little advantage so we just know the courses better and we don’t do worse just because we haven’t done our due diligence on the courses. 
+
+
+
+
+Patrick Rielly
+Glen's project is a very creative way to help us think through courses visually. Two-dimensional course maps only give us part of the story, but in three dimensions, we can see elevation changes and get a sense of what the rhythm of running might be.
+
+
+
+
+Douglas Yang ’20
+During races, we do our best when we get a good sense of how the terrain looks like as we have to pace ourselves when we go uphill and downhill to conserve our energy as required. It would be nice to know ahead of time before we go out too strong early on and end up being tired when we get to the hills. Glen’s models give really good insight to what the course is like and that can really help us conserve our energy so we can race to the best of our ability. I think the models come in handy if we can analyze them as a team before practice so at times we can tailor our workouts to some of the hard parts of the course. If we see that this course is characterized by rolling hills, one massive hill, or a lot of undulations, we can plan our training accordingly. It essentially gives us more insight into the course and we can tailor our daily practices to them. On an individual level, I would say it could really help our pacing become the most efficient as this is a major factor as to how we race. Whether you start off strong or more conserved makes a big difference in your result. I think as a team, it’ll help us come together under one mentality so we’re all prepared for hard parts together. It is probably a sort of collective acknowledgment of what we’re about to face that could bring us even closer. I believe by analysing the models it will give us a small morale boost as well as get everyone into the racing mindset so we can run together as one and in packs.  
+
+
+Samuel Capobianco ’21
+As a team, we like to know where there are hills and downhills. We really want a good layout of the course to figure out how we want to run our race and how we want to pace each other so it would be really helpful if we could have a clear layout of the course was like beforehand. On uphills, we need to pace each other and go slower so we can conserve energy. Especially in the later half of the race, it is important that we prepare for those big hills. For example, in the 3D model of the sanctuary here at Andover, we were able to see that on Heartbreak Hill we needed to adjust in order to run it accordingly. Say we have an away meet and we have a 3D model of the layout, we can mimic the course in a workout. If there is a long hill, we might do some tempo pieces to start out workout and then do some long hill pieces at the end to replicate what the course would be like. I think these 3D models could definitely improve our performances as we would be able to hone in on certain things to work on more effectively. I believe they would really give us an upper hand against our opponents. It would also allow us to set a race plan according to the elevation and keeping a consistent pace and heart rate. 
+
+
+
+
+[No response]
+Rebecca Hession
+
+
+Claudia Wessner
+
+
+
+
+Han Chin Toh ‘22
+
+
+
+
+Captain Alex Fleury ‘20
+
+
+
+
+Ellerman Mateo ‘21
+
+
+
+
+FOCUS ON WHY HE IS DOING ALL OF THIS
+How would these models of the courses be beneficial to the team?
+How does elevation affect races?
+How could it be used to train?
+What do you hope it does for the team?
+Are there ways to train focused around this idea?
+Will it help the team's performance in the season?

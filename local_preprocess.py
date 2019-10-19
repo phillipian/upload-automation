@@ -39,11 +39,11 @@ if (paper_week == None):
 local_article_path = 'articles/'
 server_article_path = '/home/plipdigital/temp_articles/' # path to articles on the server
 category_slugs = {'Arts':'arts', 'Commentary':'commentary', 'Editorial':'editorial', 'Featured Posts':'featured', 'News':'news', 'Sports':'sports', 'The Eighth Page':'eighthpage', 'Multilingual':'multilingual'}
-#sections = ['News', 'Sports', 'Commentary', 'Arts', 'Multilingual'] # sections to upload # TODO: 8th pg
-sections = ['Multilingual']
+sections = ['News', 'Sports', 'Commentary', 'Arts'] # sections to upload # TODO: 8th pg
+#sections = ['Multilingual']
 
 # IMG CONSTANTS
-local_img_path = '/Users/Alex/Downloads/digital/' # TODO: fill this in; path to photos in the docker image / local computer
+local_img_path = '/Users/jzpan/digital/' # TODO: fill this in; path to photos in the docker image / local computer
 server_img_path = '/home/plipdigital/wp-photos/'+paper_week+'/' # path to photos on the server
 NOPHOTO = 'nophoto'
 special_photo_credits = ['Archives', 'Courtesy of ']
@@ -78,7 +78,7 @@ def copy_article_to_server(article_txt):
 def fetch_photos(sheet_url):
     """fill dictionaries and compress images"""
     photo_df = fetch_sheet.get_google_sheet(sheet_url, 'Photo') # fetch image sheet
-    if ('ImageDir' in photo_df.columns and 'Context/Caption' in photo_df.columns and 'Photographer' in photo_df.columns and 'Section' in photo_df.columns):
+    if ('ImageDir' in photo_df.columns and 'Photographer' in photo_df.columns and 'Section' in photo_df.columns):
         paths = photo_df['ImageDir'].values
         captions = photo_df['Context/Caption'].values
         credits = photo_df['Photographer'].values
@@ -162,10 +162,10 @@ def fetch_illustrations(sheet_url):
         print(illus_df.columns)
 
 
-#fetch_photos(sheet_url)
+fetch_photos(sheet_url)
 #fetch_illustrations(sheet_url)
 # COPY PHOTOS OVER TO SERVER
-# copy_photos_to_server() # TODO: uncomment after done testing
+#copy_photos_to_server() # TODO: uncomment after done testing
 
 # FETCH ARTICLES
 for s in sections:
@@ -191,7 +191,6 @@ for s in sections:
     article_urls = section_df['Link'].values
     writers = section_df['Writer'].values
     statuses = section_df['Upload'].values
-    print(translators[0])
 
     category_slug = category_slugs[s] # main category
 
@@ -277,9 +276,7 @@ for s in sections:
             article_info['caption'] = caption
             article_info['credit'] = credit
             article_info['img_path'] = img
-            #helper.prepend(article_txt, 'caption:\t' + re.sub('\n'," ",caption))
-            #helper.prepend(article_txt, 'credit:\t' + credit)
-            #helper.prepend(article_txt, 'path to img:\t'+img)
+
         else:
             article_info['img_path'] = NOPHOTO
             #helper.prepend(article_txt, 'path to img:\t'+NOPHOTO)
@@ -298,13 +295,5 @@ for s in sections:
 
         with open(article_txt, 'w') as f:
             json.dump(article_info, f)
-        '''
-        helper.prepend(article_txt, 'headline:\t'+headline.strip())
-        helper.prepend(article_txt, 'writer:\t'+writer.strip())
-        helper.prepend(article_txt, 'categories:\t'+category_string.strip())
-        helper.prepend(article_txt, 'more options:\t'+more_options.strip())
-        '''
-        # copy article to server
-        # article_txt_on_server = copy_article_to_server(article_txt)
-        # print('  article file: '+article_txt)
+
 copy_article_to_server(local_article_path)

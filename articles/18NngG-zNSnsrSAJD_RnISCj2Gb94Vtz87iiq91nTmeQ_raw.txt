@@ -1,0 +1,253 @@
+﻿Andover Students Lead Third HackNEHS Hackathon
+Hannah Justicz
+
+
+BOFCXLII
+
+
+Around 130 middle and high school students from the New England area flocked to the Microsoft Burlington Office in Burlington, Mass., for the third Hack New England High Schools (HackNEHS) hackathon Saturday. The event was organized by Anthony Kim ’21, Jeffrey Pan ’21, and Alex Turk ’21.
+The day-long event consisted of keynote speakers, team projects, workshops, and a Q&A panel with professionals. According to Pan, the goal of the hackathon was to meet other students with a  shared interest in technology. Pan, Kim, and Turk first became close at the 2017 hackathon, and inspired by their own passion for technology, decided to host it again.
+“I didn't know either Anthony or Alex very well, but through that event we kind of got to know each other and our shared interest for technology. It formed this kind of special friend group that I'm in now, so I [felt] that I wanted to share that experience with the broader New England community,” said Pan.
+Lauren Lee ’22 attended the event with no prior coding experience and enjoyed the welcoming environment. Lee saw the hackathon as an opportunity to meet new people and learn about coding.
+“Honestly it was just really cool that you could go there and learn things. It was a really cool environment just to meet new people and to take classes and it didn't seem that judgemental about not knowing anything,” said Lee.
+Alex Pedroza ’20 was hesitant to sign up for the event because she had minimal coding experience, but found it empowering to uncover the connection between coding and real world problems. 
+“Going to these seminars kind of gave me an idea of practical uses to some of the languages that are available to learn. So, although they did go very fast and I did get lost at a couple of points it was really helpful to know how I could use these other resources that they were presenting to supplement my knowledge of computer science,” said Pedroza.
+For the competition rounds, groups of four created projects that were judged by a panel at the end of the event. Some projects included a photo vault app disguised as a calculator and a calendar organization app that coordinates events with email. 
+The winning team designed an app that provides information about the threat of the Eastern equine encephalitis (EEE) virus. According to Michael Barker, Director of Academy Research, Information, & Library Services, this project was relevant to surrounding communities, one component of the grading criteria.        
+“The winning project was an app that gauged moisture and humidity in the air and could kind of alert you to EEE. It speaks not only to the life here at Andover, but clearly it's on the mind of other high school students,” said Barker.
+Last spring, Kim, Pan, and Turk applied for an Abbot Grant from the Abbot Academy Fund to support this year’s hackathon, as well as the program’s future. Over the summer, the organizers reached out to other sponsors that allowed the hackathon to host speakers, award prizes, and access a venue.
+“Our biggest sponsor was probably the Abbot Academy Fund, and then beyond that we were really just reaching out to anyone and everyone who [would be] willing to sponsor this hackathon. Anyone who kind of thought that we were doing something that was good for the community and who felt that their company was in the spirit of HackNEHS,” said Turk.
+In the future, Barker hopes to diversify the hackathon for more students who are interested in topics beyond computer science. Barker also looks to change the format of the hackathon.
+Barker said, “We need a more diverse set of students willing to coordinate these things. I would love it if the students that plan these things weren't just computer science students… We need artists and students that wouldn't ordinarily think of themselves as people for hackathons. Certainly by gender, race, class, perspective, I would love to just really have a mix.”
+While Pan found the process of organizing the hackathon to be demanding, he looks forward to leading the event again next year.
+“I'd say it was an incredibly tiring, but very rewarding experience. Overall, I think we're all glad this happened, and we're hoping to do it again next year,” said Pan.
+Editor’s Note: Anthony Kim is a Digital Editor for The Phillipian. Jeffrey Pan and Alex Turk are Associate Digital Editors for The Phillipian. 
+EOFCXLII
+
+
+________________
+
+
+
+
+
+
+Anthony Kim 21, Jeffrey Pan 21, Alex Turk 21:
+
+
+How did you organize the event?
+ Pan:
+I guess where we first wanted to organize it was in our freshman year, some seniors organized this event before, so, as a result, we thought it was really cool, but last year it didnt happen because there was no one there to organize it. We decided we wanted to do it. We made an abbott grant and then we were lucky enough to get the money. Thats how it all got started I guess.
+
+
+Have you been to this event before?
+Kim: As Jeffrey said, back in 2017, when we were freshmen, there seniors who organized this event and we were able to attend as a team. We made a project there, although unsuccessful, we really enjoyed the event and thats why we decided to run this.
+
+
+What kind of planning went into this event?
+Turk: We started spring last year and we've just, over the summer, been gathering sponsors. There's really a lot of things that go into an event of this scale. From sponsors to volunteers to run our workshops, to speakers, getting everything ready for the participants. It was a bit more daunting than we thought.
+
+
+What do you hope attendees will get out of this event?
+Pan: We really wanted attendees to be able to kind of find their interest in technology and find people who are also, likewise, interested in technology. Kind of based off of our experiences the last time we went because back in freshman year, I didn't know either Anthony or Alex very well, but through that event we kind of got to know each other and our shared interest for technology. Its formed this kind of special friend group that I'm in now so I feel that I wanted to share that experience with the broader new england community.
+
+
+What happened at the event?
+Kim: We were at the same time organizers, mentors, judges, and organizing the food, cleaners. We basically just ran around everywhere trying to get everyone settled. Giving announcements of when things are. Giving help if they're in need of some help with technology and just ran around a whole lot.
+
+
+What was your favorite part of the event?
+Pan: I'd say that our keynote was very well done. Our keynote speech was done by Dr. John Cohn who is an IBM fellow over at the MIT-IBM Watson [AI] Lab. He is this pretty old dude but he's still really cool and interested in technology. Kind of like wacky, likes to make cool stuff. Just talking about his years of experience in tech and how thats ultimately informed his life. He likes to play around and make cool projects. I feel that really inspired a lot of people.
+
+
+Do you hope to organize more trips like this in the future?
+Kim: Yeah, for sure next year we're hoping to run HackNEHS again. This time, with more sponsors, with more organizers. On a larger scale and we're also planning to run similar projects with large scale events in the future.
+
+
+What kind of sponsors were they?
+Turk: Our biggest sponsor was probably the Abbot Academy Fund and then beyond that we were really just reaching out to anyone and everyone that would who was willing to sponsor this hackathon. We were sponsored by dominos, just anyone who kind of thought that we were doing something that was good for the community and who felt that their company was in the spirit of HackNEHS. 
+
+
+Kim: In addition to the Abbot Academy Fund, dominos, cadence, Microsoft with the venue and technological help, the OWHL, IBM, and others.
+
+
+Other schools in NE came right?
+Pan: We made it open to kind of like anyone in the New England area to attend thats a middle or high school student so we got a lot of attendees from a lot of different schools. Off the top of my head, I could not tell you like the comprehensive list of which schools but its definitely a range of 10-20 schools that attended.
+
+
+How many attendees were there?
+Kim: So we got a total of around 195 sign ups. The total turn out was 130. For the schools, we had a good mix of private and public schools too. I guess for private schools there were schools like Groton, Exeter, Choate signed up to come, but were able to because of travel issues. Middlesex students came and in total, a lot of public high school and middle school students around the New England area were able to participate.
+
+
+Do you have any ideas for growth for next year?
+Pan: So, that's actually a lot, I could go on on a long list. So this, was our first time organizing a hackathon, or any event in general. We had to work through a lot of the difficulties. There was just stuff we didn't think of before, for example, we didnt think of 'Oh we need liability forms and waivers and stuff' because organizing an event you don't really think about that. But once you start to organize such an event you realize oh wait we need to take care of all these liability and legal issues in addition to what the actual event is. I guess to answer that question, we just hope that in the future, we can get more experience, and with that experience, also find more organizers because this year we found ourselves doing a lot of work. So, we're hoping we can get more organizers to take turns to kind of help us out with that work and expand this hackathon.
+
+
+Would those organizers be from Andover?
+Kim: No were hoping to have this as a merged effort between different schools so this year we had organizers from Andover, Exeter, and Choate. We're hoping to continue that effort and gathering efforts from various schools.
+
+
+Were there any changes that you made from when you were freshmen?
+We definitely added the keynote speaker and a speaker panel from professionals in the technology field. The prizes were also different, of course. We were also able to get a book sponsorship. So we were able to do a raffle to give out books as prizes.
+
+
+What books did you give out?
+We got a sponsorship from the writer of Screen Queens which is a book about female coders facing the gender inequality in the STEM field. 
+
+
+Do you guys have anything else to add?
+Pan: I guess just as an overall summary, I'd say it was just an incredibly tiring but very rewarding experience. Overall, I think we're all glad this happened and we're hoping to do it again next year. 
+
+
+Once you guys graduate are you hoping for it to continue?
+Kim: We deliberately chose some lower classmen organizers to help out at the event. In our Abbot Grant pitch we talked about how this event would continue on event after we graduate and we will kind of train lower classmen organizer to kind of learn and gather experience so HackNEHS will successfully run from there on.
+
+
+Mr Barker:
+Michael Barker
+
+
+What exactly is HackNEHS?
+That stands for hack new england high schools. It was a simple idea around, I think it was born 3-4 years ago from some students that participated in a first hackathon here we called hack andover. They decided to do something really cool or they thought it would be cool to do something bigger. They changed it to hack new england high schools. So thats how that started.
+
+
+Are you looking forward to the event next year?
+I look forward to it every year. I think it’s one of the more fun events that I get to participate in each year. Also, I kind of like the mission of it and would even hope that in future years we expand on it where it provides an opportunity for a lot of high school students to try computer science in kind of a stress free environment. And the opportunity of being taught for at least an hour by some of the best high school computer science teachers in the country, Dr. Zufelt and Maria Litvin both participated this year. Its fun to give back in that way and kind of realize the private school for a public purpose idea. 
+
+
+What was your favorite part?
+Ive had different favorite parts each year, or, each different year. I think I was introduced to the song Pineapple Pen in the middle of one of these hackathons and subsequently shared that song with my son and daughter. So, Pineapple Pen has become an iconic song in my family now because of HackNEHS. But honestly if I were to answer the question seriously there have been moments where students show up without a team and we have a moment where you can network together and just basically youre meeting somebody for the first time. to think that 2 people who have never met before can kind of meet up, learn a little bit of code, share some ideas, come up with an idea, and by the end of the day they're pitching this idea to a group of judges, some of whom are very esteemed in the computer science world. I kinda think that's courageous and neat in so many different ways. I've seen that happen multiple times and thats kind of my favorite part of the day.
+
+
+What was your role in the event?
+This year was lighter than it is usually because the students involved were so on top of the game. HackNEHS now has a template that we can work from. The first couple years they didn't so I'm happy to provide some support and mentorship about planning the day out. Some financial resources just to get us there. Then occasionally these events have required a keynote speaker or somebody willing to kind of talk to students and be on a panel. This year that was all covered, the students did that themselves. Really, nothing this year other than just being there and making sure I asked a few questions to make sure they were thinking of some things. Which is great you know I love when events like this are completely student driven.
+
+
+For the competition, what were the projects graded on?
+There was a rubric. Some of it was around the novelty of it because I think there was an emphasis on creativity. Some of it was on if they used technical tools in the right way or the most efficient way to make their app or whatever they were pitching. The feasibility of it was certainly an up-scoring part. There were 4 points of the presentation. Some of it was the clarity of the presentation. Some of it was were they aware of the audience they were talking to. But also, a key part is did they demonstrate in their presentation that everybody in the group or team work on the app. It wasnt just one person with three people kind of watching. We looked for teamwork in that way. 
+
+
+What was the winning project?
+So the winning project was an app that gaged moisture and humidity in the air and could kind of alert you to triple E. So its kind of interesting it speaks not only to the life here at Andover, were all dealing with that. But, clearly its on the mind of other high school students. It was also the first time hackNEHS was not won by an Andover team. which actually was great to me because you dont want to throw a hackathon and always win it. That was one of the winning ones. Another one that was playful that I really liked was they game-ified picking up garbage. You got points for going around town picking up pieces of garbage.
+
+
+What do you hope for HackNEHS in the future?
+I would love for a much more broader diversity in the kinds of kids we attract to these things. I really want to get way past the idea that this is just for coders or comp sci kids. Id really like to find students that are a little bit beyond our own bubble. Certainly theres a lot of students from public schools but I would love to get even farther out into Boston public schools. We really wanna think also about different ways to format hackathons. We've done the kind of same things a few times. id love to kind of hack it.
+
+
+What are steps that would help you guys do that?
+we need a more diverse set of students willing to coordinate these things. I would love it if the students that plan these things weren't just computer science students. If thats even a thing here. We need more students than just the comp sci club to put these sort of things together and we need artists and students that wouldn't ordinarily think of themselves as people for hackathons. Certainly by gender, race, class, perspective, I would love to just really have a mix.
+
+
+
+
+
+
+Email:
+
+
+ Hack New England High Schools (HackNEHS) is a hackathon run by high school students for high school students to explore new areas in tech, design individual projects, and solve real-world problems. Through this event, tech enthusiasts will hone their skills in a low-pressure environment, form new relationships with like-minded participants, and gain experience in the design process. HackNEHS is also open to any high school students, so feel free to forward this invite or the registration link below to any friends you might want to see there. 
+ 
+We will provide all necessary transportation from campus, food, materials, and space for our participants to HACK! Participation is limited to 45 students due to bus seating limitations.  The bus leaves at 7:00am from the day student drop off on Salem Street. The bus will likely return around 9:30pm so participating students will likely need to commit the day to this program. 
+ 
+Come Hack With Us!  Register here: http://hacknehs.org/
+ 
+Should you have any questions, please do not hesitate email info@hacknehs.org.
+ 
+A special shout out to Anthony Kim ’21, Jeffrey Pan ’21, and Alex Turk ’21 for putting this event together!
+ 
+Additional thanks to the Abbot Academy Association for funding this event.
+
+
+Interview:
+
+
+Alex Pedroza 20
+Why did you choose to attend this event?
+So, I have very little coding experience so I wasn't completely sold on the idea of going to a full day hackathon. So when Mr. Barker sent out the e-mail I was really skeptical, but then I was convinced by some of the coordinators and they sold it really well. I signed up very last minute and I was just looking forward to learning a lot because of this lack of computing experience. So I think it was a beneficial experience. 
+
+
+What did you do in the day?
+At the beginning we had a keynote speaker who came to talk to us about the value of having fun and playing within the world of computer science and problem solving. That was in the morning. Then we split up into groups of 4 people. We brainstormed solutions to a current problem that fell under one of the 4 themes that they had. We basically worked on creating a solution to one of these problems. So my team, Gayatri was kind of the mastermind of our team. Kind of the brain of our team. So we brainstormed this solution to solve privacy issues that affect all of us with regards to our cell phones. So she kind of coded the app and we kind of helped her with moral support and other support with aspects of the presentation. She basically coded this app that would protect your photos and keep them in a private vault. All using the interface of a calculator. It was a functioning calculator to everyone else but then you would have to input a password and then it would open to the vault. That took all day. Then, by the end of the day, we were judged on our pitch, on the pitch of our product, and the presentation. Then, after that, final lists were declared. We also had a panel of keynote speakers which was later on. Maybe not keynote but just like guest speakers. We got to ask some questions about their careers in tech and basically their favorite things and advice for younger people. 
+
+
+What was your favorite part of the day?
+
+
+My favorite part of the day were the 2 seminars that I attended in the middle of the day because like I said I don't have very much computer science experience but going to these seminars kind of gave me an idea of practical uses to some of the languages that are kind of available to learn. So, although they did go very fast and I did get lost at a couple of points it was really helpful to know how I could use these other resources that they were presenting to kind of supplement my knowledge of computer science. So, they were really helpful.
+
+
+Were you thinking about doing more computer science in the future?
+Yeah so I took comp sci 470, python, in the winter and now im taking comp sci 500. So, Java. In the future, I would like to learn other languages but also just continue to learn more in deptha bout Java and python. Its a lot of problem solving. Its a lot like puzzles which I really like. But I would like to get to the point where I'm comfortable enough with either language to get to, again, like the theme of the hackathon, just get to come up to solutions to problems in the real world.
+
+
+You liked the connection between actually using problems?
+Yeah, so something I was kind of concerned about was after I took the winter course, I was super happy with what I had learned and I was really curious to keep learning more about python, but I kept wondering what the connection was between what I was learning and how I could apply it to anything else. So, yesterday at the hackathon that connection was made for me where I can actually use this language and this information to implement very real world solutions to very relevant problems and so, in that way, it was actually pretty empowering. Just knowing that, with time, once I become comfortable enough, I can do what all of my peers did yesterday and just create these new things that will be helpful to society as a whole.
+
+
+Lauren Lee 22
+
+
+I had no coding experience before attending the event so I really wanted to get some and they said you didnt really need to have any prior experience. They also said there would be a bunch of speaker panels and classes that you could take.
+
+
+What did you do at the event?
+We left really early in the morning and then once we got there. Basically, the thing was that you had 10 hours to work on a project. Then, they also had classes for people who didn't have much experience. So, I took 2 classes and tried to help with the project. I don't know how helpful I was.
+
+
+So there was one large project?
+There were teams of people. Each working on their own project and then at the end all the projects were judged and winners were chosen.
+
+
+How were you put on a team?
+We got chose our own teams. 
+
+
+Were you with people from Andover?
+Yeah. 
+Did the other people on your team have coding experience?
+Yeah, they all pretty much did.
+
+
+Were you one of the only people without experience?
+I think most people there had some form of experience and I had literally nothing. There were other people who had experience in some things.
+
+
+What did you like about the day?
+Honestly it was just really cool that you could go there and learn things. It was a really cool environment just to meet new people and to take classes and it didn't seem that judgemental about not knowing anything.
+
+
+Did you meet people from other schools?
+Yeah I think there were Exeter people and I'm not sure where else, but yeah. 
+
+
+Would you go this event again next year?
+Yeah.
+Do you think you would want to be more involved in coding at Andover in the future?
+Yeah Im taking a class now but we havent done enough yet. 
+
+
+What was your favorite part about the day?
+Probably just one of the classes I took, it was really cool. It was an intro to web-scraping class using python. So basically they just taught us some really elementary python and HTML and then showed us how to use it.
+
+
+Dongcheng Han 23
+
+
+How was your experience at HackNEHS?
+
+
+Coming to HackHEHS was a pretty good experience. We started off with our idea around 4 different topics and points about efficiency, environment, privacy, and also ethics. Our product had to be around any of these 4 points. Things outside of it were also accepted but they were different. My experience was overall that it was pretty innovative and brought me some new opportunities. We made a calendar app and we're actually going to make it into a real app. As a group in Andover even after the hackathon. It was also a place where I got to meet a lot of people whether adults or high schoolers who are also interested in technology.
+
+
+Did you have coding experience before?
+Yes I started off with Python and went on to C++ and Im currently doing USACO??
+We found out that with different technology, you dont really have to be a professional technician, or website designer or programmer to actually make something you want. Theres just tons of resources that allows you to make something you want without having the technology to do it. Coding wasnt needed but if you have coding and  people who are really good at technology then it would be a huge advantage for your team.
+
+
+we made an app about a calendar where you can link resources input from outlook. From your school calendar and from other clubs which send you information. Our calendar app is called Chronos. It can ultimately capture it and it can actually sit inside of chronos. You can press yes or no to accept the agenda. If its accepted our artificial intelligence. We're actually looking forward to making the app by ourselves. Hackathon isn’t just about winning or getting the competition done. Its also about meeting people that will help you with your technology future endeavors. 
+
+
+
+
+We made a calendar app, and we're actually going to make it into a real app as a group in Andover even after the hackathon. It was also a place where I got to meet a lot of people whether adults or high schoolers who are also interested in technology. My experience was overall that it was pretty innovative and brought me some new opportunities.
