@@ -1,2 +1,4 @@
 # ignore student directory
 students.json
+*.json
+*.txt
