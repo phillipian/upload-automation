@@ -71,10 +71,10 @@ for article_txt in article_txts: # loop through articles and upload them
 
         article_string = article_info['article_content']
 
-        with open(article_txt+'.txt', 'wb') as f: 
-            f.write(article_info['article_content'])
+        with open(article_txt[:-5]+'.txt', 'wb') as f: 
+            f.write(article_info['article_content'].encode('utf8'))
 
-        helper.add_line_breaks(article_txt+'.txt')
+        helper.add_line_breaks(article_txt[:-5]+'.txt')
 
         headline = re.sub('"','\\"',headline) # escape double quotes
 
@@ -95,14 +95,14 @@ for article_txt in article_txts: # loop through articles and upload them
             img_url = helper.media_url_to_img_url(img_url, img.split('/')[-1])
 
             image_shortcode = imgprepare_python_2.img_for_post_content(img_url, caption, credit)
-            helper.prepend(article_txt+'.txt', image_shortcode)
+            helper.prepend(article_txt[:-5]+'.txt', image_shortcode)
 
         # POST WITH GIVEN PARAMETERS
-        cmd = "wp post create " + article_txt[:-4]+'.txt' + " --post_category="+ categories +' --post_status=publish --post_title="'+ headline +'" --porcelain --post_author='+ writer_id + ' ' + more_options.strip()
+        cmd = "wp post create " + article_txt[:-5]+'.txt' + " --post_category="+ categories +' --post_status=publish --post_title="'+ headline +'" --porcelain --post_author='+ writer_id + ' ' + more_options.strip()
         post_id = check_output(cmd, shell=True)
         print('posted article')
-        call("mv " + article_txt[:-4]+'.txt' + " uploaded", shell=True)
-        call("mv " + article_txt + " uploaded", shell=True) 
+        call("mv " + article_txt[:-5]+'.txt ' + server_article_path + "uploaded/", shell=True)
+        call("mv " + article_txt + " " + server_article_path + "uploaded/", shell=True) 
         # CUSTOM AUTHOR UPDATE
         # cmd = 'wp post get ' + post_id[:-1] + ' --field=post_author'
         # user_num = check_output(cmd, shell=True)[:-1]
