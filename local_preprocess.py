@@ -114,7 +114,7 @@ def fetch_photos(sheet_url):
             ind = 0
             while (imgs[ind][0] == '.'): # skip hidden directories ('.anything')
                 ind += 1
-            if (imgs[ind][0] != '0'): # compress if not already compressed
+            if (imgs[ind].split('_')[0] != 'Compressed'): # compress if not already compressed
                 print('compressing '+full_path)
                 img = full_path+'/'+imgs[ind]
                 img = imgprepare_python_2.compress_img(img, 30) # TODO: use imgprepare
@@ -165,7 +165,7 @@ def fetch_illustrations(sheet_url):
 fetch_photos(sheet_url)
 #fetch_illustrations(sheet_url)
 # COPY PHOTOS OVER TO SERVER
-#copy_photos_to_server() # TODO: uncomment after done testing
+copy_photos_to_server() # TODO: uncomment after done testing
 
 # FETCH ARTICLES
 for s in sections:
@@ -235,7 +235,7 @@ for s in sections:
         # if featured article, make timestamp yesterday and add to the featured category
         more_options = ''
         if featured.lower() == 'yes':
-            post_timestamp = (dt.datetime.now()+dt.timedelta(minutes=5)).strftime("%Y-%m-%d %H:%M:%S")
+            post_timestamp = (dt.datetime.now()+dt.timedelta(minutes=15)).strftime("%Y-%m-%d %H:%M:%S")
             more_options += "--post_date='"+post_timestamp+"'"
             category_string += ',featured'
 

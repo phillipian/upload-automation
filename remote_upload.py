@@ -98,9 +98,11 @@ for article_txt in article_txts: # loop through articles and upload them
             helper.prepend(article_txt+'.txt', image_shortcode)
 
         # POST WITH GIVEN PARAMETERS
-        cmd = "wp post create " + article_txt+'.txt' + " --post_category="+ categories +' --post_status=publish --post_title="'+ headline +'" --porcelain --post_author='+ writer_id + ' ' + more_options.strip()
+        cmd = "wp post create " + article_txt[:-4]+'.txt' + " --post_category="+ categories +' --post_status=publish --post_title="'+ headline +'" --porcelain --post_author='+ writer_id + ' ' + more_options.strip()
         post_id = check_output(cmd, shell=True)
         print('posted article')
+        call("mv " + article_txt[:-4]+'.txt' + " uploaded", shell=True)
+        call("mv " + article_txt + " uploaded", shell=True) 
         # CUSTOM AUTHOR UPDATE
         # cmd = 'wp post get ' + post_id[:-1] + ' --field=post_author'
         # user_num = check_output(cmd, shell=True)[:-1]
