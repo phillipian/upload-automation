@@ -38,8 +38,8 @@ if (paper_week == None):
 # CONSTANTS
 local_article_path = 'articles/'
 server_article_path = '/home/plipdigital/temp_articles/' # path to articles on the server
-category_slugs = {'Arts':'arts', 'Commentary':'commentary', 'Editorial':'editorial', 'Featured Posts':'featured', 'News':'news', 'Sports':'sports', 'The Eighth Page':'eighthpage', 'Multilingual':'multilingual'}
-sections = ['News', 'Sports', 'Commentary', 'Arts'] # sections to upload # TODO: 8th pg
+category_slugs = {'Arts':'arts', 'Commentary':'commentary', 'Editorial':'editorial', 'Featured Posts':'featured', 'News':'news', 'Sports':'sports', 'The Eighth Page':'eighthpage', 'Multilingual':'multilingual', 'Editorial':'editorial'}
+sections = ['News', 'Sports', 'Commentary', 'Arts', 'Editorial'] # sections to upload # TODO: 8th pg
 #sections = ['Multilingual']
 
 # IMG CONSTANTS
@@ -165,7 +165,7 @@ def fetch_illustrations(sheet_url):
 fetch_photos(sheet_url)
 #fetch_illustrations(sheet_url)
 # COPY PHOTOS OVER TO SERVER
-copy_photos_to_server() # TODO: uncomment after done testing
+#copy_photos_to_server() # TODO: uncomment after done testing
 
 # FETCH ARTICLES
 for s in sections:

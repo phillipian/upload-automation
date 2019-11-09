@@ -21,7 +21,7 @@ with open('../students.json', 'r') as f:
 directory = StudentDirectory(students)
 
 server_article_path = '/home/plipdigital/temp_articles/articles/' # path to articles on the server (same as from local script + articles/)
-sections = [ 'News', 'Sports','Commentary', 'Arts', 'The Eighth Page', 'Multilingual'] # sections to upload
+sections = [ 'News', 'Sports','Commentary', 'Arts', 'The Eighth Page', 'Multilingual', 'Editorial'] # sections to upload
 server_name = 'plipdigital@phillipian.net/home/plipdigital/phillipian.net' # TODO: I'm not sure if this works
 NOPHOTO = 'nophoto'
 special_photo_credits = ['Archives', 'Courtesy of ']
