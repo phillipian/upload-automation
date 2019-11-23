@@ -103,7 +103,7 @@ def fetch_photos(sheet_url):
                     credit = credits[i]
                     break
             if (credit == ''):
-                credit = credits[i][0].upper()+'.'+credits[i][1:].upper()+'/The Phillipian'
+                credit = credits[i]+'/The Phillipian'
 
             photo_credit[paths[i]] = credit
 
@@ -120,6 +120,50 @@ def fetch_photos(sheet_url):
                 img = imgprepare_python_2.compress_img(img, 30) # TODO: use imgprepare
     else:
         print('error: missing col')
+
+def fetch_graphics(sheet_url):
+    graphics_df = fetch_sheet.get_google_sheet(sheet_url, 'Graphic') #fetch illustration sheet
+    if ('ImageDir' in graphics_df.columns and 'Designer' in graphics_df.columns and 'Section' in graphics_df.columns):
+        paths = graphics_df['ImageDir'].values
+        credits = graphics_df['Designer'].values
+        sections = graphics_df['Section'].values
+        do_upload = graphics_df['Upload?'].values
+
+        if(not(len(paths) == len(credits)) or not(len(paths) == len(sections))):
+            print('error: graphic budget columns not the same length')
+            exit(0)
+
+        # fill dictionaries
+        for i in range(len(paths)):
+            if (paths[i] == ''):
+                print('missing imagedir')
+                continue
+            if(credits[i] == ''):
+                print('missing credit')
+                continue
+            if paths[i] == NOPHOTO:
+                print('no photo')
+                continue
+            
+
+            credit = ''
+            if (credit == ''):
+                credit = credits[i]+'/The Phillipian'
+            graphics_credit[paths[i]] = credit
+            # compress image
+            full_path = local_img_path+sections[i].lower()+'/'+paths[i]
+            imgs = os.listdir(full_path)
+            ind = 0
+            while (imgs[ind][0] == '.'): # skip hidden directories ('.anything')
+                ind += 1
+            if imgs[ind][0] != '0':
+                print('compressing '+full_path)
+                img = full_path+'/'+imgs[ind]
+                img = imgprepare_python_2.compress_img(img, 30) # TODO: use imgprepare
+    else:
+        print('error: missing col')
+        print(graphics_df.columns)
+    
 def fetch_illustrations(sheet_url):
     illus_df = fetch_sheet.get_google_sheet(sheet_url, 'Illustrations!') #fetch illustration sheet
     if ('ImageDir' in illus_df.columns and 'Illustrator' in illus_df.columns and 'Section' in illus_df.columns):
@@ -145,7 +189,7 @@ def fetch_illustrations(sheet_url):
 
             credit = ''
             if (credit == ''):
-                credit = credits[i][0] + '.' + credits[i].split(' ')[1]+'/The Phillipian'
+                credit = credits[i]+'/The Phillipian'
             illus_credit[paths[i]] = credit
             # compress image
             full_path = local_img_path+sections[i].lower()+'/'+paths[i]
@@ -163,9 +207,10 @@ def fetch_illustrations(sheet_url):
 
 
 fetch_photos(sheet_url)
-#fetch_illustrations(sheet_url)
+fetch_illustrations(sheet_url)
+fetch_graphics(sheet_url)
 # COPY PHOTOS OVER TO SERVER
-#copy_photos_to_server() # TODO: uncomment after done testing
+copy_photos_to_server() # TODO: uncomment after done testing
 
 # FETCH ARTICLES
 for s in sections:
