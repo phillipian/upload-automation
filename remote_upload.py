@@ -64,9 +64,9 @@ for article_txt in article_txts: # loop through articles and upload them
             more_options = ''
 
         categories = article_info['categories'].strip()
-        writer = article_info['writer'].strip()
+        writer_list = article_info['writer']
         headline = article_info['headline'].strip()
-        writer_id = fetch_writer_id(writer) # fetch writer id number, or create user if writer does not exist
+        writer_ids = [fetch_writer_id(writer) for writer in writer_list] # fetch writer id number, or create user if writer does not exist
         img = article_info['img_path'].strip()
 
         article_string = article_info['article_content']

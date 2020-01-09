@@ -25,22 +25,25 @@ parser.add_argument('--url', metavar='URL', type=str, nargs='?',
                     help='url of the budget spreadsheet as it appears in the browser')
 parser.add_argument('--date', metavar='DATE', type=str, nargs='?',
                     help='date for the paper as it appears in Drobo file directory, ex: 3-29')
+parser.add_argument('--sections', metavar='SECT', type=str, default='arts, commentary, editorial, news, sports, multilingual', help='Comma seperated list of sections to upload')
 args = parser.parse_args()
 sheet_url = args.url
 paper_week = args.date
-if (sheet_url == None):
-    print('Error: no sheet_url provided')
-    exit(0)
-if (paper_week == None):
-    print('Error: no sheet_url provided')
-    exit(0)
+
+ALL_SECTIONS = ['News', 'Sports', 'Commentary', 'Arts', 'Editorial', 'Multilingual'] # list of valid sections # TODO: 8th pg
+sections = args.sections.split(',')
+sections = [i.strip().lower().capitalize() for i in sections] #ensure section strings are all lowercase and wwhitespace-stripped
+
+for section in sections: #verify that all section strings are legit
+    assert section in ALL_SECTIONS, "Error: section string {} doesn't seem to be supported — might want to check your spelling".format(section)
+
+assert sheet_url != None, 'Error: no sheet_url provided'
+assert paper_week != None, 'Error: no sheet_url provided'
 
 # CONSTANTS
 local_article_path = 'articles/'
 server_article_path = '/home/plipdigital/temp_articles/' # path to articles on the server
 category_slugs = {'Arts':'arts', 'Commentary':'commentary', 'Editorial':'editorial', 'Featured Posts':'featured', 'News':'news', 'Sports':'sports', 'The Eighth Page':'eighthpage', 'Multilingual':'multilingual', 'Editorial':'editorial'}
-sections = ['News', 'Sports', 'Commentary', 'Arts', 'Editorial'] # sections to upload # TODO: 8th pg
-#sections = ['Multilingual']
 
 # IMG CONSTANTS
 local_img_path = '/Users/jzpan/digital/' # TODO: fill this in; path to photos in the docker image / local computer
@@ -84,9 +87,8 @@ def fetch_photos(sheet_url):
         credits = photo_df['Photographer'].values
         sections = photo_df['Section'].values
 
-        if (not (len(paths) == len(captions) and len(captions) == len(credits))):
-            print('error: photo budget columns not the same length')
-            exit(0)
+        assert len(paths) == len(captions), 'error: photo budget columns not the same length'
+        assert len(captions) == len(credits), 'error: photo budget columns not the same length'
 
         for i in range(len(paths)):
             if (paths[i].lower() == 'nophoto' or paths[i] == '' or sections[i] == ''): # skip empty fields
@@ -129,9 +131,8 @@ def fetch_graphics(sheet_url):
         sections = graphics_df['Section'].values
         do_upload = graphics_df['Upload?'].values
 
-        if(not(len(paths) == len(credits)) or not(len(paths) == len(sections))):
-            print('error: graphic budget columns not the same length')
-            exit(0)
+        assert len(paths) == len(credits), 'error: graphic budget columns not the same length'
+        assert len(paths) == len(sections), 'error: graphic budget columns not the same length'
 
         # fill dictionaries
         for i in range(len(paths)):
@@ -171,9 +172,8 @@ def fetch_illustrations(sheet_url):
         credits = illus_df['Illustrator'].values
         sections = illus_df['Section'].values
 
-        if(not(len(paths) == len(credits)) or not(len(paths) == len(sections))):
-            print('error: illustration budget columns not the same length')
-            exit(0)
+        assert len(paths) == len(credits), 'error: illustration budget columns not the same length'
+        assert len(paths) == len(sections), 'error: illustration budget columns not the same length'
 
         # fill dictionaries
         for i in range(len(paths)):
@@ -206,11 +206,11 @@ def fetch_illustrations(sheet_url):
         print(illus_df.columns)
 
 
-fetch_photos(sheet_url)
-fetch_illustrations(sheet_url)
-fetch_graphics(sheet_url)
+#fetch_photos(sheet_url)
+#fetch_illustrations(sheet_url)
+#fetch_graphics(sheet_url)
 # COPY PHOTOS OVER TO SERVER
-copy_photos_to_server() # TODO: uncomment after done testing
+#copy_photos_to_server() # TODO: uncomment after done testing
 
 # FETCH ARTICLES
 for s in sections:
@@ -221,7 +221,7 @@ for s in sections:
     img_names = None
     translators = None
     featured_posts = None
-    if s == 'Multilingual':
+    if s == 'multilingual':
         helper.check_columns(section_df, ['Link','Translator','Translated Headline','Writer','Language','Upload'])
         headlines = section_df['Translated Headline'].values
         translators = section_df['Translator'].values
@@ -250,8 +250,18 @@ for s in sections:
         article_doc_url = article_urls[i].rstrip()
         headline = headlines[i].rstrip()
         writer = writers[i].rstrip()
-        if s == 'Multilingual':
-            writer = writer + ' Translated by ' + translators[i].rstrip()
+
+        # Deal with multiple authors
+        if '&' in writer:
+            writer_list = writer.split('&')
+            writer_list = [i.strip() for i in writer_list]
+        elif ' and ' in writer:
+            writer_list = writer.split(' and ')
+            writer_list = [i.strip() for i in writer_list]
+        else:
+            writer_list = [writer]
+        if s == 'multilingual':
+            writer_list.append(translators[i].rstrip())
             featured = ''
         else:
             featured = featured_posts[i].rstrip()
@@ -263,7 +273,7 @@ for s in sections:
             continue
 
         article_txt = fetch_document.get_google_doc(article_doc_url, local_article_path) # fetch article text file
-        if s == 'Multilingual':
+        if s == 'multilingual':
             category_string = category_slug + ',' + "'" + languages[i].rstrip() + "'"
         else:
             category_string = assign_categories(category_slug, article_txt, headline) # assign categories and subcategories
@@ -285,7 +295,7 @@ for s in sections:
             category_string += ',featured'
 
         # PROCESS ARTICLE IMAGES
-        if s == 'Multilingual':
+        if s == 'multilingual':
             img_name = NOPHOTO
         else:
             img_name = img_names[i].rstrip() # directory name from budget
@@ -329,11 +339,9 @@ for s in sections:
 
         #fix all the strings before writing to json
 
-        writer = unidecode.unidecode(writer)
-
         # prepend info to article text file
         article_info['headline'] = headline.strip() 
-        article_info['writer'] = writer.strip()  
+        article_info['writer'] = writer_list
         article_info['categories'] = category_string.strip() 
         article_info['more_options'] = more_options.strip() 
         #article_info['article_txt'] = article

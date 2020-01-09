@@ -2,3 +2,7 @@
 students.json
 *.json
 *.txt
+.vscode
+articles
+.pyc
+.DS_Store
