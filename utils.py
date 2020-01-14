@@ -6,6 +6,9 @@ import json
 os.chdir('/home/plipdigital/phillipian.net') # must run script in wordpress installation, so cd
 
 def fix_emails():
+    '''
+    Usage: properly assign Andover emails to author accounts that don't have legit emails
+    '''
     with open('../students.json', 'r') as f:
         students = json.load(f)
     directory = StudentDirectory(students)
@@ -35,6 +38,15 @@ def fix_emails():
         except:
             continue
 
+def fix_authors():
+    '''
+    Usage: deal with previous "and" authors that are now bad
+    '''
+    user_command = 'wp user list --role=author --fields=ID'
+    user_id_list = subprocess.check_output(user_command, shell=True).split('\n')
+    name_list = subprocess.check_output('wp user list --role=author --fields=display_name', shell=True).split('\n')
+    info_list = zip(user_id_list, name_list)
+    print(info_list)
 
 def fix_jeffreys_life():
     raise NotImplementedError
