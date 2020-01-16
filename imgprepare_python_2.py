@@ -6,7 +6,7 @@ def img_for_post_content(url, caption, credit):
     img_markdown = "<img src='"+url.strip()+"' />"
 
     if credit.strip():
-        img_markdown = "[media-credit name='"+credit+"']"+img_markdown+"[/media-credit]"
+        img_markdown = "[media-credit id='"+credit+"']"+img_markdown+"[/media-credit]"
 
     if caption.strip():
         img_markdown = "[caption]"+img_markdown+" "+caption+"[/caption]"

@@ -228,14 +228,14 @@ for s in sections:
         languages = section_df['Language'].values
         
     else:
-        helper.check_columns(section_df, ['Link','ImageDir','Headline','Writer','Featured','Upload'])
+        helper.check_columns(section_df, ['Link','ImageDir','Headline','Writer','Featured','ready for autoupload'])
         headlines = section_df['Headline'].values
         img_names = section_df['ImageDir'].values
         featured_posts = section_df['Featured'].values
 
     article_urls = section_df['Link'].values
     writers = section_df['Writer'].values
-    statuses = section_df['Upload'].values
+    statuses = section_df['ready for autoupload'].values
 
     category_slug = category_slugs[s] # main category
 
