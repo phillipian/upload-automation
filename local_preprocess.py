@@ -46,7 +46,7 @@ server_article_path = '/home/plipdigital/temp_articles/' # path to articles on t
 category_slugs = {'Arts':'arts', 'Commentary':'commentary', 'Editorial':'editorial', 'Featured Posts':'featured', 'News':'news', 'Sports':'sports', 'The Eighth Page':'eighthpage', 'Multilingual':'multilingual', 'Editorial':'editorial'}
 
 # IMG CONSTANTS
-local_img_path = '/Users/jzpan/digital/' # TODO: fill this in; path to photos in the docker image / local computer
+local_img_path = '/Users/Alex/Downloads/digital/' # TODO: fill this in; path to photos in the docker image / local computer
 server_img_path = '/home/plipdigital/wp-photos/'+paper_week+'/' # path to photos on the server
 NOPHOTO = 'nophoto'
 special_photo_credits = ['Archives', 'Courtesy of ']
@@ -207,11 +207,11 @@ def fetch_illustrations(sheet_url):
         print(illus_df.columns)
 
 
-#fetch_photos(sheet_url)
+fetch_photos(sheet_url)
 #fetch_illustrations(sheet_url)
 #fetch_graphics(sheet_url)
 # COPY PHOTOS OVER TO SERVER
-#copy_photos_to_server() # TODO: uncomment after done testing
+copy_photos_to_server() # TODO: uncomment after done testing
 
 # FETCH ARTICLES
 for s in sections:
@@ -281,9 +281,10 @@ for s in sections:
         article_txt = fetch_document.get_google_doc(article_doc_url, local_article_path) # fetch article text file
         if s == 'multilingual':
             category_string = category_slug + ',' + "'" + languages[i].rstrip() + "'"
-        else:
+        elif s == 'sports':
             category_string = assign_categories(category_slug, categories[i], headline) # assign categories and subcategories
-
+        else:
+            category_string = category_slug
         article_info = {}
         with open(article_txt, 'r') as f:
             article_info = json.load(f)
