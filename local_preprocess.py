@@ -228,7 +228,7 @@ for s in sections:
         languages = section_df['Language'].values
         
     else:
-        helper.check_columns(section_df, ['Link','ImageDir','Headline','Writer','Featured','ready for autoupload'])
+        helper.check_columns(section_df, ['Link','ImageDir','Headline','Writer','Featured','ready for autoupload', 'uploaded online'])
         headlines = section_df['Headline'].values
         img_names = section_df['ImageDir'].values
         featured_posts = section_df['Featured'].values
@@ -236,12 +236,13 @@ for s in sections:
     article_urls = section_df['Link'].values
     writers = section_df['Writer'].values
     statuses = section_df['ready for autoupload'].values
+    is_uploaded = section_df['uploaded online'].values
 
     category_slug = category_slugs[s] # main category
 
     # upload articles
     for i in range(len(article_urls)):
-        if (statuses[i].rstrip().lower() != 'yes'): # only upload finished articles -- skip all that are not marked
+        if (statuses[i].rstrip().lower() != 'yes' and is_uploaded[i].rstrip().lower == 'x'): # only upload finished articles that aren't already uploaded-- skip all that are not marked
             print('skipping:\t'+headlines[i])
             continue
 
