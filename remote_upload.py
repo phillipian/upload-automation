@@ -66,6 +66,7 @@ for article_txt in article_txts: # loop through articles and upload them
         categories = article_info['categories'].strip()
         writer_list = article_info['writer']
         headline = article_info['headline'].strip()
+        tag = article_info['tags']
         writer_ids = [fetch_writer_id(writer) for writer in writer_list] # fetch writer id number, or create user if writer does not exist
         img = article_info['img_path'].strip()
 
@@ -90,12 +91,17 @@ for article_txt in article_txts: # loop through articles and upload them
                 caption = ''
             '''
             # upload the image to the media library
-            cmd = 'wp media import "'+img+'" --porcelain | xargs -I {} wp post list --post__in={} --field=url --post_type=at tachment'
+            cmd = 'wp media import "'+img+'" --porcelain"
+            img_id = check_output(cmd, shell=True)
+            cmd = 'wp post list --post__in={} --field=url --post_type=attachment'.format(img_id)
             img_url = check_output(cmd, shell=True)
             img_url = helper.media_url_to_img_url(img_url, img.split('/')[-1])
 
             image_shortcode = imgprepare_python_2.img_for_post_content(img_url, caption, credit)
             helper.prepend(article_txt[:-5]+'.txt', image_shortcode)
+
+            #link media with creator page
+            link_cmd = "php -f /home/plipdigital/upload-automation/assign_media_credit.php {} {} {}".format(img_id, post_id, credit)
 
         # POST WITH GIVEN PARAMETERS
         cmd = "wp post create " + article_txt[:-5]+'.txt' + " --post_category="+ categories +' --post_status=draft --post_title="'+ headline +'" --porcelain --post_author='+ writer_ids[0] + ' ' + more_options.strip()
@@ -104,11 +110,15 @@ for article_txt in article_txts: # loop through articles and upload them
             cmd = "wp user get {} --field=user_login".format(writer_id)
             username = check_output(cmd, shell=True).rstrip()
             cmd = "wp co-authors-plus add-coauthors --coauthor={} --post_id={}".format(username, post_id)
-            print(cmd)
             call(cmd, shell=True)
         print('posted article')
+
+        # Add tags to post
+        cmd = "wp post term add {} post_tag {}".format(post_id, tag)
+
         call("mv " + article_txt[:-5]+'.txt ' + server_article_path + "uploaded/", shell=True)
         call("mv " + article_txt + " " + server_article_path + "uploaded/", shell=True) 
+
         # CUSTOM AUTHOR UPDATE
         # cmd = 'wp post get ' + post_id[:-1] + ' --field=post_author'
         # user_num = check_output(cmd, shell=True)[:-1]

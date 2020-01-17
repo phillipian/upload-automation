@@ -57,15 +57,16 @@ photo_credit = {'':''} # map photo_dir to credit
 illus_credit = {'':''} # map illus_dir to credit
 
 # FUNCTIONS
-def assign_categories(cur_cat_str, article_txt, headline):
+def assign_categories(cur_cat_str, category, headline):
     """produce the category string"""
     cat_string = cur_cat_str
-
+    '''
     src=open(article_txt,"r")
     content=src.readlines()
     src.close()
+    '''
     if (cur_cat_str == 'sports'):
-        cat_string += ','+assign_subcategory.find_sports_subcategories(headline, content)
+        cat_string += ','+assign_subcategory.find_sports_subcategories(headline, category)
     elif (cur_cat_str == 'arts'):
         if len(assign_subcategory.find_arts_subcategories(headline)) > 0:
             cat_string += ','+ assign_subcategory.find_arts_subcategories(headline)
@@ -226,13 +227,17 @@ for s in sections:
         headlines = section_df['Translated Headline'].values
         translators = section_df['Translator'].values
         languages = section_df['Language'].values
+    if s == 'sports':
+        helper.check_columns(section_df, ['Subcategory'])
+        categories = section_df['Subcategory'].values
         
     else:
-        helper.check_columns(section_df, ['Link','ImageDir','Headline','Writer','Featured','ready for autoupload', 'uploaded online'])
+        helper.check_columns(section_df, ['Link','ImageDir','Headline','Writer','Featured','ready for autoupload', 'uploaded online', 'TAGS'])
         headlines = section_df['Headline'].values
         img_names = section_df['ImageDir'].values
         featured_posts = section_df['Featured'].values
-
+    
+    tags = section_df['TAGS'].values
     article_urls = section_df['Link'].values
     writers = section_df['Writer'].values
     statuses = section_df['ready for autoupload'].values
@@ -277,7 +282,7 @@ for s in sections:
         if s == 'multilingual':
             category_string = category_slug + ',' + "'" + languages[i].rstrip() + "'"
         else:
-            category_string = assign_categories(category_slug, article_txt, headline) # assign categories and subcategories
+            category_string = assign_categories(category_slug, categories[i], headline) # assign categories and subcategories
 
         article_info = {}
         with open(article_txt, 'r') as f:
@@ -341,6 +346,7 @@ for s in sections:
         #fix all the strings before writing to json
 
         # prepend info to article text file
+        article_info['tags'] = tags[i].strip()
         article_info['headline'] = headline.strip() 
         article_info['writer'] = writer_list
         article_info['categories'] = category_string.strip() 

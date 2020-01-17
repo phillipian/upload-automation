@@ -25,7 +25,7 @@ sports_seasons_slugs = {'boys-soccer': 'fall-sports', 'football': 'fall-sports',
     'girls-water-polo': 'spring-sports', 'boys-volleyball': 'spring-sports', 'girls-crew': 'spring-sports', \
     'winter-track-field': 'winter-sports', 'girls-hockey': 'winter-sports', 'girls-swimming': 'winter-sports', \
     'wrestling': 'winter-sports', 'girls-squash': 'winter-sports', 'nordic': 'winter-sports'}
-
+'''
 def find_sports_subcategories(headline, article_text):
     categ_string = ''
     team_found = False
@@ -47,6 +47,10 @@ def find_sports_subcategories(headline, article_text):
     if (categ_string == ''):
         print('  error: no sports subcategory found, ASSIGN MANUALLY!')
     return categ_string
+'''
+def find_sports_subcategories(headline, subcategory):
+    team_slug = category_sanitize(keyword)
+    return team_slug +','+ sports_seasons_slugs[team_slug] # append slug
 
 def category_sanitize(s_in):
     """categ name to slug -- make all words lowercase and replace ' ' with '-'"""
