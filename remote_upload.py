@@ -68,7 +68,7 @@ for article_txt in article_txts: # loop through articles and upload them
         headline = article_info['headline'].strip()
         tag = article_info['tags']
         writer_ids = [fetch_writer_id(writer) for writer in writer_list] # fetch writer id number, or create user if writer does not exist
-        img = article_info['img_path'].strip()
+        img_list = article_info['img_paths'].strip()
 
         article_string = article_info['article_content']
 
@@ -81,9 +81,10 @@ for article_txt in article_txts: # loop through articles and upload them
 
         print('  headline '+headline)
 
-        if (img != NOPHOTO):
-            credit = article_info['credit'].strip()
-            caption = article_info['caption']
+        for img, credit, caption in zip(img_list, article_info['credit'], article_info['caption']:
+            if image == NOPHOTO:
+                break
+            credit = credit.strip()
             '''
             if len(caption) > 1: # catch possibility of no options
                 caption = caption[1].strip()
