@@ -18,6 +18,7 @@ import argparse
 import datetime as dt
 import re
 import unidecode
+import pdb
 
 # PARSE COMMAND
 parser = argparse.ArgumentParser(description='Upload articles from the budget spreadsheet.')
@@ -86,14 +87,15 @@ def fetch_photos(sheet_url):
         paths = photo_df['ImageDir'].values
         captions = photo_df['Context/Caption'].values
         credits = photo_df['Photographer'].values
-        sections = photo_df['Section'].values
+        sections_col = photo_df['Section'].values
 
         assert len(paths) == len(captions), 'error: photo budget columns not the same length'
         assert len(captions) == len(credits), 'error: photo budget columns not the same length'
 
         for i in range(len(paths)):
-            if (paths[i].lower() == 'nophoto' or paths[i] == '' or sections[i] == ''): # skip empty fields
+            if (paths[i].lower() == 'nophoto' or paths[i] == '' or sections_col[i] == '' or sections_col[i] not in [s.lower() for s in sections]): # skip empty fields
                 continue
+
             paths[i] = paths[i].strip()
 
 
@@ -111,15 +113,14 @@ def fetch_photos(sheet_url):
             photo_credit[paths[i]] = credit
 
             # compress image
-
-            full_path = local_img_path+sections[i].lower()+'/'+paths[i].lower()
+            full_path = os.path.join(local_img_path+sections_col[i].lower(), paths[i].lower())
             imgs = os.listdir(full_path)
             ind = 0
             while (imgs[ind][0] == '.'): # skip hidden directories ('.anything')
                 ind += 1
             if (imgs[ind].split('_')[0] != 'Compressed'): # compress if not already compressed
                 print('compressing '+full_path)
-                img = full_path+'/'+imgs[ind]
+                img = os.path.join(full_path, imgs[ind])
                 img = imgprepare_python_2.compress_img(img, 30) # TODO: use imgprepare
     else:
         print('error: missing col')
@@ -211,7 +212,7 @@ fetch_photos(sheet_url)
 #fetch_illustrations(sheet_url)
 #fetch_graphics(sheet_url)
 # COPY PHOTOS OVER TO SERVER
-copy_photos_to_server() # TODO: uncomment after done testing
+#copy_photos_to_server() # TODO: uncomment after done testing
 
 # FETCH ARTICLES
 for s in sections:
@@ -247,7 +248,7 @@ for s in sections:
 
     # upload articles
     for i in range(len(article_urls)):
-        if (statuses[i].rstrip().lower() != 'yes' and is_uploaded[i].rstrip().lower == 'x'): # only upload finished articles that aren't already uploaded-- skip all that are not marked
+        if (statuses[i].rstrip().lower() != 'yes' or is_uploaded[i].rstrip().lower() == 'x'): # only upload finished articles that aren't already uploaded-- skip all that are not marked
             print('skipping:\t'+headlines[i])
             continue
 
