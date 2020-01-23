@@ -12,6 +12,7 @@ import imgprepare_python_2 # TODO: uncomment, change everything to imgprepare
 from student_directory import StudentDirectory
 import json
 import re
+import pdb
 
 #Set up student directory to search author names and emails
 
@@ -29,14 +30,14 @@ special_photo_credits = ['Archives', 'Courtesy of ']
 def fetch_writer_id(writer_str):
     writer_login = helper.remove_spaces_commas(writer_str).lower()
     try:
-        writer_email = directory.student_dict[directory.search_by_name(writer.split(' ')[0], writer.split(' ')[-1])[0]]['email']
-        print(writer_email)
+        writer_email = directory.student_dict[directory.search_by_name(writer_str.split(' ')[0], writer_str.split(' ')[-1])[0]]['email']
     except:
         writer_email = writer_login + '@phillipian.net'
     try:
-        cmd = 'wp user create ' + writer_login + ' ' + writer_email + " --role='author' --display_name='"+writer+"' --first_name='"+writer.split(' ')[0]+"' --last_name='"+writer.split(' ')[-1]+"' --porcelain"
+        cmd = 'wp user create ' + writer_login + ' ' + writer_email + " --role='author' --display_name='"+writer_str+"' --first_name='"+writer_str.split(' ')[0]+"' --last_name='"+writer_str.split(' ')[-1]+"' --porcelain"
         writer_id = check_output(cmd, shell=True).strip()
     except:
+	writer_login = re.sub(r'\W+', '', writer_login)
         print('failed cmd '+cmd)
         cmd = 'wp user get --field=ID ' + writer_login
         writer_id = check_output(cmd, shell=True).strip()
@@ -46,10 +47,16 @@ def fetch_writer_id(writer_str):
 # FETCH ARTICLES; TODO: do it by section
 article_txts = os.listdir(server_article_path) # array of article text files
 
+uploaded_list = []
+
 for article_txt in article_txts: # loop through articles and upload them
     # article properties
     article_txt = server_article_path+article_txt
-    if 'filter' in article_txt: # only upload filtered articles
+
+    if article_txt[:-5] in uploaded_list:
+        continue
+
+    if 'filter' in article_txt and '.json' in article_txt: # only upload filtered articles
         print('uploading '+article_txt)
         '''
         more_options = helper.deprepend(article_txt).split('\t')
@@ -81,10 +88,14 @@ for article_txt in article_txts: # loop through articles and upload them
 
         print('  headline '+headline)
 
-        for img, credit, caption in zip(img_list, article_info['credit'], article_info['caption']:
+        for i, img, credit, caption in enumerate(zip(img_list, article_info['credit'], article_info['caption'])):
+
             if image == NOPHOTO:
                 break
+
             credit = credit.strip()
+            print(credit)
+            credit_id = fetch_writer_id(credit.split('/')[0]) #remove the /phillipian
             '''
             if len(caption) > 1: # catch possibility of no options
                 caption = caption[1].strip()
@@ -92,17 +103,23 @@ for article_txt in article_txts: # loop through articles and upload them
                 caption = ''
             '''
             # upload the image to the media library
-            cmd = 'wp media import "'+img+'" --porcelain"
-            img_id = check_output(cmd, shell=True)
+            cmd = 'wp media import "'+img+'" --porcelain'
+            img_id = check_output(cmd, shell=True).strip()
             cmd = 'wp post list --post__in={} --field=url --post_type=attachment'.format(img_id)
             img_url = check_output(cmd, shell=True)
             img_url = helper.media_url_to_img_url(img_url, img.split('/')[-1])
 
-            image_shortcode = imgprepare_python_2.img_for_post_content(img_url, caption, credit)
+            # add closing image gallery tag if multiple images
+            if i == 0 and len(img_list) > 1:
+                helper.prepend(article_txt[:-5]+'.txt', '[/imggallery]')
+
+            image_shortcode = imgprepare_python_2.img_for_post_content(img_url, caption, credit_id, img_id)
             helper.prepend(article_txt[:-5]+'.txt', image_shortcode)
 
-            #link media with creator page
-            link_cmd = "php -f /home/plipdigital/upload-automation/assign_media_credit.php {} {} {}".format(img_id, post_id, credit)
+        #add starting image gallery tag if multiple images
+        if len(img_list) > 1:
+            helper.prepend(article_txt[:-5]+'.txt', 'imggallery')
+
 
         # POST WITH GIVEN PARAMETERS
         cmd = "wp post create " + article_txt[:-5]+'.txt' + " --post_category="+ categories +' --post_status=draft --post_title="'+ headline +'" --porcelain --post_author='+ writer_ids[0] + ' ' + more_options.strip()
@@ -114,11 +131,19 @@ for article_txt in article_txts: # loop through articles and upload them
             call(cmd, shell=True)
         print('posted article')
 
+
+        # link media with creator page
+        if img != NOPHOTO:
+            link_cmd = "php -f /home/plipdigital/upload-automation/assign_media_credit.php {} {} {}".format(img_id, post_id, credit)
+	    call(link_cmd, shell=True)
+
         # Add tags to post
         cmd = "wp post term add {} post_tag {}".format(post_id, tag)
-
-        call("mv " + article_txt[:-5]+'.txt ' + server_article_path + "uploaded/", shell=True)
-        call("mv " + article_txt + " " + server_article_path + "uploaded/", shell=True) 
+        
+        #mark as done
+        uploaded_list.append(article_txt[:-5])
+        #call("mv " + article_txt[:-5]+'.txt ' + server_article_path + "uploaded/", shell=True)
+        #call("mv " + article_txt + " " + server_article_path + "uploaded/", shell=True) 
 
         # CUSTOM AUTHOR UPDATE
         # cmd = 'wp post get ' + post_id[:-1] + ' --field=post_author'
