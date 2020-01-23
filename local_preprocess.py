@@ -301,48 +301,52 @@ for s in sections:
             more_options += "--post_date='"+post_timestamp+"'"
             category_string += ',featured'
 
-        # PROCESS ARTICLE IMAGES
-        if s == 'multilingual':
-            img_name = NOPHOTO
+        article_image_dir = img_names[i].rstrip()
+
+        if NOPHOTO in article_image_dir or article_image_dir == '':
+            article_info['img_path'] = [NOPHOTO]
         else:
-            img_name = img_names[i].rstrip() # directory name from budget
-        if (NOPHOTO not in img_name and img_name != ''):
-            # fetch image (only 1 supported)
-            name = str(img_name)
-            imgs = os.listdir(local_img_path + s.lower() + '/' + name) # find imgs in the directory
-            ind = 0
-            while (imgs[ind][0] == '.'): # skip hidden directories ('.anything')
-                ind += 1
-            img = server_img_path+s.lower()+'/'+name+'/'+imgs[ind] # path to img on server
 
-            # generate short code for image, prepend to article content
-            inphoto = False
-            if name in photo_caption.keys() and name in photo_credit.keys(): # check for valid photo
-                inphoto = True
-                caption = photo_caption[name]
-                credit = photo_credit[name]
-                if caption == '' or caption == None:
-                    print('  warning: missing caption on image for imagedir '+name)
-                if credit == '' or credit == None:
-                    print('  warning: missing credit on image for imagedir '+name)
-            if name in illus_credit.keys():
-                captions = ''
-                credit = illus_credit[name]
-                if credit == '' or credit == None:
-                    print('  warning: missing credit on image for imagedir '+name)
+            name = str(article_image_dir)
+            imgs = os.listdir(os.path.join(local_img_path, s.lower(), name)) # find imgs in the directory
 
-            if not inphoto and name not in illus_credit.keys():
-                print('  error: imageDir not found in photo or illustration budget for imagedir '+name)
-                exit(0)
-            caption = (caption)
-            article_info['caption'] = caption
-            article_info['credit'] = credit
-            article_info['img_path'] = img
+            image_path_list = []
+            caption_list = []
+            credit_list = []
 
-        else:
-            article_info['img_path'] = NOPHOTO
-            #helper.prepend(article_txt, 'path to img:\t'+NOPHOTO)
 
+            for img in imgs:
+                if img[0] == '.': # skip hidden directories ('.anything')
+                    continue
+                image_path_list.append(os.path.join(server_img_path, s.lower(), name, img)) # path to img on server
+
+                # generate a unique photo path to find the photo's metadata from the photo budget
+                short_path = os.path.join(name, img)
+
+                # generate short code for images, prepend to article content
+                inphoto = False
+                if short_path in photo_caption.keys() and short_path in photo_credit.keys(): # check for valid photo
+                    inphoto = True
+                    caption_list.append(photo_caption[short_path])
+                    credit_list.append(photo_credit[short_path])
+                    if caption == '' or caption == None:
+                        print('  warning: missing caption on image for imagedir '+name)
+                    if credit == '' or credit == None:
+                        print('  warning: missing credit on image for imagedir '+name)
+
+                if short_path in illus_credit.keys():
+                    caption_list.append('')
+                    credit_list.append(illus_credit[short_path])
+                    if credit == '' or credit == None:
+                        print('  warning: missing credit on illustration for imagedir '+name)
+
+                if not inphoto and short_path not in illus_credit.keys():
+                    print('  error: imageDir not found in photo or illustration budget for imagedir '+name)
+                    exit(0)
+
+            article_info['caption'] = caption_list
+            article_info['credit'] = credit_list
+            article_info['img_paths'] = image_path_list
 
         #fix all the strings before writing to json
 
