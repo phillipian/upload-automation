@@ -47,7 +47,7 @@ server_article_path = '/home/plipdigital/temp_articles/' # path to articles on t
 category_slugs = {'Arts':'arts', 'Commentary':'commentary', 'Editorial':'editorial', 'Featured Posts':'featured', 'News':'news', 'Sports':'sports', 'The Eighth Page':'eighthpage', 'Multilingual':'multilingual', 'Editorial':'editorial'}
 
 # IMG CONSTANTS
-local_img_path = '/Users/Alex/Downloads/digital/' # TODO: fill this in; path to photos in the docker image / local computer
+local_img_path = '/Users/jzpan/digital/' # TODO: fill this in; path to photos in the docker image / local computer
 server_img_path = '/home/plipdigital/wp-photos/'+paper_week+'/' # path to photos on the server
 NOPHOTO = 'nophoto'
 special_photo_credits = ['Archives', 'Courtesy of ']
@@ -326,22 +326,23 @@ for s in sections:
 
                 # generate short code for images, prepend to article content
                 inphoto = False
-                if short_path in photo_caption.keys() and short_path in photo_credit.keys(): # check for valid photo
+                if name in photo_caption.keys() and name in photo_credit.keys(): # check for valid photo
                     inphoto = True
                     caption_list.append(photo_caption[name])
                     credit_list.append(photo_credit[name])
-                    if caption == '' or caption == None:
+                    if photo_caption[name] == '' or photo_caption[name] == None:
                         print('  warning: missing caption on image for imagedir '+name)
-                    if credit == '' or credit == None:
+                    if photo_credit[name] == '' or photo_credit[name] == None:
                         print('  warning: missing credit on image for imagedir '+name)
 
-                if short_path in illus_credit.keys():
+                if name in illus_credit.keys():
+
                     caption_list.append('')
                     credit_list.append(illus_credit[name])
-                    if credit == '' or credit == None:
+                    if illus_credit[name] == '' or illus_credit[name] == None:
                         print('  warning: missing credit on illustration for imagedir '+name)
 
-                if not inphoto and short_path not in illus_credit.keys():
+                if not inphoto and name not in illus_credit.keys():
                     print('  error: imageDir not found in photo or illustration budget for imagedir '+name)
                     exit(0)
 

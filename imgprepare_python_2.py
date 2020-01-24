@@ -26,7 +26,7 @@ def compress_img(fp, jpeg_quality):
     if (jpeg_quality == None):
         jpeg_quality = 90
     img = Image.open(str(fp)).copy()
-    jpg_img = imgconvert('RGB')
+    jpg_img = img.convert('RGB')
 
     maxsize = (1280, 1280)
     jpg_img.thumbnail(maxsize, Image.ANTIALIAS)
