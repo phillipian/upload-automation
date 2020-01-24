@@ -115,13 +115,14 @@ def fetch_photos(sheet_url):
             # compress image
             full_path = os.path.join(local_img_path+sections_col[i].lower(), paths[i].lower())
             imgs = os.listdir(full_path)
-            ind = 0
-            while (imgs[ind][0] == '.'): # skip hidden directories ('.anything')
-                ind += 1
-            if (imgs[ind].split('_')[0] != 'Compressed'): # compress if not already compressed
-                print('compressing '+full_path)
-                img = os.path.join(full_path, imgs[ind])
-                img = imgprepare_python_2.compress_img(img, 30) # TODO: use imgprepare
+
+            for img in imgs:
+                if img[0] == '.': # skip hidden directories ('.anything')
+                    continue 
+                if (img.split('_')[0] != 'Compressed'): # compress if not already compressed
+                    print('compressing '+full_path)
+                    img = os.path.join(full_path, img)
+                    img = imgprepare_python_2.compress_img(img, 30) # TODO: use imgprepare
     else:
         print('error: missing col')
 
@@ -305,7 +306,7 @@ for s in sections:
         article_image_dir = img_names[i].rstrip()
 
         if NOPHOTO in article_image_dir or article_image_dir == '':
-            article_info['img_path'] = [NOPHOTO]
+            article_info['img_paths'] = [NOPHOTO]
         else:
 
             name = str(article_image_dir)
@@ -318,6 +319,8 @@ for s in sections:
 
             for img in imgs:
                 if img[0] == '.': # skip hidden directories ('.anything')
+                    continue
+                if img.split('_')[0] != 'Compressed': # compress if not already compressed
                     continue
                 image_path_list.append(os.path.join(server_img_path, s.lower(), name, img)) # path to img on server
 
