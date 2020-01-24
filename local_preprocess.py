@@ -322,14 +322,14 @@ for s in sections:
                 image_path_list.append(os.path.join(server_img_path, s.lower(), name, img)) # path to img on server
 
                 # generate a unique photo path to find the photo's metadata from the photo budget
-                short_path = os.path.join(name, img)
+                #short_path = os.path.join(name, img)
 
                 # generate short code for images, prepend to article content
                 inphoto = False
                 if short_path in photo_caption.keys() and short_path in photo_credit.keys(): # check for valid photo
                     inphoto = True
-                    caption_list.append(photo_caption[short_path])
-                    credit_list.append(photo_credit[short_path])
+                    caption_list.append(photo_caption[name])
+                    credit_list.append(photo_credit[name])
                     if caption == '' or caption == None:
                         print('  warning: missing caption on image for imagedir '+name)
                     if credit == '' or credit == None:
@@ -337,7 +337,7 @@ for s in sections:
 
                 if short_path in illus_credit.keys():
                     caption_list.append('')
-                    credit_list.append(illus_credit[short_path])
+                    credit_list.append(illus_credit[name])
                     if credit == '' or credit == None:
                         print('  warning: missing credit on illustration for imagedir '+name)
 
