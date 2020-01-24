@@ -88,6 +88,8 @@ for article_txt in article_txts: # loop through articles and upload them
 
         print('  headline '+headline)
 
+        img_id_list = []
+
         for i, (img, credit, caption) in enumerate(zip(img_list, article_info['credit'], article_info['caption'])):
 
             if img == NOPHOTO:
@@ -105,7 +107,7 @@ for article_txt in article_txts: # loop through articles and upload them
             '''
             # upload the image to the media library
             cmd = 'wp media import "'+img+'" --porcelain'
-            img_id = check_output(cmd, shell=True).strip()
+            img_id_list.append(check_output(cmd, shell=True).strip())
             cmd = 'wp post list --post__in={} --field=url --post_type=attachment'.format(img_id)
             img_url = check_output(cmd, shell=True)
             img_url = helper.media_url_to_img_url(img_url, img.split('/')[-1])
@@ -134,9 +136,10 @@ for article_txt in article_txts: # loop through articles and upload them
 
 
         # link media with creator page
-        if img != NOPHOTO:
-            link_cmd = "php -f /home/plipdigital/upload-automation/assign_media_credit.php {} {} {}".format(img_id, post_id, credit)
-	    call(link_cmd, shell=True)
+        if NOPHOTO not in img_list:
+            for img_id in img_id_list:
+                link_cmd = "php -f /home/plipdigital/upload-automation/assign_media_credit.php {} {} {}".format(img_id, post_id, credit)
+	        call(link_cmd, shell=True)
 
         # Add tags to post
         cmd = "wp post term add {} post_tag {}".format(post_id, tag)
