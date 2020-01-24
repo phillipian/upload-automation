@@ -75,7 +75,7 @@ for article_txt in article_txts: # loop through articles and upload them
         headline = article_info['headline'].strip()
         tag = article_info['tags']
         writer_ids = [fetch_writer_id(writer) for writer in writer_list] # fetch writer id number, or create user if writer does not exist
-        img_list = article_info['img_paths'].strip()
+        img_list = article_info['img_paths']
 
         article_string = article_info['article_content']
 
@@ -88,11 +88,12 @@ for article_txt in article_txts: # loop through articles and upload them
 
         print('  headline '+headline)
 
-        for i, img, credit, caption in enumerate(zip(img_list, article_info['credit'], article_info['caption'])):
+        for i, (img, credit, caption) in enumerate(zip(img_list, article_info['credit'], article_info['caption'])):
 
-            if image == NOPHOTO:
+            if img == NOPHOTO:
                 break
 
+            img = img.strip()
             credit = credit.strip()
             print(credit)
             credit_id = fetch_writer_id(credit.split('/')[0]) #remove the /phillipian
@@ -118,7 +119,7 @@ for article_txt in article_txts: # loop through articles and upload them
 
         #add starting image gallery tag if multiple images
         if len(img_list) > 1:
-            helper.prepend(article_txt[:-5]+'.txt', 'imggallery')
+            helper.prepend(article_txt[:-5]+'.txt', '[imggallery]')
 
 
         # POST WITH GIVEN PARAMETERS
