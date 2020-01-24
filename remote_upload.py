@@ -89,39 +89,39 @@ for article_txt in article_txts: # loop through articles and upload them
         print('  headline '+headline)
 
         img_id_list = []
+        
+        if NOPHOTO not in img_list:
 
-        for i, (img, credit, caption) in enumerate(zip(img_list, article_info['credit'], article_info['caption'])):
+            for i, (img, credit, caption) in enumerate(zip(img_list, article_info['credit'], article_info['caption'])):
 
-            if img == NOPHOTO:
-                break
+                img = img.strip()
+                credit = credit.strip()
+                print(credit)
+                credit_id = fetch_writer_id(credit.split('/')[0]) #remove the /phillipian
+                '''
+                if len(caption) > 1: # catch possibility of no options
+                    caption = caption[1].strip()
+                else:
+                    caption = ''
+                '''
+                # upload the image to the media library
+                cmd = 'wp media import "'+img+'" --porcelain'
+                img_id = check_output(cmd, shell=True).strip()
+                img_id_list.append(img_id)
+                cmd = 'wp post list --post__in={} --field=url --post_type=attachment'.format(img_id)
+                img_url = check_output(cmd, shell=True)
+                img_url = helper.media_url_to_img_url(img_url, img.split('/')[-1])
 
-            img = img.strip()
-            credit = credit.strip()
-            print(credit)
-            credit_id = fetch_writer_id(credit.split('/')[0]) #remove the /phillipian
-            '''
-            if len(caption) > 1: # catch possibility of no options
-                caption = caption[1].strip()
-            else:
-                caption = ''
-            '''
-            # upload the image to the media library
-            cmd = 'wp media import "'+img+'" --porcelain'
-            img_id_list.append(check_output(cmd, shell=True).strip())
-            cmd = 'wp post list --post__in={} --field=url --post_type=attachment'.format(img_id)
-            img_url = check_output(cmd, shell=True)
-            img_url = helper.media_url_to_img_url(img_url, img.split('/')[-1])
+                # add closing image gallery tag if multiple images
+                if i == 0 and len(img_list) > 1:
+                    helper.prepend(article_txt[:-5]+'.txt', '[/imggallery]')
 
-            # add closing image gallery tag if multiple images
-            if i == 0 and len(img_list) > 1:
-                helper.prepend(article_txt[:-5]+'.txt', '[/imggallery]')
+                image_shortcode = imgprepare_python_2.img_for_post_content(img_url, caption, credit_id, img_id)
+                helper.prepend(article_txt[:-5]+'.txt', image_shortcode)
 
-            image_shortcode = imgprepare_python_2.img_for_post_content(img_url, caption, credit_id, img_id)
-            helper.prepend(article_txt[:-5]+'.txt', image_shortcode)
-
-        #add starting image gallery tag if multiple images
-        if len(img_list) > 1:
-            helper.prepend(article_txt[:-5]+'.txt', '[imggallery]')
+            #add starting image gallery tag if multiple images
+            if len(img_list) > 1:
+                helper.prepend(article_txt[:-5]+'.txt', '[imggallery]')
 
 
         # POST WITH GIVEN PARAMETERS
