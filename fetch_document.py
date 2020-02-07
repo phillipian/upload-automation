@@ -13,8 +13,8 @@ import unidecode
 
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/drive']
-BOFSTR = 'BOFCXLII'
-EOFSTR = 'EOFCXLII'
+BOFSTR = 'BOFCXLIII'
+EOFSTR = 'EOFCXLIII'
 
 def get_file_id_from_url(doc_url):
     partial_prefix = 'docs.google.com/document/d/'
@@ -32,11 +32,11 @@ def article_from_txt(raw_txt, filter_txt):
 
     copy = False
     for x in rf:
-        if ('EOFCXLII' in x):
+        if ('EOFCXLIII' in x):
             break
         if (copy):
             article_string = article_string+x
-        if ('BOFCXLII' in x):
+        if ('BOFCXLIII' in x):
             copy = True
     #article_string = unidecode(article_string)
     src['article_content'] = article_string

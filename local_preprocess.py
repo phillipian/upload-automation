@@ -122,7 +122,7 @@ def fetch_photos(sheet_url):
                 if (img.split('_')[0] != 'Compressed'): # compress if not already compressed
                     print('compressing '+full_path)
                     img = os.path.join(full_path, img)
-                    img = imgprepare_python_2.compress_img(img, 30) # TODO: use imgprepare
+                    img = imgprepare_python_2.compress_img(img, 70) # TODO: use imgprepare
     else:
         print('error: missing col')
 
@@ -163,7 +163,7 @@ def fetch_graphics(sheet_url):
             if imgs[ind][0] != '0':
                 print('compressing '+full_path)
                 img = full_path+'/'+imgs[ind]
-                img = imgprepare_python_2.compress_img(img, 30) # TODO: use imgprepare
+                img = imgprepare_python_2.compress_img(img, 70) # TODO: use imgprepare
     else:
         print('error: missing col')
         print(graphics_df.columns)
@@ -203,7 +203,7 @@ def fetch_illustrations(sheet_url):
             if imgs[ind][0] != '0':
                 print('compressing '+full_path)
                 img = full_path+'/'+imgs[ind]
-                img = imgprepare_python_2.compress_img(img, 30) # TODO: use imgprepare
+                img = imgprepare_python_2.compress_img(img, 70) # TODO: use imgprepare
     else:
         print('error: missing col')
         print(illus_df.columns)
@@ -213,7 +213,7 @@ fetch_photos(sheet_url)
 #fetch_illustrations(sheet_url)
 #fetch_graphics(sheet_url)
 # COPY PHOTOS OVER TO SERVER
-#copy_photos_to_server() # TODO: uncomment after done testing
+copy_photos_to_server() # TODO: uncomment after done testing
 
 # FETCH ARTICLES
 for s in sections:
@@ -232,7 +232,7 @@ for s in sections:
     if s == 'sports':
         helper.check_columns(section_df, ['Subcategory'])
         categories = section_df['Subcategory'].values
-        
+    
     else:
         helper.check_columns(section_df, ['Link','ImageDir','Headline','Writer','Featured','ready for autoupload', 'uploaded online', 'TAGS'])
         headlines = section_df['Headline'].values
