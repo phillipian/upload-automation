@@ -1,4 +1,12 @@
 # OTHER
+news_slugs = {'10 questions':'10-questions'}
+def find_news_subcategories(headline):
+    categ_string = ''
+    for key in news_slugs.keys():
+        if (key in headline.lower()):
+            categ_string += news_slugs[key]
+    return categ_string
+
 arts_slugs = {'look of the week':'lotw', 'off the shelf':'off-the-shelf'} # complete names : slugs
 def find_arts_subcategories(headline):
     categ_string = ''
@@ -53,7 +61,7 @@ def find_sports_subcategories(headline, subcategory):
     return team_slug +','+ sports_seasons_slugs[team_slug] # append slug
 
 def category_sanitize(s_in):
-    """categ name to slug -- make all words lowercase and replace ' ' with '-'"""
+    """convert a category name to slug by converting to lowercase and replacing ' ' with '-'"""
     if (s_in == 'Indoor Track'):
         return 'winter-track-field'
     if (s_in == 'Track'):

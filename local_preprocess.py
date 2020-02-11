@@ -71,6 +71,9 @@ def assign_categories(cur_cat_str, category, headline):
     elif (cur_cat_str == 'arts'):
         if len(assign_subcategory.find_arts_subcategories(headline)) > 0:
             cat_string += ','+ assign_subcategory.find_arts_subcategories(headline)
+    elif (cur_cat_str == 'news'):
+        if len(assign_subcategory.find_news_subcategories(headline)) > 0:
+            cat_string += ','+ assign_subcategory.find_news_subcategories(headline)
     return cat_string
 
 def copy_photos_to_server():
