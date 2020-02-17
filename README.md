@@ -1,9 +1,18 @@
 # Phillipian Article Upload Automation
 Project to automate uploading to phillipian.net
+
+### Docker for development
+In `./docker`, run the following commands to access bash in a docker image with all Python dependencies in `requirements.txt` installed and with this repo mounted at `usr/src/app` :
+```
+docker build -t plip-env . 
+docker run -it -v [PATH TO THIS GIT REPO]:/usr/src/app plip-env /bin/bash
+```
+We should Dockerize soon (so that just running the docker image will run upload) ([a simple guide](https://runnable.com/docker/python/dockerize-your-python-application)).
+
 ### Running
 Run local_preprocess.py from a local machine with access to the week's photos to compress images, fetch filtered articles, and prepend image info/author name to the beginning of each article. Those files will be scp-ed to the server. Then run remote_upload.py to read the info from the article text files and call the necessary wordpress commands to actually upload.
 ### Usage
-- The current script does not support uploading spreads, editorial, eighth page, and multilingual
+- We are currently working on expanding support for uploading spreads, editorial, eighth page, and multilingual
 - Article Google Docs
   - Article text will appear as it does in the doc, so please place the final article back on the doc if changes are made
   - Add BOF and EOF markers in article doc (‘BOFCXLII’, ‘EOFCXLII’) (the doc must be the final version of the article)
