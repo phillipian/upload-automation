@@ -9,8 +9,7 @@ from subprocess import call
 from subprocess import check_output
 import json
 import re
-import pdb
-
+import argparse
 from student_directory import StudentDirectory
 
 import sys
@@ -61,16 +60,16 @@ def upload_img(img):
 
     return img_id, img_url
 
-def upload_article(article_txt)
+def upload_article(article_txt):
     # article properties
     article_txt = server_article_path+article_txt
 
     if article_txt[:-5] in uploaded_list: # skip already uploaded articles
-            continue
+        return
     if not 'filter' in article_txt: # only upload filtered articles
-        continue
+        return
     if not '.json' in article_txt: # must be json file
-        continue
+        return
 
     print('uploading '+article_txt)
 
@@ -88,6 +87,7 @@ def upload_article(article_txt)
     with open(article_txt[:-5]+'.txt', 'wb') as f: 
         f.write(article_info['article_content'].encode('utf8'))
     helper.add_line_breaks(article_txt[:-5]+'.txt')
+    
     # PROCESS IMAGE(S) if article has image(s)
     img_id_list = [] # list of wp image ids
     credit_list = [] # list of credit ids 
@@ -143,11 +143,9 @@ def upload_article(article_txt)
     # Add tags to post
     cmd = "wp post term add {} post_tag {}".format(post_id, article_info['tags'])
             
-    # mark as done
+    # MARK AS DONE
     print('posted')
     uploaded_list.append(article_txt[:-5])
-
-
 
 
 # Set up student directory to search author names and emails

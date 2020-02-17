@@ -8,6 +8,8 @@ from google.auth.transport.requests import Request
 import io
 import re
 import json
+import sys
+sys.path.insert(1, '../')
 import helper
 import unidecode
 

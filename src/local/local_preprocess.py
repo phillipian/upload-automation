@@ -1,4 +1,5 @@
 """
+!
 fetch articles and article info
 compress images and fetch image info
 write all info to top of article text
@@ -12,14 +13,13 @@ import argparse
 import datetime as dt
 import re
 import unidecode
-import pdb
+import sys
 
 import fetch_sheet
 import fetch_document
 import assign_subcategory
 
-import sys
-sys.path.append('../')
+sys.path.insert(1, '../')
 import helper
 from config import * # TODO: test the config file import
 
@@ -145,7 +145,7 @@ sections = [x.strip().lower().capitalize() for x in args.sections.split(',')] # 
 # validate passed args
 ALL_SECTIONS = ['News', 'Sports', 'Commentary', 'Arts', 'Editorial', 'Multilingual'] # sections supported by automation # TODO: add 8th pg
 for section in sections: # verify that all section strings are legit
-    assert section in ALL_SECTIONS, "Error: section string {} doesn't seem to be supported — might want to check your spelling".format(section)
+    assert section in ALL_SECTIONS, 'Error: section string {} is not supported - might want to check your spelling'.format(section)
 assert sheet_url != None, 'Error: no sheet_url provided'
 assert paper_week != None, 'Error: no sheet_url provided'
 
