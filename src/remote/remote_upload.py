@@ -40,22 +40,23 @@ def fetch_writer_id(writer_str):
         writer_email = writer_login + '@phillipian.net'
     try:
         cmd = 'wp user create ' + writer_login + ' ' + writer_email + " --role='author' --display_name='"+writer_str+"' --first_name='"+writer_str.split(' ')[0]+"' --last_name='"+writer_str.split(' ')[-1]+"' --porcelain"
-        writer_id = check_output(cmd, shell=True).strip()
+        writer_id = check_output(cmd, shell=True).decode('utf8').strip()
     except:
-	writer_login = re.sub(r'\W+', '', writer_login)
+        writer_login = re.sub(r'\W+', '', writer_login)
         print('failed cmd '+cmd)
         cmd = 'wp user get --field=ID ' + writer_login
-        writer_id = check_output(cmd, shell=True).strip()
+        writer_id = check_output(cmd, shell=True).decode('utf8').strip()
 
     return writer_id
 
 def upload_img(img):
     # upload the image to the media library and store its id
     cmd = 'wp media import "{}" --porcelain'.format(img)
-    img_id = check_output(cmd, shell=True).strip()
+    # img_id comes back as a byte string, so convert to unicode
+    img_id = check_output(cmd, shell=True).decode('utf-8').strip()
     
     cmd = 'wp post list --post__in={} --field=url --post_type=attachment'.format(img_id)
-    img_url = check_output(cmd, shell=True)
+    img_url = check_output(cmd, shell=True).decode('utf-8').strip()
     img_url = helper.media_url_to_img_url(img_url, img.split('/')[-1])
 
     return img_id, img_url
@@ -75,7 +76,7 @@ def upload_article(article_txt, section):
 
     # LOAD JSON
     article_info = {}
-    with open(article_txt, "r") as f:
+    with open(article_txt, "r", encoding='utf8') as f:
             article_info = json.load(f)
     headline = article_info['headline'].strip()
     headline = re.sub('"','\\"',headline) # escape double quotes
@@ -91,6 +92,7 @@ def upload_article(article_txt, section):
     # PROCESS IMAGE(S) if article has image(s)
     img_id_list = [] # list of wp image ids
     credit_list = [] # list of credit ids 
+
     if NOPHOTO not in img_path_list:
         for i, (img, credit, caption) in enumerate(zip(img_path_list, article_info['credit'], article_info['caption'])):
             # upload image to the media library
@@ -120,10 +122,10 @@ def upload_article(article_txt, section):
                 writer_ids[0] + ' ' + article_info['more_options'].strip()
     )
     # authorship
-    post_id = check_output(cmd, shell=True).rstrip()
+    post_id = check_output(cmd, shell=True).decode('utf8').rstrip()
     for writer_id in writer_ids:
         cmd = "wp user get {} --field=user_login".format(writer_id)
-        username = check_output(cmd, shell=True).rstrip()
+        username = check_output(cmd, shell=True).decode('utf8').rstrip()
         cmd = "wp co-authors-plus add-coauthors --coauthor={} --post_id={}".format(username, post_id)
         call(cmd, shell=True)
     
@@ -133,7 +135,9 @@ def upload_article(article_txt, section):
             credit_id = credit_list[i]
             img_id = img_id_list[i]
             
-            link_cmd = "php -f /home/plipdigital/upload-automation/remote/assign_media_credit.php {} {} {}".format(
+            #TODO fix assign media credit function
+
+            link_cmd = "php -f /home/plipdigital/upload-automation/src/remote/assign_media_credit.php {} {} {}".format(
                 img_id, 
                 post_id, 
                 credit_id 
