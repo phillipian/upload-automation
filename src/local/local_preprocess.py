@@ -27,6 +27,7 @@ from config import * # TODO: test the config file import
 photo_caption = {'':''} # map photo_dir to caption
 photo_credit = {'':''} # map photo_dir to credit
 illus_credit = {'':''} # map illus_dir to credit
+ALL_SECTIONS = ['News', 'Sports', 'Commentary', 'Arts', 'Editorial', 'Multilingual'] # sections supported by automation # TODO: add 8th pg
 
 # FUNCTIONS
 def process_args():
@@ -56,6 +57,11 @@ def process_args():
     args = parser.parse_args()
     return args
 
+def setup_directories():
+    for section in ALL_SECTIONS:
+        if not os.path.isdir(os.path.join(local_article_path, section)):
+            os.mkdir(os.path.join(local_article_path, section))
+
 def assign_categories(section_str, category, headline):
     """produce the category string for an article, given its section and headline"""
     cat_string = section_str
@@ -84,15 +90,13 @@ def fetch_photos(sheet_url):
     photo_df = fetch_sheet.get_google_sheet(sheet_url, 'Photo') 
     # check if all columns are present
     assert ('ImageDir' in photo_df.columns), 'error: missing ImageDir column in photo budget'
-    assert ('Context/Caption' in photo_df.columns), 'error: missing Context/Caption column in photo budget'
+    assert ('Online Caption' in photo_df.columns), 'error: missing Context/Caption column in photo budget'
     assert ('Photographer' in photo_df.columns), 'error: missing Photographer column in photo budget'
     assert ('Section' in photo_df.columns), 'error: missing Section column in photo budget'
-    # fetch column info
-    photo_df.apply(process_photo_budget_row, axis=1)
 
     def process_photo_budget_row(row):
         path = row['ImageDir'].strip().lower()
-        caption = row['Context/Caption']
+        caption = row['Online Caption']
         credit = row['Photographer']
         section = row['Section'].lower()
     
@@ -115,8 +119,11 @@ def fetch_photos(sheet_url):
 
         # compress image
         full_path = os.path.join(local_img_path+section, path)
-        imgs = os.listdir(full_path)
-
+        try:
+            imgs = os.listdir(full_path)
+        except FileNotFoundError:
+            print('Warning: Directory {} does not exist'.format(full_path))
+            return
         for img in imgs:
             if img[0] == '.': # skip hidden directories ('.anything')
                 continue 
@@ -132,7 +139,10 @@ def fetch_photos(sheet_url):
             if img[0] == '.': # skip hidden directories ('.anything')
                 continue 
             if (img.split('_')[0] != 'Compressed'): # delete if not compressed
-                os.remove(img)
+                os.remove(os.path.join(full_path, img))
+    
+    # fetch column info
+    photo_df.apply(process_photo_budget_row, axis=1)
 
 
 # MAIN
@@ -143,23 +153,21 @@ paper_week = args.date
 sections = [x.strip().lower().capitalize() for x in args.sections.split(',')] # obtain lowercase and whitespace-stripped section strings 
 
 # validate passed args
-ALL_SECTIONS = ['News', 'Sports', 'Commentary', 'Arts', 'Editorial', 'Multilingual'] # sections supported by automation # TODO: add 8th pg
 for section in sections: # verify that all section strings are legit
     assert section in ALL_SECTIONS, 'Error: section string {} is not supported - might want to check your spelling'.format(section)
 assert sheet_url != None, 'Error: no sheet_url provided'
 assert paper_week != None, 'Error: no sheet_url provided'
 
 # set server img path to the week's paper
-if server_img_path[-1] == '/':
-    server_img_path += paper_week+'/'
-else:
-    server_img_path += '/'+paper_week+'/'
+server_img_path = os.path.join(server_img_path, paper_week)
+
+#ensure that articles directory is correctly set up
+setup_directories()
 
 # fetch photos
 fetch_photos(sheet_url)
 # copy photos to server
 copy_photos_to_server() 
-
 
 # upload articles for each section
 # copy articles to server
@@ -241,6 +249,7 @@ def process_section_df_row(row, s):
             headline = 'Phillipian Satire: ' + headline
         if (category_slug == 'commentary'):
             headline = 'Phillipian Commentary: ' + headline
+        return headline
 
     def add_options(category_string, featured_post):
         # for featured articles, move timestamp forward and add to the featured category
@@ -256,9 +265,12 @@ def process_section_df_row(row, s):
     # LOAD ROW INFO 
     status = row['ready for autoupload'].rstrip().lower()
     is_uploaded = row['uploaded online'].rstrip().lower()
-    if (status != 'yes' or is_uploaded == 'x'): 
+    if (status not in ['yes', 'x'] or is_uploaded in ['yes', 'x']): 
         # only upload finished articles that aren't already uploaded-- skip all rows that are not marked
-        print('skipping:\t'+headline)
+        if s == 'multilingual':
+            print('skipping:\t'+row['Translated Headline'].rstrip())
+        else:
+            print('skipping:\t'+row['Headline'].rstrip())
         return
     article_doc_url = row['Link'].rstrip()
     tag = row['TAGS'].rstrip()
@@ -298,7 +310,7 @@ def process_section_df_row(row, s):
         article_info = json.load(f)
 
     # get json info
-    category_string, more_options = add_options(category_string, featured_post)
+    category_string, more_options = add_options(category_slug, featured_post)
     caption_list, credit_list, image_path_list = process_article_imgs(imgdir)
 
     # prepend info to article text file

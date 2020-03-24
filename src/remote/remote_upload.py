@@ -60,9 +60,9 @@ def upload_img(img):
 
     return img_id, img_url
 
-def upload_article(article_txt):
+def upload_article(article_txt, section):
     # article properties
-    article_txt = server_article_path+article_txt
+    article_txt = os.path.join(server_article_path, section, article_txt)
 
     if article_txt[:-5] in uploaded_list: # skip already uploaded articles
         return
@@ -168,5 +168,5 @@ for s in sections:
     article_txts = os.listdir(server_article_path+s) # return array of article text files
 
     for article_txt in article_txts: # loop through articles and upload them
-        upload_article(article_txt)
+        upload_article(article_txt, s)
 

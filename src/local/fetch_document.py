@@ -9,7 +9,7 @@ import io
 import re
 import json
 import sys
-sys.path.insert(1, '../')
+sys.path.insert(1, os.path.join(sys.path[0], '..'))
 import helper
 import unidecode
 
@@ -60,7 +60,7 @@ def get_google_doc(doc_url, workingdir):
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file('../credentials.json', SCOPES)
+            flow = InstalledAppFlow.from_client_secrets_file(os.path.join(os.getcwd(), 'credentials.json'), SCOPES)
             creds = flow.run_local_server()
         # Save the credentials for the next run
         with open('token.pickle', 'wb') as token:
@@ -73,8 +73,8 @@ def get_google_doc(doc_url, workingdir):
     mimeType = 'text/plain'
 
     # TODO: make this fit whatever we decide
-    raw_article = workingdir+file_id+'_raw.txt'
-    filter_article = workingdir+file_id+'_filter.json'
+    raw_article = os.path.join(workingdir,file_id+'_raw.txt')
+    filter_article = os.path.join(workingdir,file_id+'_filter.json')
 
     # request = service.files().get(fileId=file_id) # to get just the metadata
     request = service.files().export(fileId=file_id, mimeType=mimeType) # to get the file content

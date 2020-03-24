@@ -2,7 +2,7 @@ server_name = 'plipdigital@phillipian.net/home/plipdigital/phillipian.net'
 
 # PATHS
 # local
-local_article_path = 'articles/'
+local_article_path = '../articles/'
 local_img_path = '/Users/jzpan/digital/' # TODO: path to photos in the docker image / local computer
 # server
 server_article_homedir = '/home/plipdigital/temp_articles/' # path to article dir/.. on the server
