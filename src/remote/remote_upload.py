@@ -134,13 +134,16 @@ def upload_article(article_txt, section):
         for i in range(len(img_path_list)):
             credit_id = credit_list[i]
             img_id = img_id_list[i]
+      
+            cmd = "wp user get {} --field=display_name".format(credit_id)
+            full_name = check_output(cmd, shell=True).decode('utf8').rstrip()
             
             #TODO fix assign media credit function
 
             link_cmd = "php -f /home/plipdigital/upload-automation/src/remote/assign_media_credit.php {} {} {}".format(
                 img_id, 
                 post_id, 
-                credit_id 
+                full_name 
             )
         call(link_cmd, shell=True)
 
