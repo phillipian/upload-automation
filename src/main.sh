@@ -6,4 +6,4 @@ URL=$1
 DATE=$2
 SECTIONS='arts'
 python local/local_preprocess.py --url $URL --date $DATE --sections $SECTIONS
-ssh plipdigital@phillipian.net "cd upload-automation/src/remote; python remote_upload.py --sections $SECTIONS" 
+ssh plipdigital@phillipian.net "cd upload-automation/src/remote; python3.8 remote_upload.py --sections $SECTIONS" 

@@ -191,7 +191,7 @@ def process_article_imgs(article_image_dir):
 
     def process_single_img(img):
         # path to img on server
-        image_path = os.path.join(server_img_path, s.lower(), name, img) 
+        image_path = os.path.join(server_img_path, 'digital', s.lower(), name, img) 
 
         # generate short code for images, prepend to article content
         if name in photo_caption.keys() and name in photo_credit.keys(): # check for valid photo

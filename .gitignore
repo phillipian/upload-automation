@@ -6,4 +6,5 @@ students.json
 *.pickle
 articles
 *.pyc
+*.swp
 .DS_Store
