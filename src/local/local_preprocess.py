@@ -208,7 +208,7 @@ def process_article_imgs(article_image_dir):
 
     # if article has no photo specified
     if NOPHOTO in article_image_dir or article_image_dir == '':
-        return [NOPHOTO]
+        return [None, None, NOPHOTO]
     
     name = str(article_image_dir)
     imgs = os.listdir(os.path.join(local_img_path, s.lower(), name)) # find imgs in the 'article_image_dir' directory
