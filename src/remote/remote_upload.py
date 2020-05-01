@@ -17,7 +17,6 @@ sys.path.append('../')
 import helper
 from config import * # TODO: test the config file import
 
-
 def process_args():
     """process command line args"""
     parser = argparse.ArgumentParser(description='Upload articles to phillipian.net.')
@@ -176,4 +175,15 @@ for s in sections:
 
     for article_txt in article_txts: # loop through articles and upload them
         upload_article(article_txt, s)
+
+'''
+Experimental + untested: uncomment if you dare
+
+# Clear uploaded articles only after all uploads are successful to allow for smoother reruns
+
+for s in sections:
+    print('removing files for section '+s)
+    helper.remove_local_articles(server_article_path, s)
+
+'''
 

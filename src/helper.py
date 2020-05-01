@@ -3,6 +3,10 @@ import re
 import os
 from PIL import Image
 
+def remove_local_articles(article_dir, section):
+    cmd = 'find '+article_dir+section+' -type f -delete'
+    call(cmd, shell=True)
+
 def remove_spaces_commas(s_in):
     """Remove spaces and commas from a string"""
     s_out = ''

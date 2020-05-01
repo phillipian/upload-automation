@@ -83,6 +83,7 @@ def copy_article_to_server(article_dir):
     cmd = 'scp -r "'+article_dir+'" plipdigital@phillipian.net:'+server_article_homedir
     call(cmd, shell=True)
     return server_article_homedir+article_dir.split('/')[-1]
+
 def fetch_photos(sheet_url):
     """from photo budget, fill global dictionaries (photo_caption, photo_credit) and compress images in imagedirs"""
     
@@ -254,7 +255,7 @@ def process_section_df_row(row, s):
     def add_options(category_string, featured_post):
         # for featured articles, move timestamp forward and add to the featured category
         more_options = ''
-        if featured_post == 'yes':
+        if featured_post in ['yes', 'x']:
             post_timestamp = (dt.datetime.now()+dt.timedelta(minutes=15)).strftime("%Y-%m-%d %H:%M:%S")
             more_options += "--post_date='"+post_timestamp+"'"
             category_string += ',featured'
@@ -337,3 +338,12 @@ for s in sections:
 
 
 copy_article_to_server(local_article_path)
+
+'''
+Experimental + untested: uncomment if you dare
+
+for s in sections:
+    print('removing files for section:\t' + s)
+    helper.remove_local_articles(local_article_path, s)
+
+'''
